@@ -3,11 +3,9 @@ package me.syari.ss.core.config
 import me.syari.ss.core.Main.Companion.coreLogger
 import me.syari.ss.core.message.Message.send
 import org.bukkit.Bukkit.getWorld
-import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.io.IOException
@@ -18,7 +16,7 @@ class CustomConfig(
     private val output: CommandSender,
     fileName: String,
     private val directory: File,
-    deleteIfEmpty: Boolean
+    private val deleteIfEmpty: Boolean
 ) {
     private var file = File(directory, fileName)
     private val config: YamlConfiguration
@@ -174,20 +172,8 @@ class CustomConfig(
         return getBoolean(path, notFoundError) ?: default
     }
 
-    fun getItemStack(path: String, notFoundError: Boolean = true): ItemStack? {
-        return get(path, "ItemStack", notFoundError)
-    }
-
     fun getDate(path: String, notFoundError: Boolean = true): Date? {
         return get(path, "Date", notFoundError)
-    }
-
-    private fun getColor(path: String, notFoundError: Boolean = true): Color? {
-        return get(path, "Color", notFoundError)
-    }
-
-    fun getColor(path: String, default: Color, notFoundError: Boolean = true): Color {
-        return getColor(path, notFoundError) ?: default
     }
 
     fun contains(path: String) = config.contains(path)
@@ -196,7 +182,7 @@ class CustomConfig(
         path: String, notFoundError: Boolean = true
     ) = config.getConfigurationSection(path)?.getKeys(false) ?: notFoundError<Set<String>>(path, notFoundError)
 
-    fun set(path: String, value: Any?, save: Boolean = true) {
+    fun set(path: String, value: Any?, save: Boolean = false) {
         config.set(path, value)
         if (save) save()
     }
@@ -215,7 +201,7 @@ class CustomConfig(
 
     fun save() {
         config.save(file)
-        if (file.length() == 0L) {
+        if (deleteIfEmpty && file.length() == 0L) {
             delete()
         }
     }
@@ -229,8 +215,8 @@ class CustomConfig(
         output.send("&b[$path|$ymlPath] &c$message")
     }
 
-    private fun <T> notFoundError(path: String, sendNotFound: Boolean): T? {
-        if (sendNotFound) sendError(path, "見つかりませんでした")
+    private fun <T> notFoundError(path: String, notFoundError: Boolean): T? {
+        if (notFoundError) sendError(path, "見つかりませんでした")
         return null
     }
 

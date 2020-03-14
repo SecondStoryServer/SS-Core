@@ -5,5 +5,6 @@ enum class ErrorMessage(val message: String) {
     NotEnterPlayer("プレイヤーを入力してください"),
     NotFoundPlayer("プレイヤーが見つかりませんでした"),
     NotEnterName("名前を入力してください"),
+    NotExist("存在しません"),
     AlreadyExist("既に存在しています")
 }

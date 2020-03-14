@@ -1,7 +1,7 @@
 package me.syari.ss.core.inventory
 
 import me.syari.ss.core.Main.Companion.corePlugin
-import me.syari.ss.core.auto.EventInit
+import me.syari.ss.core.auto.Event
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.inventory.event.CustomInventoryOpenEvent
 import me.syari.ss.core.inventory.event.NaturalInventoryOpenEvent
@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.*
 import org.bukkit.inventory.Inventory
 
-object CreateInventory : EventInit {
+object CreateInventory : Event {
     @EventHandler
     fun on(e: InventoryOpenEvent) {
         val player = e.player as Player
