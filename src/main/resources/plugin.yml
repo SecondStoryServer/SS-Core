@@ -1,0 +1,6 @@
+name: SS-Core
+version: "1.0"
+api-version: "1.13"
+main: me.syari.ss.core.Main
+author: sya_ri
+load: STARTUP
