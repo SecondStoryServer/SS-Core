@@ -2,9 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.70"
+    maven
 }
 
 group = "me.syari.ss.core"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -24,4 +26,25 @@ tasks.withType<KotlinCompile> {
 val jar by tasks.getting(Jar::class) {
     from(configurations.compile.get().map { if (it.isDirectory) it else zipTree(it) })
     exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
+}
+
+tasks.getByName<Upload>("uploadArchives") {
+    repositories {
+        withConvention(MavenRepositoryHandlerConvention::class) {
+            mavenDeployer {
+                withGroovyBuilder {
+                    "repository"("url" to uri("$buildDir/m2/releases"))
+                }
+                pom.project {
+                    withGroovyBuilder {
+                        "parent" {
+                            "groupId"("me.syari.ss")
+                            "artifactId"("core")
+                            "version"(version as String)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
