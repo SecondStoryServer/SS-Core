@@ -4,6 +4,7 @@ import me.syari.ss.core.Main.Companion.coreLogger
 import me.syari.ss.core.message.Message.send
 import org.bukkit.Bukkit.getWorld
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -14,7 +15,7 @@ import java.util.*
 class CustomConfig(
     plugin: JavaPlugin,
     private val output: CommandSender,
-    fileName: String,
+    val fileName: String,
     private val directory: File,
     private val deleteIfEmpty: Boolean
 ) {
@@ -59,17 +60,23 @@ class CustomConfig(
 
     private inline fun <reified T> getList(path: String, typeName: String, notFoundError: Boolean): List<T>? {
         return mutableListOf<T>().apply {
-            get<List<*>>(path, "List", notFoundError)?.forEachIndexed { index, each ->
-                if (each is T) {
-                    add(each)
-                } else {
-                    typeMismatchInListError(path, index, typeName)
+            if(config.isList(path)){
+                get<List<*>>(path, "List", notFoundError)?.forEachIndexed { index, each ->
+                    if (each is T) {
+                        add(each)
+                    } else {
+                        typeMismatchInListError(path, index, typeName)
+                    }
+                }
+            } else {
+                get<T>(path, "List", notFoundError)?.let {
+                    add(it)
                 }
             }
         }
     }
 
-    private fun <T> getFromString(path: String, typeName: String, notFoundError: Boolean, run: (String) -> T): T? {
+    private fun <T> getFromString(path: String, typeName: String, notFoundError: Boolean, run: (String) -> T?): T? {
         val getValue = get<String>(path, typeName, notFoundError) ?: return null
         return run.invoke(getValue)
     }
@@ -174,6 +181,14 @@ class CustomConfig(
 
     fun getDate(path: String, notFoundError: Boolean = true): Date? {
         return get(path, "Date", notFoundError)
+    }
+
+    fun getMaterial(path: String, notFoundError: Boolean = true): Material? {
+        return getFromString(path, "String(Material)", notFoundError){ Material.getMaterial(it) }
+    }
+
+    fun getMaterial(path: String, default: Material, notFoundError: Boolean = true): Material {
+        return getMaterial(path, notFoundError) ?: default
     }
 
     fun contains(path: String) = config.contains(path)

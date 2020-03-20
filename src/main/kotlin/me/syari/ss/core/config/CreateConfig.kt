@@ -49,9 +49,9 @@ object CreateConfig {
             if (!directory.exists()) directory.mkdir()
         }
         return mutableMapOf<String, CustomConfig>().apply {
-            directory.list()?.forEach { file ->
-                if (file.endsWith(".yml")) {
-                    this[file] = CustomConfig(plugin, output, file, directory, deleteIfEmpty)
+            directory.list()?.forEach { fileName ->
+                if (fileName.endsWith(".yml")) {
+                    this[fileName] = CustomConfig(plugin, output, fileName, directory, deleteIfEmpty)
                 }
             }
         }
