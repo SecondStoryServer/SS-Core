@@ -36,6 +36,7 @@ class CommandArgument(private val array: Array<out String>, private val message:
 
     private fun slice(range: IntRange) = array.slice(range)
 
+    @Suppress("DEPRECATION")
     fun getOfflinePlayer(index: Int, equalName: Boolean): OfflinePlayer? {
         val rawPlayer = getOrNull(index)
         if (rawPlayer == null) {

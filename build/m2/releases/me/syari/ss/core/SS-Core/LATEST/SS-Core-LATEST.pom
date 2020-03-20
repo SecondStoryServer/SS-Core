@@ -4,11 +4,11 @@
   <parent>
     <groupId>upload</groupId>
     <artifactId>SS-Core</artifactId>
-    <version>1.0.1</version>
+    <version>LATEST</version>
   </parent>
   <groupId>me.syari.ss.core</groupId>
   <artifactId>SS-Core</artifactId>
-  <version>1.0.1</version>
+  <version>LATEST</version>
   <dependencies>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>

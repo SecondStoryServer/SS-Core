@@ -3,10 +3,10 @@
   <groupId>me.syari.ss.core</groupId>
   <artifactId>SS-Core</artifactId>
   <versioning>
-    <release>1.0.1</release>
+    <release>LATEST</release>
     <versions>
-      <version>1.0.1</version>
+      <version>LATEST</version>
     </versions>
-    <lastUpdated>20200320154552</lastUpdated>
+    <lastUpdated>20200320160300</lastUpdated>
   </versioning>
 </metadata>

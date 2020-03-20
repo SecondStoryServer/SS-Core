@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "me.syari.ss.core"
-version = "1.0.1"
+version = "LATEST"
 
 repositories {
     mavenCentral()
@@ -34,6 +34,7 @@ tasks.getByName<Upload>("uploadArchives") {
             mavenDeployer {
                 withGroovyBuilder {
                     "repository"("url" to uri("$buildDir/m2/releases"))
+                    "snapshotRepository"("url" to uri("$buildDir/m2/snapshots"))
                 }
                 pom.project {
                     withGroovyBuilder {
