@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "me.syari.ss.core"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -38,8 +38,8 @@ tasks.getByName<Upload>("uploadArchives") {
                 pom.project {
                     withGroovyBuilder {
                         "parent" {
-                            "groupId"("me.syari.ss")
-                            "artifactId"("core")
+                            "groupId"(group)
+                            "artifactId"(rootProject.name)
                             "version"(version as String)
                         }
                     }
