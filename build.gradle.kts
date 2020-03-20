@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.70"
-    maven
+    `maven-publish`
 }
 
 group = "me.syari.ss.core"
@@ -28,24 +28,21 @@ val jar by tasks.getting(Jar::class) {
     exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
 }
 
-tasks.getByName<Upload>("uploadArchives") {
+val sourcesJar by tasks.registering(Jar::class) {
+    classifier = "sources"
+    from(sourceSets.main.get().allSource)
+}
+
+publishing {
     repositories {
-        withConvention(MavenRepositoryHandlerConvention::class) {
-            mavenDeployer {
-                withGroovyBuilder {
-                    "repository"("url" to uri("$buildDir/m2/releases"))
-                    "snapshotRepository"("url" to uri("$buildDir/m2/snapshots"))
-                }
-                pom.project {
-                    withGroovyBuilder {
-                        "parent" {
-                            "groupId"(group)
-                            "artifactId"(rootProject.name)
-                            "version"(version as String)
-                        }
-                    }
-                }
-            }
+        maven {
+            url = uri("$buildDir/repo")
+        }
+    }
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["kotlin"])
+            artifact(sourcesJar.get())
         }
     }
 }
