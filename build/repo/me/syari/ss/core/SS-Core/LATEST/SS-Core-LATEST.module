@@ -11,18 +11,19 @@
   "createdBy": {
     "gradle": {
       "version": "6.2.2",
-      "buildId": "xb75ny5cbvdn5nnl2z5knvvlca"
+      "buildId": "ncbwqiibsvhjnlbpfmta4flmv4"
     }
   },
   "variants": [
     {
-      "name": "-api",
+      "name": "apiElements",
       "attributes": {
         "org.gradle.category": "library",
         "org.gradle.dependency.bundling": "external",
         "org.gradle.jvm.version": 13,
         "org.gradle.libraryelements": "jar",
         "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.localToProject": "public",
         "org.jetbrains.kotlin.platform.type": "jvm"
       },
       "dependencies": [
@@ -46,21 +47,22 @@
           "name": "SS-Core-LATEST.jar",
           "url": "SS-Core-LATEST.jar",
           "size": 4607957,
-          "sha512": "e98248af9ed3d1b2d3a250c1fa8dec6798d84611a8b9aca98e479dd8a42f9620065d9fdd6fa4b5aecff4bfd1edc7de5086b8bf5261e4e715c21aa7ccca78c4a7",
-          "sha256": "bb472847d9a4cb5f1e8141b959bde93d6cd9e381f25c69f3eb7dddeb9648a657",
-          "sha1": "3b6c0e2fc1efcd4fca4f7cb283d8eacd131318c1",
-          "md5": "dea370a2ecb15332d9251a375cae31ad"
+          "sha512": "c507f41567599117c9b72ed3b507914c9fa31090d59d7896467194e85430207a45dec047836c27bc11f2d402305552b9a5468b7fe6642737a1d3a0c477454495",
+          "sha256": "e7f350479f39d5782e0f58b0f300450758043fb90ed4c12aa277b2b2ba629873",
+          "sha1": "75929086650df8d76e6b277669135f8fe4db5c02",
+          "md5": "46563a755f79f54d90c7f7a7b3680ca8"
         }
       ]
     },
     {
-      "name": "-runtime",
+      "name": "runtimeElements",
       "attributes": {
         "org.gradle.category": "library",
         "org.gradle.dependency.bundling": "external",
         "org.gradle.jvm.version": 13,
         "org.gradle.libraryelements": "jar",
         "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.localToProject": "public",
         "org.jetbrains.kotlin.platform.type": "jvm"
       },
       "dependencies": [
@@ -91,10 +93,10 @@
           "name": "SS-Core-LATEST.jar",
           "url": "SS-Core-LATEST.jar",
           "size": 4607957,
-          "sha512": "e98248af9ed3d1b2d3a250c1fa8dec6798d84611a8b9aca98e479dd8a42f9620065d9fdd6fa4b5aecff4bfd1edc7de5086b8bf5261e4e715c21aa7ccca78c4a7",
-          "sha256": "bb472847d9a4cb5f1e8141b959bde93d6cd9e381f25c69f3eb7dddeb9648a657",
-          "sha1": "3b6c0e2fc1efcd4fca4f7cb283d8eacd131318c1",
-          "md5": "dea370a2ecb15332d9251a375cae31ad"
+          "sha512": "c507f41567599117c9b72ed3b507914c9fa31090d59d7896467194e85430207a45dec047836c27bc11f2d402305552b9a5468b7fe6642737a1d3a0c477454495",
+          "sha256": "e7f350479f39d5782e0f58b0f300450758043fb90ed4c12aa277b2b2ba629873",
+          "sha1": "75929086650df8d76e6b277669135f8fe4db5c02",
+          "md5": "46563a755f79f54d90c7f7a7b3680ca8"
         }
       ]
     }

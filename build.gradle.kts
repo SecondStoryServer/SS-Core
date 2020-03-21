@@ -30,8 +30,8 @@ val jar by tasks.getting(Jar::class) {
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
-    from(sourceSets.main.get().allSource)
+    archiveClassifier.set("sources")
+    from(sourceSets["main"].allSource)
 }
 
 publishing {
@@ -42,7 +42,7 @@ publishing {
     }
     publications {
         create<MavenPublication>("mavenJava") {
-            from(components["kotlin"])
+            from(components["java"])
             artifact(sourcesJar.get())
         }
     }
