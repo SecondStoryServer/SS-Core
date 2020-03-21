@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
+    compile(kotlin("reflect"))
     implementation("com.destroystokyo.paper:paper-api:1.15.2-R0.1-SNAPSHOT")
 }
 
