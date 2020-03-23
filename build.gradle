@@ -42,7 +42,12 @@ publishing {
     repositories {
         maven {
             url ssMavenRepoUpload
+            credentials {
+                username ssMavenRepoUploadUser
+                password ssMavenRepoUploadPassword
+            }
         }
+
     }
     publications {
         maven(MavenPublication) {
