@@ -91,14 +91,16 @@ object CreateCommand {
                     val joinArg = args.joinToString(separator = " ").toLowerCase()
                     val size = args.size - 1
                     tab.forEach { eachTab ->
-                        when(eachTab){
+                        when (eachTab) {
                             is CommandTab.Base -> {
                                 val element = eachTab.tab.invoke(
                                     sender,
                                     CommandArgument(args, message)
                                 )?.element ?: return@forEach
                                 if (eachTab.arg.isEmpty()) {
-                                    if (size == 0) tabList.addAll(element.filter { it.toLowerCase().startsWith(joinArg) })
+                                    if (size == 0) tabList.addAll(element.filter {
+                                        it.toLowerCase().startsWith(joinArg)
+                                    })
                                 } else {
                                     eachTab.arg.forEach { eachArg ->
                                         val splitArg = eachArg.split("\\s+".toRegex())
@@ -106,7 +108,7 @@ object CreateCommand {
                                             val completed = if (eachArg.contains('*')) {
                                                 StringBuilder().apply {
                                                     splitArg.forEachIndexed { index, word ->
-                                                        append("${if(word != "*") word else args[index]} ")
+                                                        append("${if (word != "*") word else args[index]} ")
                                                     }
                                                 }.toString().substringBeforeLast(" ")
                                             } else {
@@ -122,14 +124,14 @@ object CreateCommand {
                             is CommandTab.Flag -> {
                                 val splitArg = eachTab.arg.split("\\s+".toRegex())
                                 splitArg.forEachIndexed { index, split ->
-                                    if(split != "*" && split.toLowerCase() != args.getOrNull(index)?.toLowerCase()) {
+                                    if (split != "*" && split.toLowerCase() != args.getOrNull(index)?.toLowerCase()) {
                                         return@forEach
                                     }
                                 }
                                 val enterText = args.getOrNull(args.size - 1) ?: return@forEach
-                                if((size - splitArg.size) % 2 == 0){
+                                if ((size - splitArg.size) % 2 == 0) {
                                     val element = eachTab.flag.keys.toMutableSet()
-                                    for(index in splitArg.size until size step 2){
+                                    for (index in splitArg.size until size step 2) {
                                         element.remove(args[index].toLowerCase())
                                     }
                                     tabList.addAll(element.filter {
@@ -137,7 +139,7 @@ object CreateCommand {
                                     })
                                 } else {
                                     val element = eachTab.flag[args.getOrNull(args.size - 2)?.toLowerCase()]
-                                    if(element != null){
+                                    if (element != null) {
                                         tabList.addAll(element.filter {
                                             it.toLowerCase().startsWith(enterText)
                                         })

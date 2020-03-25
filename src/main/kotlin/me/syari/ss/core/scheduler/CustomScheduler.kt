@@ -1,5 +1,6 @@
 package me.syari.ss.core.scheduler
 
+import me.syari.ss.core.Main
 import org.bukkit.plugin.java.JavaPlugin
 
 object CustomScheduler {
@@ -34,5 +35,23 @@ object CustomScheduler {
         run: CustomTask.() -> Unit
     ): CustomTask? {
         return schedule(plugin, run).runRepeatTimes(period, times, delay, async)
+    }
+
+    fun <T> runListWithDelay(
+        listWithDelay: Map<Long, Set<T>>,
+        run: (T) -> Unit
+    ): Set<CustomTask> {
+        return mutableSetOf<CustomTask>().also { taskList ->
+            listWithDelay.forEach { (delay, value) ->
+                runLater(Main.corePlugin, delay, true) {
+                    run(Main.corePlugin, false) {
+                        value.forEach {
+                            run.invoke(it)
+                        }
+                    }
+                    taskList.remove(this)
+                }?.let { taskList.add(it) }
+            }
+        }
     }
 }

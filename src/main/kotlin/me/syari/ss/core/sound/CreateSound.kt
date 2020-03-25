@@ -9,7 +9,13 @@ object CreateSound {
         return CustomSound(type, volume, pitch, category)
     }
 
-    fun playSound(location: Location, type: Sound, volume: Float, pitch: Float, category: SoundCategory = SoundCategory.MASTER){
+    fun playSound(
+        location: Location,
+        type: Sound,
+        volume: Float,
+        pitch: Float,
+        category: SoundCategory = SoundCategory.MASTER
+    ) {
         sound(type, volume, pitch, category).play(location)
     }
 }

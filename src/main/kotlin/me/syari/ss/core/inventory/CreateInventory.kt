@@ -66,7 +66,12 @@ object CreateInventory : Event {
         return inventory(createInventory(null, type, display.toColor), *id)
     }
 
-    fun inventory(display: String, type: InventoryType, vararg id: String, run: CustomInventory.() -> Unit): CustomInventory {
+    fun inventory(
+        display: String,
+        type: InventoryType,
+        vararg id: String,
+        run: CustomInventory.() -> Unit
+    ): CustomInventory {
         return inventory(display, type, *id).apply(run)
     }
 

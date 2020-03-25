@@ -2,13 +2,12 @@ package me.syari.ss.core.config
 
 import me.syari.ss.core.Main.Companion.coreLogger
 import me.syari.ss.core.message.Message.send
+import me.syari.ss.core.particle.CustomParticle
+import me.syari.ss.core.particle.CustomParticleList
 import me.syari.ss.core.sound.CustomSound
 import me.syari.ss.core.sound.CustomSoundList
+import org.bukkit.*
 import org.bukkit.Bukkit.getWorld
-import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.Sound
-import org.bukkit.SoundCategory
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -66,7 +65,7 @@ class CustomConfig(
 
     private inline fun <reified T> getList(path: String, typeName: String, notFoundError: Boolean): List<T>? {
         return mutableListOf<T>().apply {
-            if(config.isList(path)){
+            if (config.isList(path)) {
                 get<List<*>>(path, "List", notFoundError)?.forEachIndexed { index, each ->
                     if (each is T) {
                         add(each)
@@ -192,7 +191,7 @@ class CustomConfig(
     }
 
     fun getMaterial(path: String, notFoundError: Boolean = true): Material? {
-        return getFromString(path, "String(Material)", notFoundError){ Material.getMaterial(it) }
+        return getFromString(path, "String(Material)", notFoundError) { Material.getMaterial(it) }
     }
 
     fun getMaterial(path: String, default: Material, notFoundError: Boolean = true): Material {
@@ -201,45 +200,50 @@ class CustomConfig(
 
     private fun getPotionEffect(path: String, rawText: String): PotionEffect? {
         val split = rawText.split("-")
-        if(split.size < 3) return formatMismatchError<PotionEffect>(path)
+        if (split.size < 3) return formatMismatchError<PotionEffect>(path)
         val type = PotionEffectType.getByName(split[0]) ?: return nullError<PotionEffect>(path, "Potion(${split[0]})")
         val duration = split[1].toIntOrNull() ?: return typeMismatchError<PotionEffect>(path, "Int(${split[1]})")
         val level = split[2].toIntOrNull() ?: return typeMismatchError<PotionEffect>(path, "Int(${split[2]})")
-        if(split.size < 4) return PotionEffect(type, duration, level)
+        if (split.size < 4) return PotionEffect(type, duration, level)
         val particle = split[3].toBoolean()
         return PotionEffect(type, duration, level, true, particle)
     }
 
     fun getPotionEffectList(path: String, notFoundError: Boolean = true): List<PotionEffect>? {
-        return getListFromStringList(path, "String(Potion)", notFoundError){ line, index ->
+        return getListFromStringList(path, "String(Potion)", notFoundError) { line, index ->
             getPotionEffect("$path:$index", line)
         }
     }
 
-    fun getPotionEffectList(path: String, default: List<PotionEffect>, notFoundError: Boolean = true): List<PotionEffect> {
+    fun getPotionEffectList(
+        path: String,
+        default: List<PotionEffect>,
+        notFoundError: Boolean = true
+    ): List<PotionEffect> {
         return getPotionEffectList(path, notFoundError) ?: default
     }
 
-    private fun CustomSoundList.addElement(path: String, rawText: String){
+    private fun CustomSoundList.addElement(path: String, rawText: String) {
         val split = rawText.split("-")
-        when(val size = split.size){
+        when (val size = split.size) {
             2 -> {
-                if(split[0].toLowerCase() == "delay"){
+                if (split[0].toLowerCase() == "delay") {
                     val delay = split[1].toLongOrNull() ?: return nullError(path, "Long(${split[1]})")
                     return addDelay(delay)
                 }
             }
             3, 4 -> {
                 val rawType = split[0].toUpperCase()
-                val type = Sound.values().firstOrNull { rawType == it.name } ?: return nullError(path, "Sound($rawType)")
+                val type =
+                    Sound.values().firstOrNull { rawType == it.name } ?: return nullError(path, "Sound($rawType)")
                 val volume = split[1].toFloatOrNull() ?: return nullError(path, "Float(${split[1]})")
                 val pitch = split[2].toFloatOrNull() ?: return nullError(path, "Float(${split[2]})")
-                val loop = if(size == 3){
+                val loop = if (size == 3) {
                     1
                 } else {
                     split[3].toIntOrNull() ?: return nullError(path, "Int(${split[3]})")
                 }
-                for(i in 0 until loop){
+                for (i in 0 until loop) {
                     addSound(CustomSound(type, volume, pitch, SoundCategory.MASTER))
                 }
             }
@@ -257,11 +261,65 @@ class CustomConfig(
         }
     }
 
+    private fun CustomParticleList.addElement(path: String, rawText: String) {
+        val split = rawText.split("-")
+        when (split.size) {
+            2 -> {
+                if (split[0].toLowerCase() == "delay") {
+                    val delay = split[1].toLongOrNull() ?: return nullError(path, "Long(${split[1]})")
+                    return addDelay(delay)
+                }
+            }
+            3, 4, 6 -> {
+                val rawType = split[0].toUpperCase()
+                val type =
+                    Particle.values().firstOrNull { rawType == it.name } ?: return nullError(path, "Particle($rawType)")
+                val lastIndex = split.lastIndex
+                val speed =
+                    split[lastIndex - 1].toDoubleOrNull() ?: return nullError(path, "Double(${split[lastIndex - 1]})")
+                val count = split[lastIndex].toIntOrNull() ?: return nullError(path, "Int(${split[lastIndex]})")
+                return addParticle(
+                    when (type) {
+                        Particle.ITEM_CRACK, Particle.BLOCK_CRACK, Particle.BLOCK_DUST, Particle.FALLING_DUST -> {
+                            val material =
+                                Material.getMaterial(split[2]) ?: return nullError(path, "Material(${split[2]})")
+                            when (type) {
+                                Particle.ITEM_CRACK -> CustomParticle.ItemCrack(material, count, speed)
+                                Particle.BLOCK_CRACK -> CustomParticle.BlockCrack(material, count, speed)
+                                Particle.BLOCK_DUST -> CustomParticle.BlockDust(material, count, speed)
+                                Particle.FALLING_DUST -> CustomParticle.FallingDust(material, count, speed)
+                                else -> return // Unreachable
+                            }
+                        }
+                        Particle.REDSTONE -> {
+                            val red = split[2].toIntOrNull() ?: return nullError(path, "Int(${split[2]})")
+                            val green = split[3].toIntOrNull() ?: return nullError(path, "Int(${split[3]})")
+                            val blue = split[4].toIntOrNull() ?: return nullError(path, "Int(${split[4]})")
+                            CustomParticle.RedStone(red, blue, green, count, speed)
+                        }
+                        else -> CustomParticle.Normal(type, count, speed)
+                    }
+                )
+            }
+        }
+        formatMismatchError(path)
+    }
+
+    fun getParticleList(path: String, notFoundError: Boolean = true): CustomParticleList? {
+        return getStringList(path, notFoundError)?.let { lines ->
+            CustomParticleList().apply {
+                lines.forEachIndexed { index, line ->
+                    addElement("$path:$index", line)
+                }
+            }
+        }
+    }
+
     fun contains(path: String) = config.contains(path)
 
-    fun section(
-        path: String, notFoundError: Boolean = true
-    ) = config.getConfigurationSection(path)?.getKeys(false) ?: notFoundError<Set<String>>(path, notFoundError)
+    fun section(path: String, notFoundError: Boolean = true): Set<String>? {
+        return config.getConfigurationSection(path)?.getKeys(false) ?: notFoundError<Set<String>>(path, notFoundError)
+    }
 
     fun set(path: String, value: Any?, save: Boolean = false) {
         config.set(path, value)
@@ -301,7 +359,7 @@ class CustomConfig(
         return null
     }
 
-    private fun nullError(path: String, thing: String){
+    private fun nullError(path: String, thing: String) {
         sendError(path, "$thing が null でした")
     }
 

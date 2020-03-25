@@ -7,14 +7,15 @@ data class Vector5D(val x: Double, val y: Double, val z: Double, val yaw: Float 
     fun toLocation(world: World) = Location(world, x, y, z, yaw, pitch)
 
     override fun toString(): String {
-        return if(yaw == 0F && pitch == 0F) "$x, $y, $z" else "$x, $y, $z, $yaw, $pitch"
+        return if (yaw == 0F && pitch == 0F) "$x, $y, $z" else "$x, $y, $z, $yaw, $pitch"
     }
 
     companion object {
-        fun fromLocation(location: Location) = Vector5D(location.x, location.y, location.z, location.yaw, location.pitch)
+        fun fromLocation(location: Location) =
+            Vector5D(location.x, location.y, location.z, location.yaw, location.pitch)
 
         fun fromString(string: String?): Vector5D? {
-            if(string == null) return null
+            if (string == null) return null
             val split = string.split(",\\s*".toRegex())
             when (val size = split.size) {
                 3, 5 -> {

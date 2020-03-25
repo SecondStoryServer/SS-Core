@@ -15,7 +15,7 @@ class CommandArgument(private val array: Array<out String>, private val message:
     fun getFlag(target: String): String? {
         val lowerTarget = target.toLowerCase()
         array.forEachIndexed { index, element ->
-            if(lowerTarget == element.toLowerCase()){
+            if (lowerTarget == element.toLowerCase()) {
                 return getOrNull(index + 1)?.toLowerCase()
             }
         }

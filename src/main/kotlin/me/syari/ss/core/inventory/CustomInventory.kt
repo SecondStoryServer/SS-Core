@@ -61,16 +61,30 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         return item(index, item.toOneItemStack)
     }
 
-    fun item(index: Int, material: Material, display: String, lore: Collection<String>, amount: Int = 1, shine: Boolean = false): Int? {
+    fun item(
+        index: Int,
+        material: Material,
+        display: String,
+        lore: Collection<String>,
+        amount: Int = 1,
+        shine: Boolean = false
+    ): Int? {
         return item(index, CustomItemStack.create(material, display, *lore.toTypedArray(), amount = amount).apply {
-            if(shine){
+            if (shine) {
                 addEnchant(Enchantment.DURABILITY, 0)
                 addItemFlag(ItemFlag.HIDE_ENCHANTS)
             }
         })
     }
 
-    fun item(index: Int, material: Material, display: String, vararg lore: String, amount: Int = 1, shine: Boolean = false): Int? {
+    fun item(
+        index: Int,
+        material: Material,
+        display: String,
+        vararg lore: String,
+        amount: Int = 1,
+        shine: Boolean = false
+    ): Int? {
         return item(index, material, display, lore.toList(), amount, shine)
     }
 

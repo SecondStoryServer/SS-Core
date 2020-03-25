@@ -120,9 +120,10 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
             return map
         }
 
-    val toOneItemStack: ItemStack get() {
-        return item.clone().also { it.amount = if (64 < amount) 64 else amount }
-    }
+    val toOneItemStack: ItemStack
+        get() {
+            return item.clone().also { it.amount = if (64 < amount) 64 else amount }
+        }
 
     fun isSimilar(customItem: CustomItemStack) = toOneItemStack.isSimilar(customItem.toOneItemStack)
 

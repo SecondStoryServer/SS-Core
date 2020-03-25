@@ -25,7 +25,7 @@ class CommandMessage(private val prefix: String, private val sender: CommandSend
         }
     }
 
-    fun sendList(title: String, vararg element: String){
+    fun sendList(title: String, vararg element: String) {
         sendList(title, element.toList())
     }
 
