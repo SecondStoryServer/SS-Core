@@ -7,7 +7,7 @@ object ConfigMaterialDataType : ConfigDataType<Material> {
     override val typeName = "String(Material)"
 
     override fun get(config: CustomConfig, path: String, notFoundError: Boolean): Material? {
-        val getValue = config.get(path, CustomConfig.STRING, notFoundError) ?: return null
+        val getValue = config.get(path, ConfigDataType.STRING, notFoundError) ?: return null
         return Material.getMaterial(getValue)
     }
 }

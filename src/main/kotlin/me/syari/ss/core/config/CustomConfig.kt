@@ -1,7 +1,7 @@
 package me.syari.ss.core.config
 
 import me.syari.ss.core.Main.Companion.coreLogger
-import me.syari.ss.core.config.dataType.*
+import me.syari.ss.core.config.dataType.ConfigDataType
 import me.syari.ss.core.message.Message.send
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
@@ -78,7 +78,7 @@ class CustomConfig(
         return type.get(this, path, notFoundError)
     }
 
-    fun <T> get(path: String, type: ConfigDataType<T>, notFoundError: Boolean, default: T): T {
+    fun <T> get(path: String, type: ConfigDataType<T>, default: T, notFoundError: Boolean): T {
         return get(path, type, notFoundError) ?: default
     }
 
@@ -141,21 +141,5 @@ class CustomConfig(
 
     fun notFoundError(path: String) {
         sendError(path, "$path が見つかりませんでした")
-    }
-
-    object Type {
-        val NUMBER = ConfigNumberDataType
-        val INT = ConfigIntDataType
-        val LONG = ConfigLongDataType
-        val FLOAT = ConfigFloatDataType
-        val STRING = ConfigStringDataType
-        val STRINGLIST = ConfigStringListDataType
-        val BOOLEAN = ConfigBooleanDataType
-        val DATE = ConfigDateDataType
-        val LOCATION = ConfigLocationDataType
-        val MATERIAL = ConfigMaterialDataType
-        val PARTICLE = ConfigParticleDataType
-        val POTION = ConfigPotionDataType
-        val SOUND = ConfigSoundDataType
     }
 }

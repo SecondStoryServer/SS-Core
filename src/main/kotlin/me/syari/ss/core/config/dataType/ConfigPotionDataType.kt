@@ -8,7 +8,7 @@ object ConfigPotionDataType : ConfigDataType<List<PotionEffect>> {
     override val typeName = "List<PotionEffect>"
 
     override fun get(config: CustomConfig, path: String, notFoundError: Boolean): List<PotionEffect>? {
-        val getList = config.get(path, CustomConfig.STRINGLIST, notFoundError) ?: return null
+        val getList = config.get(path, ConfigDataType.STRINGLIST, notFoundError) ?: return null
         return mutableListOf<PotionEffect>().apply {
             getList.forEachIndexed { index, line ->
                 val split = line.split("-")

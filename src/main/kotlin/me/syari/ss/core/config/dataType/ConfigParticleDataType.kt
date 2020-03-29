@@ -10,7 +10,7 @@ object ConfigParticleDataType : ConfigDataType<CustomParticleList> {
     override val typeName = "CustomParticleList"
 
     override fun get(config: CustomConfig, path: String, notFoundError: Boolean): CustomParticleList? {
-        val getList = config.get(path, CustomConfig.STRINGLIST, notFoundError) ?: return null
+        val getList = config.get(path, ConfigDataType.STRINGLIST, notFoundError) ?: return null
         return CustomParticleList().apply {
             getList.forEachIndexed { index, line ->
                 val split = line.split("-")

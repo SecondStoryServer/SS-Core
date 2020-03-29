@@ -1,8 +1,5 @@
 package me.syari.ss.core.persistentData
 
-import me.syari.ss.core.persistentData.customType.PersistentDataTypeBoolean
-import me.syari.ss.core.persistentData.customType.PersistentDataTypeCustomItemStack
-import me.syari.ss.core.persistentData.customType.PersistentDataTypeUUID
 import org.bukkit.NamespacedKey
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
@@ -40,18 +37,5 @@ class CustomPersistentData(
 
     fun remove(key: String) {
         persistentDataContainer.remove(key.asNamespacedKey)
-    }
-
-    object Type {
-        val BYTE: PersistentDataType<Byte, Byte> = PersistentDataType.BYTE
-        val SHORT: PersistentDataType<Short, Short> = PersistentDataType.SHORT
-        val INT: PersistentDataType<Int, Int> = PersistentDataType.INTEGER
-        val LONG: PersistentDataType<Long, Long> = PersistentDataType.LONG
-        val FLOAT: PersistentDataType<Float, Float> = PersistentDataType.FLOAT
-        val DOUBLE: PersistentDataType<Double, Double> = PersistentDataType.DOUBLE
-        val STRING: PersistentDataType<String, String> = PersistentDataType.STRING
-        val UUID = PersistentDataTypeUUID
-        val BOOLEAN = PersistentDataTypeBoolean
-        val ITEM = PersistentDataTypeCustomItemStack
     }
 }
