@@ -142,8 +142,8 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
         return result
     }
 
-    override fun <E> getPersistentData(plugin: JavaPlugin, run: CustomPersistentData.() -> E): E? {
-        return itemMeta?.persistentDataContainer?.let { run.invoke(CustomPersistentData(plugin, it)) }
+    override fun getPersistentData(plugin: JavaPlugin): CustomPersistentData? {
+        return itemMeta?.persistentDataContainer?.let { CustomPersistentData(plugin, it) }
     }
 
     fun clone() = CustomItemStack(item.clone(), amount)
