@@ -5,7 +5,7 @@ import org.bukkit.persistence.PersistentDataType
 import java.nio.ByteBuffer
 import java.util.*
 
-class PersistentDataTypeUUID : PersistentDataType<ByteArray, UUID> {
+object PersistentDataTypeUUID : PersistentDataType<ByteArray, UUID> {
     override fun getPrimitiveType(): Class<ByteArray> {
         return ByteArray::class.java
     }

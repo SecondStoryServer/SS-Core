@@ -1,6 +1,7 @@
 package me.syari.ss.core.persistentData
 
 import me.syari.ss.core.persistentData.customType.PersistentDataTypeBoolean
+import me.syari.ss.core.persistentData.customType.PersistentDataTypeCustomItemStack
 import me.syari.ss.core.persistentData.customType.PersistentDataTypeUUID
 import org.bukkit.NamespacedKey
 import org.bukkit.persistence.PersistentDataContainer
@@ -49,7 +50,8 @@ class CustomPersistentData(
         val FLOAT: PersistentDataType<Float, Float> = PersistentDataType.FLOAT
         val DOUBLE: PersistentDataType<Double, Double> = PersistentDataType.DOUBLE
         val STRING: PersistentDataType<String, String> = PersistentDataType.STRING
-        val UUID = PersistentDataTypeUUID()
-        val BOOLEAN = PersistentDataTypeBoolean()
+        val UUID = PersistentDataTypeUUID
+        val BOOLEAN = PersistentDataTypeBoolean
+        val ITEM = PersistentDataTypeCustomItemStack
     }
 }

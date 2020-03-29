@@ -3,7 +3,7 @@ package me.syari.ss.core.persistentData.customType
 import org.bukkit.persistence.PersistentDataAdapterContext
 import org.bukkit.persistence.PersistentDataType
 
-class PersistentDataTypeBoolean : PersistentDataType<Byte, Boolean> {
+object PersistentDataTypeBoolean : PersistentDataType<Byte, Boolean> {
     override fun getPrimitiveType(): Class<Byte> {
         return Byte::class.java
     }

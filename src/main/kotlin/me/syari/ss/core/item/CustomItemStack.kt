@@ -1,10 +1,14 @@
 package me.syari.ss.core.item
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.persistentData.CustomPersistentData
 import me.syari.ss.core.persistentData.CustomPersistentDataContainer
 import org.bukkit.Material
+import org.bukkit.configuration.serialization.ConfigurationSerializable
+import org.bukkit.configuration.serialization.ConfigurationSerialization
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
@@ -12,7 +16,8 @@ import org.bukkit.inventory.meta.Damageable
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.java.JavaPlugin
 
-class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPersistentDataContainer {
+class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPersistentDataContainer,
+    ConfigurationSerializable {
     var type: Material
         set(value) {
             item.type = value
@@ -89,15 +94,35 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
         itemMeta = meta
     }
 
-    fun addItemFlag(flag: ItemFlag) {
+    fun hasItemFlag(flag: ItemFlag): Boolean {
+        return itemMeta?.hasItemFlag(flag) == true
+    }
+
+    fun addItemFlag(vararg flag: ItemFlag) {
         editMeta {
-            addItemFlags(flag)
+            addItemFlags(*flag)
         }
+    }
+
+    fun removeItemFlag(vararg flag: ItemFlag) {
+        editMeta {
+            removeItemFlags(*flag)
+        }
+    }
+
+    fun hasEnchant(enchant: Enchantment): Boolean {
+        return itemMeta?.hasEnchant(enchant) == true
     }
 
     fun addEnchant(enchant: Enchantment, level: Int) {
         editMeta {
             addEnchant(enchant, level, true)
+        }
+    }
+
+    fun removeEnchant(enchant: Enchantment) {
+        editMeta {
+            removeEnchant(enchant)
         }
     }
 
@@ -150,6 +175,23 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
 
     fun clone(run: CustomItemStack.() -> Unit) = clone().apply { run.invoke(this) }
 
+    override fun serialize(): MutableMap<String, Any> {
+        return LinkedHashMap<String, Any>().also { result ->
+            result["type"] = type.name
+            if (amount != 1) {
+                result["amount"] = amount
+            }
+            val meta = itemMeta
+            if (meta != null && !corePlugin.server.itemFactory.equals(meta, null)) {
+                result["meta"] = meta.serialize()
+            }
+        }
+    }
+
+    fun toJson(): String {
+        return Gson().toJson(serialize())
+    }
+
     companion object {
         fun create(item: ItemStack?, amount: Int? = null): CustomItemStack {
             val data = if (item != null) {
@@ -190,6 +232,32 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
 
         fun fromNullable(item: ItemStack?, amount: Int = 1): CustomItemStack? {
             return if (item != null) CustomItemStack(item, amount) else null
+        }
+
+        fun fromJson(json: String): CustomItemStack {
+            val map: Map<String, Any> = Gson().fromJson(json, object : TypeToken<Map<String, Any>>() {}.type)
+            return fromMap(map)
+        }
+
+        private fun fromMap(args: Map<String, Any>): CustomItemStack {
+            val item = ItemStack(
+                Material.getMaterial(args["type"] as String) ?: Material.STONE,
+                1
+            )
+
+            val amount = if (args.containsKey("amount")) {
+                (args["amount"] as Number).toInt()
+            } else {
+                1
+            }
+
+            return CustomItemStack(item, amount).apply {
+                if (args.containsKey("meta")) {
+                    val itemMetaMap = args["meta"] as MutableMap<String, Any>
+                    itemMetaMap["=="] = "ItemMeta"
+                    itemMeta = ConfigurationSerialization.deserializeObject(itemMetaMap) as ItemMeta
+                }
+            }
         }
     }
 }
