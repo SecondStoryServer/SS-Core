@@ -143,7 +143,7 @@ class CustomConfig(
         sendError(path, "$path が見つかりませんでした")
     }
 
-    companion object {
+    object Type {
         val NUMBER = ConfigNumberDataType
         val INT = ConfigIntDataType
         val LONG = ConfigLongDataType
