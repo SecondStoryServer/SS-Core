@@ -41,7 +41,7 @@ class CustomPersistentData(
         persistentDataContainer.remove(key.asNamespacedKey)
     }
 
-    companion object Type {
+    companion object {
         val BYTE: PersistentDataType<Byte, Byte> = PersistentDataType.BYTE
         val SHORT: PersistentDataType<Short, Short> = PersistentDataType.SHORT
         val INT: PersistentDataType<Int, Int> = PersistentDataType.INTEGER
