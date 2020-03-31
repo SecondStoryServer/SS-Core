@@ -253,6 +253,7 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
 
             return CustomItemStack(item, amount).apply {
                 if (args.containsKey("meta")) {
+                    @Suppress("UNCHECKED_CAST")
                     val itemMetaMap = args["meta"] as MutableMap<String, Any>
                     itemMetaMap["=="] = "ItemMeta"
                     itemMeta = ConfigurationSerialization.deserializeObject(itemMetaMap) as ItemMeta
