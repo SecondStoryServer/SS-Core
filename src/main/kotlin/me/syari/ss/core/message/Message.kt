@@ -1,5 +1,6 @@
 package me.syari.ss.core.message
 
+import me.syari.ss.core.Main.Companion.coreLogger
 import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.code.StringEditor.toColor
 import org.bukkit.command.CommandSender
@@ -10,7 +11,7 @@ object Message {
         corePlugin.server.onlinePlayers.forEach {
             it.sendMessage(message)
         }
-        corePlugin.server.consoleSender.sendMessage(message)
+        coreLogger.send(message)
     }
 
     fun send(message: String, vararg to: CommandSender) {

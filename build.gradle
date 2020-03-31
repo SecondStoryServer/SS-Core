@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "me.syari.ss.core"
-version = "2.1"
+version = "2.2"
 
 repositories {
     mavenCentral()
