@@ -4,19 +4,35 @@ import org.bukkit.entity.HumanEntity
 import org.bukkit.inventory.ItemStack
 
 object ItemStackPlus {
-    fun HumanEntity.giveOrDrop(items: Iterable<ItemStack?>) {
-        val location = location
-        items.forEach { item ->
-            if (item == null) return@forEach
-            if (inventory.firstEmpty() in 0 until 36) {
-                inventory.addItem(item.clone())
-            } else {
-                location.world.dropItem(location, item.clone())
-            }
+    fun HumanEntity.give(item: ItemStack) {
+        inventory.addItem(item)
+    }
+
+    fun HumanEntity.give(items: Iterable<ItemStack?>) {
+        items.forEach {
+            if (it != null) give(it)
         }
     }
 
-    fun HumanEntity.giveOrDrop(vararg items: CustomItemStack) {
-        giveOrDrop(items.flatMap { it.toItemStack })
+    fun HumanEntity.give(item: CustomItemStack) {
+        give(item.toItemStack)
+    }
+
+    fun HumanEntity.giveOrDrop(item: ItemStack) {
+        if (inventory.firstEmpty() in 0 until 36) {
+            give(item)
+        } else {
+            location.world.dropItem(location, item)
+        }
+    }
+
+    fun HumanEntity.giveOrDrop(items: Iterable<ItemStack?>) {
+        items.forEach { item ->
+            if (item != null) giveOrDrop(item)
+        }
+    }
+
+    fun HumanEntity.giveOrDrop(item: CustomItemStack) {
+        giveOrDrop(item.toItemStack)
     }
 }
