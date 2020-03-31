@@ -7,7 +7,6 @@ import org.bukkit.entity.Entity
 
 class CustomParticleList {
     private val listWithDelay = mutableMapOf<Long, MutableSet<CustomParticle>>()
-    private val taskList = mutableSetOf<CustomTask>()
     private var accumulateDelay = 0L
 
     fun addParticle(particle: CustomParticle) {
@@ -18,20 +17,19 @@ class CustomParticleList {
         accumulateDelay += delay
     }
 
-    private fun run(run: (CustomParticle) -> Unit) {
-        taskList.addAll(runListWithDelay(listWithDelay, run))
+    private fun run(run: (CustomParticle) -> Unit): Set<CustomTask> {
+        return runListWithDelay(listWithDelay, run)
     }
 
-    fun spawn(location: Location) {
-        run { it.spawn(location) }
+    fun spawn(location: Location): Set<CustomTask> {
+        return run { it.spawn(location) }
     }
 
-    fun spawn(entity: Entity) {
-        run { it.spawn(entity) }
+    fun spawn(entity: Entity): Set<CustomTask> {
+        return run { it.spawn(entity) }
     }
 
-    fun cancel() {
-        taskList.forEach { it.cancel() }
-        taskList.clear()
+    fun getRequireTime(): Long {
+        return accumulateDelay
     }
 }
