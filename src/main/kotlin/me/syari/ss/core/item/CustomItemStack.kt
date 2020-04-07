@@ -42,33 +42,15 @@ class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersiste
 
     val hasLore get() = itemMeta?.hasLore() ?: false
 
-    var lore: List<String>
+    var lore: MutableList<String>
         set(value) {
             editMeta {
                 lore = value.toColor
             }
         }
-        get() = itemMeta?.lore ?: listOf()
+        get() = itemMeta?.lore ?: mutableListOf()
 
-    fun addLore(newLine: Iterable<String>) {
-        this.lore = lore.toMutableList().apply {
-            addAll(newLine)
-        }
-    }
-
-    fun addLore(vararg newLine: String) {
-        addLore(newLine.toList())
-    }
-
-    fun containsLore(text: String): Boolean {
-        val colored = text.toColor
-        lore.forEach { line ->
-            if (line == colored) return true
-        }
-        return false
-    }
-
-    var durability
+    var damage
         set(value) {
             editMeta {
                 if (this is Damageable) {
@@ -88,13 +70,13 @@ class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersiste
 
     val hasItemMeta get() = item.hasItemMeta()
 
-    private var itemMeta: ItemMeta?
+    var itemMeta: ItemMeta?
         set(value) {
             item.itemMeta = value
         }
         get() = item.itemMeta
 
-    private inline fun editMeta(run: ItemMeta.() -> Unit) {
+    inline fun editMeta(run: ItemMeta.() -> Unit) {
         val meta = itemMeta ?: corePlugin.server.itemFactory.getItemMeta(type) ?: return
         run.invoke(meta)
         itemMeta = meta
@@ -216,13 +198,13 @@ class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersiste
             material: Material,
             display: String?,
             lore: List<String>,
-            durability: Int = 0,
+            damage: Int = 0,
             amount: Int = 1
         ): CustomItemStack {
             return create(material, amount).apply {
                 this.display = display
-                this.lore = lore
-                this.durability = durability
+                this.lore = lore.toMutableList()
+                this.damage = damage
             }
         }
 

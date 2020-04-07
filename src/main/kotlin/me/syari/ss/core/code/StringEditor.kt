@@ -7,7 +7,7 @@ object StringEditor {
 
     val String.toUncolor get() = ChatColor.stripColor(toColor) ?: this
 
-    val Collection<String>.toColor get() = map { it.toColor }
+    val Iterable<String>.toColor get() = map { it.toColor }
 
-    val Collection<String>.toUncolor get() = map { it.toUncolor }
+    val Iterable<String>.toUncolor get() = map { it.toUncolor }
 }
