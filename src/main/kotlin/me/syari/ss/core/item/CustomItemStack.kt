@@ -16,8 +16,14 @@ import org.bukkit.inventory.meta.Damageable
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.java.JavaPlugin
 
-class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPersistentDataContainer,
+class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersistentDataContainer,
     ConfigurationSerializable {
+    var amount = amount
+        set(value) {
+            item.amount = value
+            field = value
+        }
+
     var type: Material
         set(value) {
             item.type = value
@@ -39,15 +45,15 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
     var lore: List<String>
         set(value) {
             editMeta {
-                lore = value.map { it.toColor }
+                lore = value.toColor
             }
         }
         get() = itemMeta?.lore ?: listOf()
 
     fun addLore(newLine: Iterable<String>) {
-        val lore = lore.toMutableList()
-        lore.addAll(newLine)
-        this.lore = lore
+        this.lore = lore.toMutableList().apply {
+            addAll(newLine)
+        }
     }
 
     fun addLore(vararg newLine: String) {
@@ -147,10 +153,10 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
 
     val toOneItemStack: ItemStack
         get() {
-            return item.clone().also { it.amount = if (64 < amount) 64 else amount }
+            return item.clone().apply { amount = if (64 < amount) 64 else amount }
         }
 
-    fun isSimilar(customItem: CustomItemStack) = toOneItemStack.isSimilar(customItem.toOneItemStack)
+    fun isSimilar(customItem: CustomItemStack) = isSimilar(customItem.toOneItemStack)
 
     fun isSimilar(item: ItemStack) = toOneItemStack.isSimilar(item)
 
@@ -195,7 +201,7 @@ class CustomItemStack(private val item: ItemStack, var amount: Int) : CustomPers
     companion object {
         fun create(item: ItemStack?, amount: Int? = null): CustomItemStack {
             val data = if (item != null) {
-                item.asOne() to (amount ?: item.amount)
+                item to (amount ?: item.amount)
             } else {
                 ItemStack(Material.AIR) to 0
             }
