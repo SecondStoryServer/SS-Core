@@ -15,19 +15,39 @@ sealed class CustomParticle(
     offsetY: Double,
     offsetZ: Double
 ) {
+    /**
+     * @see ParticleBuilder
+     */
     val builder = ParticleBuilder(type)
         .count(count)
         .offset(offsetX, offsetY, offsetZ)
         .extra(speed)
 
+    /**
+     * パーティクルを生成します
+     * @param location 場所
+     */
     fun spawn(location: Location) {
         builder.location(location).spawn()
     }
 
+    /**
+     * パーティクルを生成します
+     * @param entity 場所
+     */
     fun spawn(entity: Entity) {
         spawn(entity.location)
     }
 
+    /**
+     * 基本パーティクル
+     * @param type パーティクルの種類
+     * @param count カウント
+     * @param speed 速度
+     * @param offsetX Xのずれ default: 0.0
+     * @param offsetY Yのずれ default: 0.0
+     * @param offsetZ Zのずれ default: 0.0
+     */
     class Normal(
         type: Particle,
         count: Int,
@@ -37,6 +57,15 @@ sealed class CustomParticle(
         offsetZ: Double = 0.0
     ) : CustomParticle(type, count, speed, offsetX, offsetY, offsetZ)
 
+    /**
+     * アイテムクラック
+     * @param material アイテムタイプ
+     * @param count カウント
+     * @param speed 速度
+     * @param offsetX Xのずれ default: 0.0
+     * @param offsetY Yのずれ default: 0.0
+     * @param offsetZ Zのずれ default: 0.0
+     */
     class ItemCrack(
         material: Material,
         count: Int,
@@ -50,6 +79,15 @@ sealed class CustomParticle(
         }
     }
 
+    /**
+     * ブロッククラック
+     * @param material ブロックタイプ
+     * @param count カウント
+     * @param speed 速度
+     * @param offsetX Xのずれ default: 0.0
+     * @param offsetY Yのずれ default: 0.0
+     * @param offsetZ Zのずれ default: 0.0
+     */
     class BlockCrack(
         material: Material,
         count: Int,
@@ -63,6 +101,15 @@ sealed class CustomParticle(
         }
     }
 
+    /**
+     * ブロックダスト
+     * @param material ブロックタイプ
+     * @param count カウント
+     * @param speed 速度
+     * @param offsetX Xのずれ default: 0.0
+     * @param offsetY Yのずれ default: 0.0
+     * @param offsetZ Zのずれ default: 0.0
+     */
     class BlockDust(
         material: Material,
         count: Int,
@@ -76,6 +123,15 @@ sealed class CustomParticle(
         }
     }
 
+    /**
+     * フォーリングダスト
+     * @param material ブロックタイプ
+     * @param count カウント
+     * @param speed 速度
+     * @param offsetX Xのずれ default: 0.0
+     * @param offsetY Yのずれ default: 0.0
+     * @param offsetZ Zのずれ default: 0.0
+     */
     class FallingDust(
         material: Material,
         count: Int,
@@ -89,6 +145,17 @@ sealed class CustomParticle(
         }
     }
 
+    /**
+     * レッドストーン
+     * @param red 色
+     * @param blue 色
+     * @param green 色
+     * @param count カウント
+     * @param speed 速度
+     * @param offsetX Xのずれ default: 0.0
+     * @param offsetY Yのずれ default: 0.0
+     * @param offsetZ Zのずれ default: 0.0
+     */
     class RedStone(
         red: Int,
         blue: Int,

@@ -3,6 +3,7 @@ package me.syari.ss.core.inventory
 import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.auto.Event
 import me.syari.ss.core.code.StringEditor.toColor
+import me.syari.ss.core.inventory.CreateInventory.runWithId
 import me.syari.ss.core.inventory.event.CustomInventoryOpenEvent
 import me.syari.ss.core.inventory.event.NaturalInventoryOpenEvent
 import me.syari.ss.core.player.UUIDPlayer
@@ -17,7 +18,7 @@ import org.bukkit.inventory.Inventory
 
 object CreateInventory : Event {
     @EventHandler
-    fun on(e: InventoryOpenEvent) {
+    fun onInventoryOpen(e: InventoryOpenEvent) {
         val player = e.player as Player
         val inventory = e.inventory
         if (player.menuPlayer != null) {
@@ -28,7 +29,7 @@ object CreateInventory : Event {
     }
 
     @EventHandler
-    fun on(e: InventoryClickEvent) {
+    fun onInventoryClick(e: InventoryClickEvent) {
         val player = e.whoClicked as Player
         val playerData = player.menuPlayer ?: return
         if (playerData.cancel) {
@@ -48,7 +49,7 @@ object CreateInventory : Event {
     }
 
     @EventHandler
-    fun on(e: InventoryCloseEvent) {
+    fun onInventoryClose(e: InventoryCloseEvent) {
         val player = e.player as Player
         val playerData = player.menuPlayer ?: return
         playerData.onClose(e)
@@ -58,14 +59,32 @@ object CreateInventory : Event {
         }
     }
 
+    /**
+     * @param inventory [Inventory]
+     * @param id インベントリのID
+     * @return [CustomInventory]
+     */
     fun inventory(inventory: Inventory, vararg id: String): CustomInventory {
         return CustomInventory(inventory, id.toList())
     }
 
+    /**
+     * @param display インベントリのタイトル
+     * @param type インベントリの種類
+     * @param id インベントリのID
+     * @return [CustomInventory]
+     */
     fun inventory(display: String, type: InventoryType, vararg id: String): CustomInventory {
         return inventory(createInventory(null, type, display.toColor), *id)
     }
 
+    /**
+     * @param display インベントリのタイトル
+     * @param type インベントリの種類
+     * @param id インベントリのID
+     * @param run インベントリに対して実行する処理
+     * @return [CustomInventory]
+     */
     fun inventory(
         display: String,
         type: InventoryType,
@@ -75,12 +94,27 @@ object CreateInventory : Event {
         return inventory(display, type, *id).apply(run)
     }
 
-    fun inventory(display: String, line: Int = 3, vararg id: String, run: CustomInventory.() -> Unit): CustomInventory {
+    /**
+     * @param display インベントリのタイトル
+     * @param line インベントリの行数 default: 3
+     * @param id インベントリのID
+     * @param run インベントリに対して実行する処理
+     * @return [CustomInventory]
+     */
+    fun inventory(
+        display: String,
+        line: Int = 3,
+        vararg id: String,
+        run: CustomInventory.() -> Unit
+    ): CustomInventory {
         return inventory(createInventory(null, (if (line in 1..6) line else 3) * 9, display.toColor), *id).apply(run)
     }
 
     private val menuPlayers = mutableMapOf<UUIDPlayer, InventoryPlayerData>()
 
+    /**
+     * インベントリのプレイヤーデータ
+     */
     var OfflinePlayer.menuPlayer
         get() = menuPlayers[UUIDPlayer(this)]
         set(value) {
@@ -92,7 +126,12 @@ object CreateInventory : Event {
             }
         }
 
-    fun reopen(vararg id: String, run: (Player) -> Unit) {
+    /**
+     * [id] から始まる インベントリID を持つプレイヤーに処理を行います
+     * @param id インベントリのID
+     * @param run プレイヤーに対して実行する処理
+     */
+    fun runWithId(vararg id: String, run: (Player) -> Unit) {
         val joinedId = id.joinToString("-").toColor
         menuPlayers.forEach { (uuidPlayer, playerData) ->
             if (playerData.id.startsWith(joinedId)) {
@@ -102,16 +141,45 @@ object CreateInventory : Event {
         }
     }
 
-    fun close(humanEntity: HumanEntity) {
-        humanEntity.closeInventory()
+    /**
+     * 該当プレイヤーに再度インベントリを開かせます
+     * @see runWithId
+     * @param id インベントリのID
+     * @param inventory プレイヤーに開かせるインベントリ
+     */
+    fun reopen(vararg id: String, inventory: CustomInventory) {
+        runWithId(*id) {
+            inventory.open(it)
+        }
     }
 
-    fun close(vararg id: String) {
-        val joinedId = id.joinToString("-").toColor
-        menuPlayers.forEach { (uuidPlayer, playerData) ->
-            if (playerData.id.startsWith(joinedId)) {
-                uuidPlayer.player?.closeInventory()
-            }
+    /**
+     * 該当プレイヤーに再度インベントリを開かせます
+     * @see runWithId
+     * @param id インベントリのID
+     * @param run プレイヤーに対して実行する処理
+     */
+    fun reopen(vararg id: String, run: (Player) -> CustomInventory) {
+        runWithId(*id) {
+            run.invoke(it).open(it)
         }
+    }
+
+    /**
+     * 該当プレイヤーのインベントリを閉じます
+     * @see runWithId
+     * @param id インベントリのID
+     */
+    fun close(vararg id: String) {
+        runWithId(*id) {
+            it.closeInventory()
+        }
+    }
+
+    /**
+     * @param humanEntity インベントリを閉じるプレイヤー
+     */
+    fun close(humanEntity: HumanEntity) {
+        humanEntity.closeInventory()
     }
 }

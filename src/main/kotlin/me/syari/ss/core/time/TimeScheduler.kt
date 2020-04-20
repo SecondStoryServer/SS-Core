@@ -16,18 +16,42 @@ object TimeScheduler : OnEnable, Event {
     private val everyDayScheduler = mutableMapOf<ScheduleTimeEveryDay, MutableSet<() -> Unit>>()
     private val everyHourScheduler = mutableMapOf<ScheduleTimeEveryHour, MutableSet<() -> Unit>>()
 
+    /**
+     * 毎週決まった時間に実行されます
+     * @param dayOfWeek 曜日
+     * @param hour 時間
+     * @param minute 分
+     * @param run その時間に実行する処理
+     */
     fun scheduleEveryWeekAt(dayOfWeek: DayOfWeek, hour: Int, minute: Int, run: () -> Unit) {
         everyWeekScheduler.getOrPut(ScheduleTimeEveryWeek.create(dayOfWeek, hour, minute)) { mutableSetOf() }.add(run)
     }
 
+    /**
+     * 毎日決まった時間に実行されます
+     * @param hour 時間
+     * @param minute 分
+     * @param run その時間に実行する処理
+     */
     fun scheduleEveryDayAt(hour: Int, minute: Int, run: () -> Unit) {
         everyDayScheduler.getOrPut(ScheduleTimeEveryDay.create(hour, minute)) { mutableSetOf() }.add(run)
     }
 
+    /**
+     * 毎時決まった時間に実行されます
+     * @param minute 分
+     * @param run その時間に実行する処理
+     */
     fun scheduleEveryHourAt(minute: Int, run: () -> Unit) {
         everyHourScheduler.getOrPut(ScheduleTimeEveryHour.create(minute)) { mutableSetOf() }.add(run)
     }
 
+    /**
+     * XX:XXというフォーマットの時間を取得します
+     * @param hour 時間
+     * @param minute 分
+     * @return [String]
+     */
     fun getFormatTime(hour: Int, minute: Int): String {
         return "${String.format("%2d", hour)}:${String.format("%2d", minute)}"
     }
@@ -55,7 +79,7 @@ object TimeScheduler : OnEnable, Event {
     }
 
     @EventHandler
-    fun on(e: NextMinuteEvent) {
+    fun onNextMinute(e: NextMinuteEvent) {
         val everyWeek = e.scheduleTime
         everyWeekScheduler[everyWeek]?.forEach { it.invoke() }
         val everyDay = everyWeek.everyDay

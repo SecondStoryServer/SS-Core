@@ -10,32 +10,60 @@ class CustomRunnable(private val plugin: JavaPlugin, private val run: CustomTask
 
     private var alreadyInit = false
 
+    /**
+     * @see BukkitTask
+     */
     lateinit var task: BukkitTask
 
+    /**
+     * @see BukkitRunnable
+     */
     lateinit var runnable: BukkitRunnable
 
+    /**
+     * キャンセルされているか取得します
+     */
     override val isCanceled get() = alreadyInit && task.isCancelled
 
     // override val isAsync get() = alreadyInit && task.isSync
 
+    /**
+     * 残りリピート回数
+     */
     override var repeatRemain = 0
 
     private var onEndRepeatTask: (() -> Unit)? = null
 
     private var onCancelTask: (() -> Unit)? = null
 
+    /**
+     * @see CustomScheduler.run
+     * @return [CustomTask]?
+     */
     fun run(async: Boolean = false): CustomTask? {
         return runLater(0, async)
     }
 
+    /**
+     * @see CustomScheduler.runLater
+     * @return [CustomTask]?
+     */
     fun runLater(delay: Long, async: Boolean = false): CustomTask? {
         return runTimer(-1, delay, async)
     }
 
+    /**
+     * @see CustomScheduler.runTimer
+     * @return [CustomTask]?
+     */
     fun runTimer(period: Long, delay: Long = 0, async: Boolean = false): CustomTask? {
         return runRepeatTimes(period, -1, delay, async)
     }
 
+    /**
+     * @see CustomScheduler.runRepeatTimes
+     * @return [CustomTask]?
+     */
     fun runRepeatTimes(period: Long, times: Int, delay: Long = 0, async: Boolean = false): CustomTask? {
         return if (isRunning) {
             null
@@ -71,6 +99,10 @@ class CustomRunnable(private val plugin: JavaPlugin, private val run: CustomTask
         }
     }
 
+    /**
+     * キャンセルします
+     * @return [Boolean]
+     */
     override fun cancel(): Boolean {
         return if (isRunning) {
             task.cancel()
@@ -84,11 +116,21 @@ class CustomRunnable(private val plugin: JavaPlugin, private val run: CustomTask
         }
     }
 
+    /**
+     * リピートが終了したら実行されます
+     * @param run 終了時に実行する処理
+     * @return [CustomTask]?
+     */
     override fun onEndRepeat(run: () -> Unit): CustomTask? {
         onEndRepeatTask = run
         return this
     }
 
+    /**
+     * キャンセルされたら実行されます
+     * @param run キャンセル時に実行する処理
+     * @return [CustomTask]?
+     */
     override fun onCancel(run: () -> Unit): CustomTask? {
         onCancelTask = run
         return this

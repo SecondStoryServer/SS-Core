@@ -15,24 +15,44 @@ data class CustomScoreBoard(
 
     private var lineIndex = 0
 
+    /**
+     * 新しく行を追加します
+     * @param text 内容
+     */
     override fun line(text: String) {
         lineList[lineIndex] = ScoreBoardLine.Constant(text)
         lineIndex--
     }
 
+    /**
+     * 新しく行を追加します
+     * @param text 内容
+     */
     override fun line(text: Player.() -> String) {
         lineList[lineIndex] = ScoreBoardLine.Invoke(text)
         lineIndex--
     }
 
+    /**
+     * 表示するプレイヤーを追加します
+     * @param players プレイヤー
+     */
     fun addPlayer(vararg players: Player) {
         players.forEach { ScoreBoardPlayer.addBoard(UUIDPlayer(it), this) }
     }
 
+    /**
+     * 表示するプレイヤーを削除します
+     * @param players プレイヤー
+     */
     fun removePlayer(vararg players: Player) {
         players.forEach { ScoreBoardPlayer.removeBoard(UUIDPlayer(it), this) }
     }
 
+    /**
+     * スコアボードを表示します
+     * @param scoreBoardPlayer プレイヤーデータ
+     */
     fun show(scoreBoardPlayer: ScoreBoardPlayer) {
         val uuidPlayer = scoreBoardPlayer.uuidPlayer
         val player = uuidPlayer.player ?: return

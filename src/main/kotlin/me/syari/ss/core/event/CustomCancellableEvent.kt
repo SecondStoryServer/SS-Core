@@ -2,6 +2,9 @@ package me.syari.ss.core.event
 
 import org.bukkit.event.Cancellable
 
+/**
+ * キャンセル可能なイベント
+ */
 open class CustomCancellableEvent : CustomEvent(), Cancellable {
     private var cancelled: Boolean = false
 

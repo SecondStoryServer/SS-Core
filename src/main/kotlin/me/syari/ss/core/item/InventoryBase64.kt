@@ -11,14 +11,29 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
 object InventoryBase64 {
+    /**
+     * プレイヤーインベントリを Base64 に変換します
+     * @param playerInventory 対象プレイヤーインベントリ
+     * @return [String]
+     */
     fun toBase64(playerInventory: PlayerInventory): String {
         return toBase64(playerInventory.extraContents)
     }
 
+    /**
+     * アイテムを Base64 に変換します
+     * @param items 対象アイテム
+     * @return [String]
+     */
     fun toBase64(items: Array<ItemStack>): String {
         return toBase64(items.toList())
     }
 
+    /**
+     * アイテムを Base64 に変換します
+     * @param items 対象アイテム
+     * @return [String]
+     */
     fun toBase64(items: Collection<ItemStack>): String {
         val outputStream = ByteArrayOutputStream()
         val data = BukkitObjectOutputStream(outputStream)
@@ -30,6 +45,11 @@ object InventoryBase64 {
         return Base64Coder.encodeLines(outputStream.toByteArray())
     }
 
+    /**
+     * Base64 をプレイヤーインベントリに変換します
+     * @param base64 Base64 データ
+     * @return [PlayerInventory]
+     */
     fun getInventoryFromBase64(base64: String): PlayerInventory {
         val playerInventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER) as PlayerInventory
         fromBase64(base64).forEachIndexed { index, item ->
@@ -38,6 +58,11 @@ object InventoryBase64 {
         return playerInventory
     }
 
+    /**
+     * Base64 をアイテムに変換します
+     * @param base64 Base64 データ
+     * @return [List]<[ItemStack]>
+     */
     fun getItemStackFromBase64(base64: String): List<ItemStack> {
         return fromBase64(base64).filterNotNull()
     }

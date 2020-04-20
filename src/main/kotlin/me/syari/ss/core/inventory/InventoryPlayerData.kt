@@ -13,14 +13,23 @@ data class InventoryPlayerData(
     private val onClose: ((InventoryCloseEvent) -> Unit)?,
     private val clickEvent: Map<Pair<Int, ClickType?>, () -> Unit>?
 ) {
+    /**
+     * クリックイベント
+     */
     fun onClick(e: InventoryClickEvent) {
         onClick?.invoke(e)
     }
 
+    /**
+     * クローズイベント
+     */
     fun onClose(e: InventoryCloseEvent) {
         onClose?.invoke(e)
     }
 
+    /**
+     * アイテム単位のクリックイベント
+     */
     fun runEvent(index: Int, click: ClickType) {
         clickEvent?.run {
             get(index to click)?.invoke()

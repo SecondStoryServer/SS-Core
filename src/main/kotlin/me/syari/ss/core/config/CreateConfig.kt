@@ -5,6 +5,14 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
 object CreateConfig {
+    /**
+     * コンフィグをロードします
+     * @param plugin ロードするプラグイン
+     * @param output メッセージの出力先
+     * @param fileName ファイル名 最後は必ず.yml
+     * @param deleteIfEmpty 中身が存在しなければ消去する default: true
+     * @return [CustomConfig]
+     */
     fun config(
         plugin: JavaPlugin,
         output: CommandSender,
@@ -23,9 +31,18 @@ object CreateConfig {
                 }
             }
         }
-        throw Exception("ファイル名の最後が .yml ではありません ($fileName)")
+        throw IllegalArgumentException("ファイル名の最後が .yml ではありません ($fileName)")
     }
 
+    /**
+     * コンフィグをロードします
+     * @param plugin ロードするプラグイン
+     * @param output メッセージの出力先
+     * @param fileName ファイル名 最後は必ず.yml
+     * @param deleteIfEmpty 中身が存在しなければ消去する default: true
+     * @param run コンフィグに対して実行する処理
+     * @return [CustomConfig]
+     */
     fun config(
         plugin: JavaPlugin,
         output: CommandSender,
@@ -36,6 +53,14 @@ object CreateConfig {
         return config(plugin, output, fileName, deleteIfEmpty).apply { run.invoke(this) }
     }
 
+    /**
+     * フォルダ内のコンフィグを全てロードします
+     * @param plugin ロードするプラグイン
+     * @param output メッセージの出力先
+     * @param directoryName フォルダ名
+     * @param deleteIfEmpty 中身が存在しなければ消去する default: true
+     * @return [Map]<[String], [CustomConfig]>
+     */
     fun configDir(
         plugin: JavaPlugin,
         output: CommandSender,
@@ -57,6 +82,15 @@ object CreateConfig {
         }
     }
 
+    /**
+     * フォルダ内のコンフィグを全てロードします
+     * @param plugin ロードするプラグイン
+     * @param output メッセージの出力先
+     * @param directoryName フォルダ名
+     * @param deleteIfEmpty 中身が存在しなければ消去する default: true
+     * @param run コンフィグに対して実行する処理
+     * @return [Map]<[String], [CustomConfig]>
+     */
     fun configDir(
         plugin: JavaPlugin,
         output: CommandSender,
@@ -71,6 +105,12 @@ object CreateConfig {
         }
     }
 
+    /**
+     * 存在するコンフィグファイルかを取得する
+     * @param plugin 調べるプラグイン
+     * @param fileName 対象のファイル名 最後は必ず.yml
+     * @return [Boolean]
+     */
     fun contains(plugin: JavaPlugin, fileName: String): Boolean {
         var directory = plugin.dataFolder
         if (!directory.exists()) return false

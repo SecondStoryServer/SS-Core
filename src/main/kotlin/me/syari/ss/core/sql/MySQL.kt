@@ -16,6 +16,10 @@ data class MySQL(val host: String, val port: Int, val database: String, val user
         }
     }
 
+    /**
+     * 接続テストを行います
+     * @return [Boolean]
+     */
     fun canConnect(): Boolean {
         var connection: Connection? = null
         return try {
@@ -29,6 +33,11 @@ data class MySQL(val host: String, val port: Int, val database: String, val user
         }
     }
 
+    /**
+     * データベースを使用します
+     * @param run データベースに対して実行する処理
+     * @return [Boolean]
+     */
     fun use(run: Statement.() -> Unit): Boolean {
         var connection: Connection? = null
         var statement: Statement? = null

@@ -9,17 +9,35 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
     override val size: Int
         get() = element.size
 
-    private fun joinList(run: () -> Collection<String>?): CommandTabElement {
-        run.invoke()?.let { element = element.union(it) }
+    private fun joinList(element: Collection<String>?): CommandTabElement {
+        if (element != null) {
+            this.element = this.element.union(element)
+        }
         return this
     }
 
-    fun joinIf(bool: Boolean, vararg values: String): CommandTabElement {
-        return if (bool) joinList { values.toList() } else this
+    /**
+     * @param condition 条件
+     * @param element 条件に一致した場合追加する要素
+     */
+    fun joinIf(condition: Boolean, vararg element: String): CommandTabElement {
+        return if (condition) joinList(element.toList()) else this
     }
 
-    fun joinIfOp(sender: CommandSender, vararg values: String): CommandTabElement {
-        return joinIf(sender.isOp, *values)
+    /**
+     * @param sender CommandSender
+     * @param element sender.isOpが真だった場合追加する要素
+     */
+    fun joinIfOp(sender: CommandSender, vararg element: String): CommandTabElement {
+        return joinIf(sender.isOp, *element)
+    }
+
+    /**
+     * @param sender CommandSender
+     * @param element sender.isOpが偽だった場合追加する要素
+     */
+    fun joinIfNotOp(sender: CommandSender, vararg element: String): CommandTabElement {
+        return joinIf(!sender.isOp, *element)
     }
 
     override fun contains(element: String): Boolean {

@@ -3,6 +3,9 @@ package me.syari.ss.core.event
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
+/**
+ * Kotlinで自作イベントを作成する場合の基底クラス
+ */
 open class CustomEvent : Event() {
     override fun getHandlers(): HandlerList {
         return HANDLERS
