@@ -15,6 +15,9 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.Damageable
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.IOException
+import java.io.InvalidClassException
+import java.io.NotSerializableException
 
 class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersistentDataContainer,
     ConfigurationSerializable {
@@ -180,6 +183,15 @@ class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersiste
         return Gson().toJson(serialize())
     }
 
+    @Throws(
+        InvalidClassException::class,
+        NotSerializableException::class,
+        IOException::class
+    )
+    fun toBase64(): String {
+        return InventoryBase64.toBase64(toItemStack)
+    }
+
     companion object {
         fun create(item: ItemStack?, amount: Int? = null): CustomItemStack {
             val data = if (item != null) {
@@ -245,6 +257,24 @@ class CustomItemStack(private val item: ItemStack, amount: Int) : CustomPersiste
                     val itemMetaMap = args["meta"] as MutableMap<String, Any>
                     itemMetaMap["=="] = "ItemMeta"
                     itemMeta = ConfigurationSerialization.deserializeObject(itemMetaMap) as ItemMeta
+                }
+            }
+        }
+
+        fun fromBase64(base64: String): List<CustomItemStack> {
+            val items = InventoryBase64.getItemStackFromBase64(base64)
+            return compress(items)
+        }
+
+        fun compress(items: Iterable<ItemStack>): List<CustomItemStack> {
+            return mutableListOf<CustomItemStack>().apply {
+                items.forEach { item ->
+                    val similarItem = firstOrNull { it.isSimilar(item) }
+                    if (similarItem != null) {
+                        similarItem.amount += item.amount
+                    } else {
+                        add(create(item))
+                    }
                 }
             }
         }
