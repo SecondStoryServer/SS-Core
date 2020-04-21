@@ -33,4 +33,20 @@ data class UUIDPlayer(private val uniqueId: UUID) {
      * UUIDを文字列として取得します
      */
     override fun toString() = uniqueId.toString()
+
+    companion object {
+        /**
+         * 文字列をUUIDPlayerに変換します
+         * 失敗したら null を返します
+         * @param uuid UUID
+         * @return [UUIDPlayer]?
+         */
+        fun create(uuid: String): UUIDPlayer? {
+            return try {
+                UUIDPlayer(UUID.fromString(uuid))
+            } catch (ex: IllegalArgumentException) {
+                null
+            }
+        }
+    }
 }
