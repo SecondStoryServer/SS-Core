@@ -36,17 +36,13 @@ jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.allJava.srcDirs
-}
-
 dokka {
     outputFormat = "html"
     outputDirectory = "$buildDir/kdoc"
 }
 
-task dokkaJar(type: Jar, dependsOn: "dokka") {
-    from fileTree(new File(project.buildDir, "kdoc"))
+task sourceJar(type: Jar){
+    from sourceSets.main.allJava.srcDirs
 }
 
 publishing {
@@ -62,8 +58,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.java
-            artifact dokkaJar {
-                classifier "kdoc"
+            artifact sourceJar {
+                classifier "sources"
             }
         }
     }
