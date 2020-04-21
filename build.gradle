@@ -37,16 +37,16 @@ jar {
 }
 
 task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
+    from sourceSets.main.allJava.srcDirs
 }
 
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = "javadoc"
-    outputDirectory = "$buildDir/javadoc"
+dokka {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/kdoc"
 }
 
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
-    from "$buildDir/javadoc"
+task dokkaJar(type: Jar, dependsOn: "dokka") {
+    from fileTree(new File(project.buildDir, "kdoc"))
 }
 
 publishing {
@@ -62,11 +62,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.java
-            artifact sourceJar {
-                classifier "sources"
-            }
-            artifact javadocJar {
-                classifier = "javadoc"
+            artifact dokkaJar {
+                classifier "kdoc"
             }
         }
     }
