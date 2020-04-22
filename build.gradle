@@ -36,11 +36,6 @@ jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
-dokka {
-    outputFormat = "html"
-    outputDirectory = "$buildDir/kdoc"
-}
-
 task sourceJar(type: Jar){
     from sourceSets.main.allJava.srcDirs
 }
