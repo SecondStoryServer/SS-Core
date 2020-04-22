@@ -121,12 +121,30 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
     }
 
     /**
+     * 全てのアイテムフラグを削除します
+     */
+    private fun ItemMeta.clearItemFlag() {
+        itemFlags.clear()
+    }
+
+    /**
      * 対象アイテムフラグが存在するか取得します
      * @param flag 対象アイテムフラグ
      * @return [Boolean]
      */
     fun hasItemFlag(flag: ItemFlag): Boolean {
         return itemMeta?.hasItemFlag(flag) == true
+    }
+
+    /**
+     * アイテムフラグを上書きします
+     * @param flag アイテムフラグ
+     */
+    fun setItemFlag(vararg flag: ItemFlag) {
+        editMeta {
+            clearItemFlag()
+            addItemFlags(*flag)
+        }
     }
 
     /**
@@ -150,12 +168,52 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
     }
 
     /**
+     * 全てのアイテムフラグを削除します
+     */
+    fun clearItemFlag() {
+        editMeta {
+            clearItemFlag()
+        }
+    }
+
+    /**
+     * 全てのエンチャントを削除します
+     */
+    private fun ItemMeta.clearEnchant() {
+        enchants.forEach { (enchant, level) ->
+            addEnchant(enchant, level, true)
+        }
+    }
+
+    /**
      * 対象エンチャントが存在するか取得します
      * @param enchant 対象エンチャント
      * @return [Boolean]
      */
     fun hasEnchant(enchant: Enchantment): Boolean {
         return itemMeta?.hasEnchant(enchant) == true
+    }
+
+    /**
+     * 対象エンチャントのレベルを取得します
+     * @param enchant 対象エンチャント
+     * @return [Int]?
+     */
+    fun getEnchantLevel(enchant: Enchantment): Int? {
+        return itemMeta?.getEnchantLevel(enchant)
+    }
+
+    /**
+     * エンチャントを上書きします
+     * @param enchants エンチャントとレベルの一覧
+     */
+    fun setEnchant(enchants: Map<Enchantment, Int>) {
+        editMeta {
+            clearEnchant()
+            enchants.forEach { (enchant, level) ->
+                addEnchant(enchant, level, true)
+            }
+        }
     }
 
     /**
@@ -176,6 +234,15 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
     fun removeEnchant(enchant: Enchantment) {
         editMeta {
             removeEnchant(enchant)
+        }
+    }
+
+    /**
+     * 全てのエンチャントを削除します
+     */
+    fun clearEnchant() {
+        editMeta {
+            clearEnchant()
         }
     }
 
