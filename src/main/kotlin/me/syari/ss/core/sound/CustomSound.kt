@@ -5,6 +5,9 @@ import org.bukkit.Sound
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Entity
 
+/**
+ * サウンドデータ
+ */
 class CustomSound(
     private val type: Sound,
     private val volume: Float,

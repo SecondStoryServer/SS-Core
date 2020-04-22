@@ -97,19 +97,7 @@ class CustomConfig(
 
     /**
      * @param path コンフィグパス
-     * @param type
-     * - [ConfigDataType.NUMBER]
-     * - [ConfigDataType.INT]
-     * - [ConfigDataType.LONG]
-     * - [ConfigDataType.FLOAT]
-     * - [ConfigDataType.STRING]
-     * - [ConfigDataType.STRINGLIST]
-     * - [ConfigDataType.DATE]
-     * - [ConfigDataType.LOCATION]
-     * - [ConfigDataType.MATERIAL]
-     * - [ConfigDataType.PARTICLE]
-     * - [ConfigDataType.POTION]
-     * - [ConfigDataType.SOUND]
+     * @param type データタイプ
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
      */
     fun <T> get(path: String, type: ConfigDataType<T>, notFoundError: Boolean = true): T? {

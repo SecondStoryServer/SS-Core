@@ -5,6 +5,9 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.Statement
 
+/**
+ * データベース接続クラス
+ */
 data class MySQL(val host: String, val port: Int, val database: String, val user: String, val password: String) {
     companion object {
         fun create(host: String?, port: Int?, database: String?, user: String?, password: String?): MySQL? {

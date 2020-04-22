@@ -10,6 +10,7 @@ import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
 
 /**
+ * ボスバー
  * @see CreateBossBar.createBossBar
  */
 class CustomBossBar(title: String, color: BarColor, style: BarStyle, private val public: Boolean) {
@@ -74,7 +75,7 @@ class CustomBossBar(title: String, color: BarColor, style: BarStyle, private val
      * 自動で実行されます
      * @see CreateBossBar.onJoin
      */
-    fun onLogin(player: Player) {
+    internal fun onLogin(player: Player) {
         if (public) {
             bar.addPlayer(player)
         } else if (addOnLogin.contains(player)) {
@@ -87,7 +88,7 @@ class CustomBossBar(title: String, color: BarColor, style: BarStyle, private val
      * 自動で実行されます
      * @see CreateBossBar.onQuit
      */
-    fun onLogout(player: Player) {
+    internal fun onLogout(player: Player) {
         if (public) return
         bar.removePlayer(player)
         addOnLogin.add(player)

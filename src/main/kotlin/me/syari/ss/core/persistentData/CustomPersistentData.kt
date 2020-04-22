@@ -5,6 +5,9 @@ import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * [PersistentDataContainer] 拡張クラス
+ */
 class CustomPersistentData(
     private val plugin: JavaPlugin,
     private val persistentDataContainer: PersistentDataContainer

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.syari.ss.core"
-version = "2.6-pre"
+version = "2.5.1"
 
 repositories {
     mavenCentral()
@@ -48,7 +48,7 @@ task sourceJar(type: Jar){
 publishing {
     repositories {
         maven {
-            url ssMavenRepoUpload
+            url ssMavenRepoUploadURL
             credentials {
                 username ssMavenRepoUploadUser
                 password ssMavenRepoUploadPassword

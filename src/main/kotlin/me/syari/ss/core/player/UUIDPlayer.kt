@@ -6,6 +6,9 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import java.util.*
 
+/**
+ * [UUID] としてプレイヤーを保存しておく
+ */
 data class UUIDPlayer(private val uniqueId: UUID) {
     constructor(player: OfflinePlayer) : this(player.uniqueId)
 

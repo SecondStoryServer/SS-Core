@@ -152,6 +152,9 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         return item(index, material, display, lore.toList(), amount, shine)
     }
 
+    /**
+     * アイテム単位でクリックイベントを設定します
+     */
     data class ClickEvent(val inventory: CustomInventory, val slot: Int?) {
         /**
          * @param clickType クリックタイプ

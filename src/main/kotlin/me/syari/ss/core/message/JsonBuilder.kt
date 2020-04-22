@@ -62,11 +62,17 @@ class JsonBuilder {
             }
         }
 
+    /**
+     * メッセージ
+     */
     sealed class JsonMessage {
         class Text(val text: String, val hover: String?, val click: Click?) : JsonMessage()
         object NewLine : JsonMessage()
     }
 
+    /**
+     * クリックイベント
+     */
     sealed class Click(val event: ClickEvent.Action, val content: String) {
         /**
          * コマンドを実行します

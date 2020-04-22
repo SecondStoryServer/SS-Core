@@ -6,6 +6,9 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scoreboard.DisplaySlot
 
+/**
+ * @see CreateScoreBoard.createScoreBoard
+ */
 data class CustomScoreBoard(
     private val plugin: JavaPlugin,
     private val title: String,

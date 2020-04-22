@@ -9,8 +9,12 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
 object CreateBossBar : Event, OnDisable {
-    val barList = mutableListOf<CustomBossBar>()
+    internal val barList = mutableListOf<CustomBossBar>()
 
+    /**
+     * バーを自動で表示します
+     * @see [CustomBossBar.onLogin]
+     */
     @EventHandler
     fun onJoin(e: PlayerJoinEvent) {
         val player = e.player
@@ -24,6 +28,9 @@ object CreateBossBar : Event, OnDisable {
         barList.forEach { it.onLogout(player) }
     }
 
+    /**
+     * プラグインを無効になった時に全てのプレイヤーのバーを非表示にします
+     */
     override fun onDisable() {
         barList.forEach { it.clearPlayer() }
     }

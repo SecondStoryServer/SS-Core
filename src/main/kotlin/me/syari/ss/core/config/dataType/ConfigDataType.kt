@@ -2,6 +2,10 @@ package me.syari.ss.core.config.dataType
 
 import me.syari.ss.core.config.CustomConfig
 
+/**
+ * コンフィグデータタイプ
+ * @param T データ型
+ */
 interface ConfigDataType<T> {
     /**
      * データ型の名前
@@ -25,6 +29,20 @@ interface ConfigDataType<T> {
         return get(config, path, notFoundError) ?: default
     }
 
+    /**
+     * - [ConfigDataType.NUMBER]
+     * - [ConfigDataType.INT]
+     * - [ConfigDataType.LONG]
+     * - [ConfigDataType.FLOAT]
+     * - [ConfigDataType.STRING]
+     * - [ConfigDataType.STRINGLIST]
+     * - [ConfigDataType.DATE]
+     * - [ConfigDataType.LOCATION]
+     * - [ConfigDataType.MATERIAL]
+     * - [ConfigDataType.PARTICLE]
+     * - [ConfigDataType.POTION]
+     * - [ConfigDataType.SOUND]
+     */
     companion object {
         val NUMBER = ConfigNumberDataType
         val INT = ConfigIntDataType

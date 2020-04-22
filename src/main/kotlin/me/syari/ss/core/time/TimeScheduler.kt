@@ -56,6 +56,9 @@ object TimeScheduler : OnEnable, Event {
         return "${String.format("%2d", hour)}:${String.format("%2d", minute)}"
     }
 
+    /**
+     * プラグインが有効になった時に現在時間を更新します
+     */
     override fun onEnable() {
         val now = LocalDateTime.now()
         runLater(corePlugin, (60 - now.second).toLong()) {

@@ -5,6 +5,9 @@ import me.syari.ss.core.scheduler.CustomTask
 import org.bukkit.Location
 import org.bukkit.entity.Entity
 
+/**
+ * [CustomParticle] をまとめたクラス
+ */
 class CustomParticleList {
     private val listWithDelay = mutableMapOf<Long, MutableSet<CustomParticle>>()
     private var accumulateDelay = 0L

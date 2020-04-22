@@ -3,6 +3,9 @@ package me.syari.ss.core.auto
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * イベント登録
+ */
 interface Event : Listener {
     companion object {
         /**

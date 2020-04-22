@@ -5,6 +5,9 @@ import me.syari.ss.core.scheduler.CustomTask
 import org.bukkit.Location
 import org.bukkit.entity.Entity
 
+/**
+ * [CustomSound] をまとめたクラス
+ */
 class CustomSoundList {
     private val listWithDelay = mutableMapOf<Long, MutableSet<CustomSound>>()
     private var accumulateDelay = 0L

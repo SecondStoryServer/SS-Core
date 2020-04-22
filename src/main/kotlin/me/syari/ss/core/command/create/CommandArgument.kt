@@ -47,19 +47,45 @@ class CommandArgument(private val array: Array<out String>, private val message:
         return null
     }
 
-    val size get() = array.size
+    /**
+     * 引数の数
+     */
+    val size = array.size
 
-    val isEmpty get() = size == 0
+    /**
+     * 引数の数が0であれば真
+     */
+    val isEmpty = array.isEmpty()
 
-    val isNotEmpty get() = size != 0
+    /**
+     * 引数の数が0でなければ真
+     */
+    val isNotEmpty = array.isNotEmpty()
 
+    /**
+     * 引数を List として取得します
+     */
     val toList by lazy { array.toList() }
 
+    /**
+     * 引数を結合します
+     * @param separator 区切り文字 default: ", "
+     */
     fun joinToString(separator: CharSequence = ", ") = array.joinToString(separator)
 
+    /**
+     * 指定範囲のみ取得します
+     * @param first 範囲の始まり
+     * @return [List]<[String]>
+     */
     fun slice(first: Int) = slice(first until size)
 
-    private fun slice(range: IntRange) = array.slice(range)
+    /**
+     * 指定範囲のみ取得します
+     * @param range 範囲
+     * @return [List]<[String]>
+     */
+    fun slice(range: IntRange) = array.slice(range)
 
     /**
      * 指定した要素をオフラインプレイヤーに変換します

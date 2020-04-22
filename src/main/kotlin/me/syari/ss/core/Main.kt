@@ -12,8 +12,19 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
     companion object {
+        /**
+         * コアプラグインのインスタンス
+         */
         lateinit var corePlugin: JavaPlugin
+
+        /**
+         * コアプラグインのロガー
+         */
         lateinit var coreLogger: ConsoleLogger
+
+        /**
+         * コンソール
+         */
         lateinit var console: ConsoleCommandSender
     }
 
