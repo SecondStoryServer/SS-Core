@@ -66,11 +66,29 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * @param index アイテムの場所
      * @param material アイテムタイプ
      */
-    fun item(vararg index: Int, material: Material) {
+    fun item(index: Iterable<Int>, material: Material) {
         val item = CustomItemStack.create(material, "").toOneItemStack
         index.forEach {
             item(it, item)
         }
+    }
+
+    /**
+     * 見た目のみのアイテムを配置します
+     * @param index アイテムの場所
+     * @param material アイテムタイプ
+     */
+    fun item(vararg index: Int, material: Material) {
+        item(index.toList(), material)
+    }
+
+    /**
+     * 見た目のみのアイテムを配置します
+     * @param index アイテムの場所
+     * @param material アイテムタイプ
+     */
+    fun item(index: IntRange, material: Material) {
+        item(index.toList(), material)
     }
 
     /**
