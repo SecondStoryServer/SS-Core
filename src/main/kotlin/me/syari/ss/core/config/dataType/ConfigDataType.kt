@@ -42,6 +42,7 @@ interface ConfigDataType<T> {
      * - [ConfigDataType.PARTICLE]
      * - [ConfigDataType.POTION]
      * - [ConfigDataType.SOUND]
+     * - [ConfigDataType.DATABASE]
      */
     companion object {
         val NUMBER = ConfigNumberDataType
@@ -57,5 +58,6 @@ interface ConfigDataType<T> {
         val PARTICLE = ConfigParticleDataType
         val POTION = ConfigPotionDataType
         val SOUND = ConfigSoundDataType
+        val DATABASE = ConfigDatabaseDataType
     }
 }

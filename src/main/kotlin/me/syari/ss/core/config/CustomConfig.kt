@@ -17,7 +17,7 @@ import java.io.IOException
  * @param deleteIfEmpty 中身が存在しなければ消去する
  */
 class CustomConfig(
-    plugin: JavaPlugin,
+    val plugin: JavaPlugin,
     private val output: CommandSender,
     val fileName: String,
     private val directory: File,
