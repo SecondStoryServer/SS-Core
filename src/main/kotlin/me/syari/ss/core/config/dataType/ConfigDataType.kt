@@ -58,6 +58,8 @@ interface ConfigDataType<T> {
         val PARTICLE = ConfigParticleDataType
         val POTION = ConfigPotionDataType
         val SOUND = ConfigSoundDataType
+        val MYSQL = ConfigMySQLDataType
+        val SQLITE = ConfigSQLiteDataType
         val DATABASE = ConfigDatabaseDataType
     }
 }
