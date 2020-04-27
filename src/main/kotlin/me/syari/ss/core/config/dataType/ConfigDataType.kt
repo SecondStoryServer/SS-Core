@@ -29,21 +29,6 @@ interface ConfigDataType<T> {
         return get(config, path, notFoundError) ?: default
     }
 
-    /**
-     * - [ConfigDataType.NUMBER]
-     * - [ConfigDataType.INT]
-     * - [ConfigDataType.LONG]
-     * - [ConfigDataType.FLOAT]
-     * - [ConfigDataType.STRING]
-     * - [ConfigDataType.STRINGLIST]
-     * - [ConfigDataType.DATE]
-     * - [ConfigDataType.LOCATION]
-     * - [ConfigDataType.MATERIAL]
-     * - [ConfigDataType.PARTICLE]
-     * - [ConfigDataType.POTION]
-     * - [ConfigDataType.SOUND]
-     * - [ConfigDataType.DATABASE]
-     */
     companion object {
         val NUMBER = ConfigNumberDataType
         val INT = ConfigIntDataType

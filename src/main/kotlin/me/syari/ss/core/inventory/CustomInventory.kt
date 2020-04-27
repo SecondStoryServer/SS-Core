@@ -99,9 +99,9 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
     fun item(index: Int, item: ItemStack): ClickEvent {
         return if (index in 0 until inventory.size) {
             inventory.setItem(index, item)
-            ClickEvent(this, index)
+            ClickEvent(this, listOf(index))
         } else {
-            ClickEvent(this, null)
+            ClickEvent(this, listOf())
         }
     }
 
@@ -142,12 +142,34 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         amount: Int = 1,
         shine: Boolean = false
     ): ClickEvent {
-        return item(index, CustomItemStack.create(material, display, *lore.toTypedArray(), amount = amount).apply {
-            if (shine) {
-                addEnchant(Enchantment.DURABILITY, 0)
-                addItemFlag(ItemFlag.HIDE_ENCHANTS)
-            }
-        })
+        return item(listOf(index), material, display, lore.toList(), amount, shine)
+    }
+
+    /**
+     * @param index アイテムの場所
+     * @param material アイテムタイプ
+     * @param display アイテム名
+     * @param lore アイテムの説明文
+     * @param amount アイテムの数
+     * @param shine エンチャントを付与する default: false
+     * @return [ClickEvent]
+     */
+    fun item(
+        index: Iterable<Int>,
+        material: Material,
+        display: String,
+        lore: Collection<String>,
+        amount: Int = 1,
+        shine: Boolean = false
+    ): ClickEvent {
+        return ClickEvent(this, index.map {
+            item(it, CustomItemStack.create(material, display, *lore.toTypedArray(), amount = amount).apply {
+                if (shine) {
+                    addEnchant(Enchantment.DURABILITY, 0)
+                    addItemFlag(ItemFlag.HIDE_ENCHANTS)
+                }
+            })
+        }.flatMap { it.slot })
     }
 
     /**
@@ -167,13 +189,33 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         amount: Int = 1,
         shine: Boolean = false
     ): ClickEvent {
+        return item(listOf(index), material, display, lore.toList(), amount, shine)
+    }
+
+    /**
+     * @param index アイテムの場所
+     * @param material アイテムタイプ
+     * @param display アイテム名
+     * @param lore アイテムの説明文
+     * @param amount アイテムの数
+     * @param shine エンチャントを付与する default: false
+     * @return [ClickEvent]
+     */
+    fun item(
+        index: Iterable<Int>,
+        material: Material,
+        display: String,
+        vararg lore: String,
+        amount: Int = 1,
+        shine: Boolean = false
+    ): ClickEvent {
         return item(index, material, display, lore.toList(), amount, shine)
     }
 
     /**
      * アイテム単位でクリックイベントを設定します
      */
-    data class ClickEvent(val inventory: CustomInventory, val slot: Int?) {
+    data class ClickEvent(val inventory: CustomInventory, val slot: List<Int>) {
         /**
          * @param clickType クリックタイプ
          * @param run クリックタイプが一致した時に実行する処理
@@ -196,7 +238,7 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         }
 
         private fun addEvent(clickType: ClickType?, run: () -> Unit) {
-            slot?.let {
+            slot.forEach {
                 inventory.events[it to clickType] = run
             }
         }
