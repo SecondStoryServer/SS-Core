@@ -64,13 +64,25 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
     /**
      * アイテムの説明文
      */
-    var lore: MutableList<String>
+    var lore: List<String>
         set(value) {
             editMeta {
                 lore = value.toColor
             }
         }
-        get() = itemMeta?.lore ?: mutableListOf()
+        get() = itemMeta?.lore ?: listOf()
+
+    /**
+     * アイテムの説明文を編集
+     * @param run 説明文に対して行う処理
+     */
+    fun editLore(run: MutableList<String>.() -> Unit) {
+        editMeta {
+            val lore = this.lore ?: mutableListOf()
+            run.invoke(lore)
+            this.lore = lore
+        }
+    }
 
     /**
      * アイテムダメージ
