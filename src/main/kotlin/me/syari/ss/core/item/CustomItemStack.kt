@@ -80,7 +80,7 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
         editMeta {
             val lore = this.lore ?: mutableListOf()
             run.invoke(lore)
-            this.lore = lore
+            this.lore = lore.toColor
         }
     }
 
