@@ -41,6 +41,7 @@ val jar by tasks.getting(Jar::class) {
 }
 
 val sourceJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
     from(sourceSets.main.get().allJava.srcDirs)
 }
 
@@ -57,9 +58,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
-            artifact(sourceJar.get()) {
-                classifier = "sources"
-            }
+            artifact(sourceJar.get())
         }
     }
 }
