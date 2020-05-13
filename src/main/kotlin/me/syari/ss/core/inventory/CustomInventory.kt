@@ -47,14 +47,6 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         get() = inventory.contents
 
     /**
-     * @param run インベントリに対して実行する処理
-     */
-    inline fun with(run: CustomInventory.() -> Unit): CustomInventory {
-        run.invoke(this)
-        return this
-    }
-
-    /**
      * @param index 取得するアイテムのインデックス
      */
     fun getItem(index: Int): ItemStack? {
