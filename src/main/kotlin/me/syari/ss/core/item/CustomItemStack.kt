@@ -6,6 +6,7 @@ import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.persistentData.CustomPersistentData
 import me.syari.ss.core.persistentData.CustomPersistentDataContainer
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.configuration.serialization.ConfigurationSerialization
@@ -127,7 +128,7 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
      * @param run アイテムメタに対して実行する処理
      */
     inline fun editMeta(run: ItemMeta.() -> Unit) {
-        val meta = itemMeta ?: corePlugin.server.itemFactory.getItemMeta(type) ?: return
+        val meta = itemMeta ?: Bukkit.getItemFactory().getItemMeta(type) ?: return
         run.invoke(meta)
         itemMeta = meta
     }
