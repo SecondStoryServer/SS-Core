@@ -44,13 +44,6 @@ class CustomConfig(
     }
 
     /**
-     * @param run コンフィグに対して実行する処理
-     */
-    inline fun with(run: CustomConfig.() -> Unit) {
-        run.invoke(this)
-    }
-
-    /**
      * @param path コンフィグパス
      * @param typeName データ型の名前
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
