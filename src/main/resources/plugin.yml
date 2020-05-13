@@ -1,7 +1,0 @@
-name: SS-Core
-version: @version@
-api-version: "1.15"
-main: me.syari.ss.core.Main
-author: sya_ri
-depend:
-  - SS-Kotlin
