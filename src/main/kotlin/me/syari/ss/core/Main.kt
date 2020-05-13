@@ -15,12 +15,12 @@ class Main : JavaPlugin() {
         /**
          * コアプラグインのインスタンス
          */
-        lateinit var corePlugin: JavaPlugin
+        internal lateinit var corePlugin: JavaPlugin
 
         /**
          * コアプラグインのロガー
          */
-        lateinit var coreLogger: ConsoleLogger
+        internal lateinit var coreLogger: ConsoleLogger
 
         /**
          * コンソール
