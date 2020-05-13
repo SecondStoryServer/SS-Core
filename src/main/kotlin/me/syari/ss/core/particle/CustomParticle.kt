@@ -1,6 +1,7 @@
 package me.syari.ss.core.particle
 
 import com.destroystokyo.paper.ParticleBuilder
+import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -150,9 +151,7 @@ sealed class CustomParticle(
 
     /**
      * レッドストーン
-     * @param red 色
-     * @param blue 色
-     * @param green 色
+     * @param color 色
      * @param count カウント
      * @param speed 速度
      * @param offsetX Xのずれ default: 0.0
@@ -160,9 +159,7 @@ sealed class CustomParticle(
      * @param offsetZ Zのずれ default: 0.0
      */
     class RedStone(
-        red: Int,
-        blue: Int,
-        green: Int,
+        color: Color,
         count: Int,
         speed: Double,
         offsetX: Double = 0.0,
@@ -170,7 +167,50 @@ sealed class CustomParticle(
         offsetZ: Double = 0.0
     ) : CustomParticle(Particle.REDSTONE, count, speed, offsetX, offsetY, offsetZ) {
         init {
-            fun convertColor(value: Int): Int {
+            builder.color(color)
+        }
+
+        /**
+         * レッドストーン
+         * @param red R
+         * @param blue G
+         * @param green B
+         * @param count カウント
+         * @param speed 速度
+         * @param offsetX Xのずれ default: 0.0
+         * @param offsetY Yのずれ default: 0.0
+         * @param offsetZ Zのずれ default: 0.0
+         */
+        constructor(
+            red: Int,
+            green: Int,
+            blue: Int,
+            count: Int,
+            speed: Double,
+            offsetX: Double = 0.0,
+            offsetY: Double = 0.0,
+            offsetZ: Double = 0.0
+        ) : this(
+            Color.fromRGB(convertColor(red), convertColor(green), convertColor(blue)),
+            count,
+            speed,
+            offsetX,
+            offsetY,
+            offsetZ
+        )
+
+        companion object {
+            /**
+             * ランダムなRGBコードを取得します
+             */
+            inline val randomColor get() = (0..255).random()
+
+            /**
+             * 色を 0..255 に丸め込みます
+             * @param value 色
+             * @return [Int]
+             */
+            private fun convertColor(value: Int): Int {
                 return when {
                     value < 0 -> 0
                     255 < value -> 255
@@ -178,7 +218,24 @@ sealed class CustomParticle(
                 }
             }
 
-            builder.color(convertColor(blue), convertColor(green), convertColor(red))
+            /**
+             * ランダムな色のレッドストーン
+             * @param count カウント
+             * @param speed 速度
+             * @param offsetX Xのずれ default: 0.0
+             * @param offsetY Yのずれ default: 0.0
+             * @param offsetZ Zのずれ default: 0.0
+             * @return [RedStone]
+             */
+            fun random(
+                count: Int,
+                speed: Double,
+                offsetX: Double = 0.0,
+                offsetY: Double = 0.0,
+                offsetZ: Double = 0.0
+            ): RedStone {
+                return RedStone(randomColor, randomColor, randomColor, count, speed, offsetX, offsetY, offsetZ)
+            }
         }
     }
 }
