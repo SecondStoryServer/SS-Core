@@ -330,6 +330,24 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
     }
 
     /**
+     * CustomModelData が設定済みか取得します
+     */
+    val hasCustomModelData
+        get() = itemMeta?.hasCustomModelData() ?: false
+
+    /**
+     * CustomModelData を取得・設定します
+     * 取得するときは [hasCustomModelData] で設定済みの場合のみ取得してください
+     */
+    var customModelData
+        get() = itemMeta?.customModelData
+        set(value) {
+            editMeta {
+                setCustomModelData(value)
+            }
+        }
+
+    /**
      * CustomItemStack を複製します
      * @return [CustomItemStack]
      */
@@ -410,13 +428,13 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
             material: Material,
             display: String?,
             lore: List<String>,
-            damage: Int = 0,
+            customModelData: Int? = 0,
             amount: Int = 1
         ): CustomItemStack {
             return create(material, amount).apply {
                 this.display = display
                 this.lore = lore.toMutableList()
-                this.damage = damage
+                this.customModelData = customModelData
             }
         }
 
@@ -432,10 +450,10 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
             material: Material,
             display: String?,
             vararg lore: String,
-            damage: Int = 0,
+            customModelData: Int? = 0,
             amount: Int = 1
         ): CustomItemStack {
-            return create(material, display, lore.toList(), damage, amount)
+            return create(material, display, lore.toList(), customModelData, amount)
         }
 
         /**

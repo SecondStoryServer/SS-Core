@@ -123,6 +123,7 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * @param display アイテム名
      * @param lore アイテムの説明文
      * @param amount アイテムの数
+     * @param customModelData カスタムモデルデータ
      * @param shine エンチャントを付与する default: false
      * @return [ClickEvent]
      */
@@ -132,9 +133,10 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         display: String,
         lore: Collection<String>,
         amount: Int = 1,
+        customModelData: Int? = null,
         shine: Boolean = false
     ): ClickEvent {
-        return item(listOf(index), material, display, lore.toList(), amount, shine)
+        return item(listOf(index), material, display, lore.toList(), amount, customModelData, shine)
     }
 
     /**
@@ -143,6 +145,7 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * @param display アイテム名
      * @param lore アイテムの説明文
      * @param amount アイテムの数
+     * @param customModelData カスタムモデルデータ
      * @param shine エンチャントを付与する default: false
      * @return [ClickEvent]
      */
@@ -152,15 +155,24 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         display: String,
         lore: Collection<String>,
         amount: Int = 1,
+        customModelData: Int? = null,
         shine: Boolean = false
     ): ClickEvent {
         return ClickEvent(this, index.map {
-            item(it, CustomItemStack.create(material, display, *lore.toTypedArray(), amount = amount).apply {
-                if (shine) {
-                    addEnchant(Enchantment.DURABILITY, 0)
-                    addItemFlag(ItemFlag.HIDE_ENCHANTS)
-                }
-            })
+            item(
+                it,
+                CustomItemStack.create(
+                    material,
+                    display,
+                    *lore.toTypedArray(),
+                    customModelData = customModelData,
+                    amount = amount
+                ).apply {
+                    if (shine) {
+                        addEnchant(Enchantment.DURABILITY, 0)
+                        addItemFlag(ItemFlag.HIDE_ENCHANTS)
+                    }
+                })
         }.flatMap { it.slot })
     }
 
@@ -170,6 +182,7 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * @param display アイテム名
      * @param lore アイテムの説明文
      * @param amount アイテムの数
+     * @param customModelData カスタムモデルデータ
      * @param shine エンチャントを付与する default: false
      * @return [ClickEvent]
      */
@@ -179,9 +192,10 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         display: String,
         vararg lore: String,
         amount: Int = 1,
+        customModelData: Int? = null,
         shine: Boolean = false
     ): ClickEvent {
-        return item(listOf(index), material, display, lore.toList(), amount, shine)
+        return item(listOf(index), material, display, lore.toList(), amount, customModelData, shine)
     }
 
     /**
@@ -190,6 +204,7 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * @param display アイテム名
      * @param lore アイテムの説明文
      * @param amount アイテムの数
+     * @param customModelData カスタムモデルデータ
      * @param shine エンチャントを付与する default: false
      * @return [ClickEvent]
      */
@@ -199,9 +214,10 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
         display: String,
         vararg lore: String,
         amount: Int = 1,
+        customModelData: Int? = null,
         shine: Boolean = false
     ): ClickEvent {
-        return item(index, material, display, lore.toList(), amount, shine)
+        return item(index, material, display, lore.toList(), amount, customModelData, shine)
     }
 
     /**
