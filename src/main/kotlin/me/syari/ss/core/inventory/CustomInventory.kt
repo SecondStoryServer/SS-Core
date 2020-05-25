@@ -57,9 +57,12 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * 見た目のみのアイテムを配置します
      * @param index アイテムの場所
      * @param material アイテムタイプ
+     * @param customModelData カスタムモデルデータ
      */
-    fun item(index: Iterable<Int>, material: Material) {
-        val item = CustomItemStack.create(material, "").toOneItemStack
+    fun item(index: Iterable<Int>, material: Material, customModelData: Int? = null) {
+        val item = CustomItemStack.create(material, "").apply {
+            this.customModelData = customModelData
+        }.toOneItemStack
         index.forEach {
             item(it, item)
         }
@@ -69,18 +72,20 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      * 見た目のみのアイテムを配置します
      * @param index アイテムの場所
      * @param material アイテムタイプ
+     * @param customModelData カスタムモデルデータ
      */
-    fun item(vararg index: Int, material: Material) {
-        item(index.toList(), material)
+    fun item(vararg index: Int, material: Material, customModelData: Int? = null) {
+        item(index.toList(), material, customModelData)
     }
 
     /**
      * 見た目のみのアイテムを配置します
      * @param index アイテムの場所
      * @param material アイテムタイプ
+     * @param customModelData カスタムモデルデータ
      */
-    fun item(index: IntRange, material: Material) {
-        item(index.toList(), material)
+    fun item(index: IntRange, material: Material, customModelData: Int? = null) {
+        item(index.toList(), material, customModelData)
     }
 
     /**
