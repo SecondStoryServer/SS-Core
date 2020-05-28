@@ -50,7 +50,7 @@ object CreateConfig {
         deleteIfEmpty: Boolean = true,
         run: CustomConfig.() -> Unit
     ): CustomConfig {
-        return config(plugin, output, fileName, deleteIfEmpty).apply { run.invoke(this) }
+        return config(plugin, output, fileName, deleteIfEmpty).apply(run)
     }
 
     /**

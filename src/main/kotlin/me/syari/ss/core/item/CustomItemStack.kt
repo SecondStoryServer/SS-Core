@@ -358,7 +358,7 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
      * @param run 複製後のアイテムに対して実行する処理
      * @return [CustomItemStack]
      */
-    fun clone(run: CustomItemStack.() -> Unit) = clone().apply { run.invoke(this) }
+    fun clone(run: CustomItemStack.() -> Unit) = clone().apply(run)
 
     /**
      * @see [ConfigurationSerializable]
