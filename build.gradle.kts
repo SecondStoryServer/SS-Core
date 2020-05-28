@@ -7,6 +7,10 @@ plugins {
 group = "me.syari.ss.core"
 version = "2.8.1"
 
+val ssMavenRepoUploadURL: String by extra
+val ssMavenRepoUploadUser: String by extra
+val ssMavenRepoUploadPassword: String by extra
+
 repositories {
     mavenCentral()
     maven {
@@ -48,10 +52,10 @@ val sourceJar by tasks.registering(Jar::class) {
 publishing {
     repositories {
         maven {
-            url = uri(properties["ssMavenRepoUploadURL"] as String)
+            url = uri(ssMavenRepoUploadURL)
             credentials {
-                username = properties["ssMavenRepoUploadUser"] as String
-                password = properties["ssMavenRepoUploadPassword"] as String
+                username = ssMavenRepoUploadUser
+                password = ssMavenRepoUploadPassword
             }
         }
     }
