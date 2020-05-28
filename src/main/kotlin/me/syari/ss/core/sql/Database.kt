@@ -19,15 +19,12 @@ interface Database {
      * @return [Boolean]
      */
     fun canConnect(): Boolean {
-        var connection: Connection? = null
         return try {
-            connection = getConnection()
+            getConnection().use { }
             true
         } catch (ex: SQLException) {
             ex.printStackTrace()
             false
-        } finally {
-            connection?.close()
         }
     }
 
@@ -37,18 +34,13 @@ interface Database {
      * @return [Boolean]
      */
     fun use(run: Statement.() -> Unit): Boolean {
-        var connection: Connection? = null
-        var statement: Statement? = null
         return try {
-            connection = getConnection()
-            statement = connection.createStatement()
-            run.invoke(statement)
+            getConnection().use { connection ->
+                connection.createStatement().use(run)
+            }
             true
         } catch (ex: SQLException) {
             false
-        } finally {
-            statement?.close()
-            connection?.close()
         }
     }
 }

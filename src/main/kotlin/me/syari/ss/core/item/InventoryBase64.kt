@@ -36,12 +36,12 @@ object InventoryBase64 {
      */
     fun toBase64(items: Collection<ItemStack>): String {
         val outputStream = ByteArrayOutputStream()
-        val data = BukkitObjectOutputStream(outputStream)
-        data.writeInt(items.size)
-        for (item in items) {
-            data.writeObject(item)
+        BukkitObjectOutputStream(outputStream).use { data ->
+            data.writeInt(items.size)
+            for (item in items) {
+                data.writeObject(item)
+            }
         }
-        data.close()
         return Base64Coder.encodeLines(outputStream.toByteArray())
     }
 
@@ -67,12 +67,12 @@ object InventoryBase64 {
 
     private fun fromBase64(base64: String): Array<ItemStack?> {
         val inputStream = ByteArrayInputStream(Base64Coder.decodeLines(base64))
-        val data = BukkitObjectInputStream(inputStream)
-        val items = arrayOfNulls<ItemStack>(data.readInt())
-        for (i in items.indices) {
-            items[i] = data.readObject() as? ItemStack
+        return BukkitObjectInputStream(inputStream).use { data ->
+            arrayOfNulls<ItemStack>(data.readInt()).also { items ->
+                for (i in items.indices) {
+                    items[i] = data.readObject() as? ItemStack
+                }
+            }
         }
-        data.close()
-        return items
     }
 }
