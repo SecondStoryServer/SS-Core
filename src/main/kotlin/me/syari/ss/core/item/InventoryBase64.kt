@@ -2,6 +2,7 @@ package me.syari.ss.core.item
 
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryType
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.PlayerInventory
 import org.bukkit.util.io.BukkitObjectInputStream
@@ -17,7 +18,7 @@ object InventoryBase64 {
      * @return [String]
      */
     fun toBase64(playerInventory: PlayerInventory): String {
-        return toBase64(playerInventory.extraContents)
+        return toBase64(playerInventory.contents)
     }
 
     /**
@@ -48,14 +49,12 @@ object InventoryBase64 {
     /**
      * Base64 をプレイヤーインベントリに変換します
      * @param base64 Base64 データ
-     * @return [PlayerInventory]
+     * @return [Inventory]
      */
-    fun getInventoryFromBase64(base64: String): PlayerInventory {
-        val playerInventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER) as PlayerInventory
-        fromBase64(base64).forEachIndexed { index, item ->
-            playerInventory.setItem(index, item)
+    fun getInventoryFromBase64(base64: String): Inventory {
+        return Bukkit.getServer().createInventory(null, InventoryType.PLAYER).apply {
+            contents = fromBase64(base64)
         }
-        return playerInventory
     }
 
     /**

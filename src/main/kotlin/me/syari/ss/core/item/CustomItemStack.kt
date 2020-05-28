@@ -442,7 +442,7 @@ class CustomItemStack constructor(private val item: ItemStack, amount: Int) : Cu
          * @param material アイテムタイプ
          * @param display アイテム名
          * @param lore アイテムの説明文
-         * @param damage アイテムダメージ default: 0
+         * @param customModelData カスタムモデルデータ default: 0
          * @param amount アイテム数 default: 1
          * @return [CustomItemStack]
          */
