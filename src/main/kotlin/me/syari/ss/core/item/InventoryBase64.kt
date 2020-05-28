@@ -4,7 +4,6 @@ import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.PlayerInventory
 import org.bukkit.util.io.BukkitObjectInputStream
 import org.bukkit.util.io.BukkitObjectOutputStream
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
@@ -13,12 +12,12 @@ import java.io.ByteArrayOutputStream
 
 object InventoryBase64 {
     /**
-     * プレイヤーインベントリを Base64 に変換します
-     * @param playerInventory 対象プレイヤーインベントリ
+     * インベントリを Base64 に変換します
+     * @param inventory 対象インベントリ
      * @return [String]
      */
-    fun toBase64(playerInventory: PlayerInventory): String {
-        return toBase64(playerInventory.contents)
+    fun toBase64(inventory: Inventory): String {
+        return toBase64(inventory.contents)
     }
 
     /**
