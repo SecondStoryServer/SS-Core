@@ -17,13 +17,14 @@ object CreateConfig {
         plugin: JavaPlugin,
         output: CommandSender,
         fileName: String,
-        deleteIfEmpty: Boolean = true
+        deleteIfEmpty: Boolean = true,
+        default: Map<String, Any> = emptyMap()
     ): CustomConfig {
         var directory = plugin.dataFolder
         if (!directory.exists()) directory.mkdir()
         fileName.split("/".toRegex()).forEach { file ->
             if (file.endsWith(".yml")) {
-                return CustomConfig(plugin, output, file, directory, deleteIfEmpty)
+                return CustomConfig(plugin, output, file, directory, deleteIfEmpty, default)
             } else {
                 directory = File(directory, file)
                 if (!directory.exists()) {
@@ -48,9 +49,10 @@ object CreateConfig {
         output: CommandSender,
         fileName: String,
         deleteIfEmpty: Boolean = true,
+        default: Map<String, Any> = emptyMap(),
         run: CustomConfig.() -> Unit
     ): CustomConfig {
-        return config(plugin, output, fileName, deleteIfEmpty).apply(run)
+        return config(plugin, output, fileName, deleteIfEmpty, default).apply(run)
     }
 
     /**

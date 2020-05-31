@@ -21,25 +21,38 @@ class CustomConfig(
     private val output: CommandSender,
     val fileName: String,
     private val directory: File,
-    private val deleteIfEmpty: Boolean
+    private val deleteIfEmpty: Boolean,
+    default: Map<String, Any> = emptyMap()
 ) {
     private var file = File(directory, fileName)
     val config: YamlConfiguration
     private val filePath: String
 
     init {
-        config = YamlConfiguration.loadConfiguration(file)
         filePath = file.path.substringAfter(plugin.dataFolder.path).substring(1)
-        if (!file.exists()) {
+
+        val writeDefault = if (!file.exists()) {
             try {
                 file.createNewFile()
                 coreLogger.info("$filePath の作成に成功しました")
+                true
             } catch (ex: IOException) {
                 coreLogger.error("$filePath の作成に失敗しました")
+                false
             }
         } else if (file.length() == 0L && deleteIfEmpty) {
             coreLogger.warn("$filePath は中身が存在しないので削除されます")
             delete()
+            false
+        } else {
+            false
+        }
+        config = YamlConfiguration.loadConfiguration(file)
+        if (writeDefault && default.isNotEmpty()) {
+            default.forEach { (key, value) ->
+                set(key, value)
+            }
+            save()
         }
     }
 
