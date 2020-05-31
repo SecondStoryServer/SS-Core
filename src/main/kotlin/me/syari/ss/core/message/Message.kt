@@ -1,6 +1,5 @@
 package me.syari.ss.core.message
 
-import me.syari.ss.core.Main.Companion.coreLogger
 import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.code.StringEditor.toColor
 import org.bukkit.command.CommandSender
@@ -14,7 +13,6 @@ object Message {
     fun broadcast(message: String) {
         val coloredMessage = message.toColor
         corePlugin.server.broadcastMessage(coloredMessage)
-        coreLogger.send(message)
     }
 
     /**
