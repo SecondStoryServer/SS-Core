@@ -12,9 +12,8 @@ object Message {
      * @param message 送信するメッセージ
      */
     fun broadcast(message: String) {
-        corePlugin.server.onlinePlayers.forEach {
-            it.sendMessage(message)
-        }
+        val coloredMessage = message.toColor
+        corePlugin.server.broadcastMessage(coloredMessage)
         coreLogger.send(message)
     }
 
