@@ -35,5 +35,13 @@ enum class ConnectState(val message: String) {
                 null -> NullError
             }
         }
+
+        /**
+         * データベースに接続できるか確認します
+         * @return [ConnectState]
+         */
+        fun Database?.checkConnect(): ConnectState {
+            return ConnectState.get(this?.canConnect())
+        }
     }
 }
