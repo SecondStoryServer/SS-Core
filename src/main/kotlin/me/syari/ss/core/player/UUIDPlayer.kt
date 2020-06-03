@@ -1,5 +1,6 @@
 package me.syari.ss.core.player
 
+import me.syari.ss.core.code.UUIDConverter.toUUIDOrNull
 import org.bukkit.Bukkit.getOfflinePlayer
 import org.bukkit.Bukkit.getPlayer
 import org.bukkit.OfflinePlayer
@@ -45,11 +46,7 @@ data class UUIDPlayer(private val uniqueId: UUID) {
          * @return [UUIDPlayer]?
          */
         fun create(uuid: String): UUIDPlayer? {
-            return try {
-                UUIDPlayer(UUID.fromString(uuid))
-            } catch (ex: IllegalArgumentException) {
-                null
-            }
+            return uuid.toUUIDOrNull()?.let { UUIDPlayer(it) }
         }
     }
 }
