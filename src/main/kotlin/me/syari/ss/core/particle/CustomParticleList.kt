@@ -1,6 +1,6 @@
 package me.syari.ss.core.particle
 
-import me.syari.ss.core.scheduler.CustomScheduler.runListWithDelay
+import me.syari.ss.core.scheduler.CreateScheduler.runListWithDelay
 import me.syari.ss.core.scheduler.CustomTask
 import org.bukkit.Location
 import org.bukkit.entity.Entity

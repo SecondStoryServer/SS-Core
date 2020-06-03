@@ -38,7 +38,7 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
     private var onCancelTask: (() -> Unit)? = null
 
     /**
-     * @see CustomScheduler.run
+     * @see CreateScheduler.run
      * @return [CustomTask]?
      */
     fun run(async: Boolean = false): CustomTask? {
@@ -46,7 +46,7 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
     }
 
     /**
-     * @see CustomScheduler.runLater
+     * @see CreateScheduler.runLater
      * @return [CustomTask]?
      */
     fun runLater(delay: Long, async: Boolean = false): CustomTask? {
@@ -54,7 +54,7 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
     }
 
     /**
-     * @see CustomScheduler.runTimer
+     * @see CreateScheduler.runTimer
      * @return [CustomTask]?
      */
     fun runTimer(period: Long, delay: Long = 0, async: Boolean = false): CustomTask? {
@@ -62,7 +62,7 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
     }
 
     /**
-     * @see CustomScheduler.runRepeatTimes
+     * @see CreateScheduler.runRepeatTimes
      * @return [CustomTask]?
      */
     fun runRepeatTimes(period: Long, times: Int, delay: Long = 0, async: Boolean = false): CustomTask? {

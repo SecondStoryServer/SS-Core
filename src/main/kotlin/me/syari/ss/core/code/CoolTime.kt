@@ -1,6 +1,6 @@
 package me.syari.ss.core.code
 
-import me.syari.ss.core.scheduler.CustomScheduler.runLater
+import me.syari.ss.core.scheduler.CreateScheduler.runLater
 import org.bukkit.plugin.java.JavaPlugin
 
 /**

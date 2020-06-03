@@ -3,7 +3,7 @@ package me.syari.ss.core.time
 import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.auto.Event
 import me.syari.ss.core.auto.OnEnable
-import me.syari.ss.core.scheduler.CustomScheduler.runLater
+import me.syari.ss.core.scheduler.CreateScheduler.runLater
 import me.syari.ss.core.time.event.NextDayEvent
 import me.syari.ss.core.time.event.NextHourEvent
 import me.syari.ss.core.time.event.NextMinuteEvent

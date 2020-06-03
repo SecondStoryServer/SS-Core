@@ -5,7 +5,7 @@ import me.syari.ss.core.auto.Event
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.inventory.CreateInventory.runWithId
 import me.syari.ss.core.player.UUIDPlayer
-import me.syari.ss.core.scheduler.CustomScheduler.runLater
+import me.syari.ss.core.scheduler.CreateScheduler.runLater
 import org.bukkit.Bukkit.createInventory
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.HumanEntity

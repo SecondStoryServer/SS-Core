@@ -3,7 +3,7 @@ package me.syari.ss.core.scheduler
 import me.syari.ss.core.Main.Companion.corePlugin
 import org.bukkit.plugin.java.JavaPlugin
 
-object CustomScheduler {
+object CreateScheduler {
     /**
      * @param plugin 実行するプラグイン
      * @param run 実行する処理
