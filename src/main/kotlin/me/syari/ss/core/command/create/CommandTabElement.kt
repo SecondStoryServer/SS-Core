@@ -9,18 +9,30 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
     override val size: Int
         get() = element.size
 
-    private fun joinList(element: Collection<String>): CommandTabElement {
+    /**
+     * 要素を追加します
+     * @param element 追加する要素
+     */
+    fun join(element: Collection<String>): CommandTabElement {
         this.element = this.element.union(element)
         return this
     }
-
 
     /**
      * 要素を追加します
      * @param element 追加する要素
      */
     fun join(vararg element: String): CommandTabElement {
-        return joinList(element.toList())
+        return join(element.toList())
+    }
+
+    /**
+     * [condition] が 真 だった場合に 要素を追加します
+     * @param condition 条件
+     * @param element 条件に一致した場合追加する要素
+     */
+    fun joinIf(condition: Boolean, element: Collection<String>): CommandTabElement {
+        return if (condition) join(element) else this
     }
 
     /**
@@ -29,7 +41,16 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * @param element 条件に一致した場合追加する要素
      */
     fun joinIf(condition: Boolean, vararg element: String): CommandTabElement {
-        return if (condition) joinList(element.toList()) else this
+        return joinIf(condition, element.toList())
+    }
+
+    /**
+     * [sender] が OP だった場合に 要素を追加します
+     * @param sender CommandSender
+     * @param element sender.isOpが真だった場合追加する要素
+     */
+    fun joinIfOp(sender: CommandSender, element: Collection<String>): CommandTabElement {
+        return joinIf(sender.isOp, element)
     }
 
     /**
@@ -38,7 +59,15 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * @param element sender.isOpが真だった場合追加する要素
      */
     fun joinIfOp(sender: CommandSender, vararg element: String): CommandTabElement {
-        return joinIf(sender.isOp, *element)
+        return joinIfOp(sender, element.toList())
+    }
+
+    /**
+     * @param sender CommandSender
+     * @param element sender.isOpが偽だった場合追加する要素
+     */
+    fun joinIfNotOp(sender: CommandSender, element: Collection<String>): CommandTabElement {
+        return joinIf(!sender.isOp, element)
     }
 
     /**
@@ -46,7 +75,7 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * @param element sender.isOpが偽だった場合追加する要素
      */
     fun joinIfNotOp(sender: CommandSender, vararg element: String): CommandTabElement {
-        return joinIf(!sender.isOp, *element)
+        return joinIfNotOp(sender, element.toList())
     }
 
     override fun contains(element: String): Boolean {
