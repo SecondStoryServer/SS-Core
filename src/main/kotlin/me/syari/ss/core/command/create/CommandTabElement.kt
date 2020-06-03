@@ -9,14 +9,22 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
     override val size: Int
         get() = element.size
 
-    private fun joinList(element: Collection<String>?): CommandTabElement {
-        if (element != null) {
-            this.element = this.element.union(element)
-        }
+    private fun joinList(element: Collection<String>): CommandTabElement {
+        this.element = this.element.union(element)
         return this
     }
 
+
     /**
+     * 要素を追加します
+     * @param element 追加する要素
+     */
+    fun join(vararg element: String): CommandTabElement {
+        return joinList(element.toList())
+    }
+
+    /**
+     * [condition] が 真 だった場合に 要素を追加します
      * @param condition 条件
      * @param element 条件に一致した場合追加する要素
      */
@@ -25,6 +33,7 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
     }
 
     /**
+     * [sender] が OP だった場合に 要素を追加します
      * @param sender CommandSender
      * @param element sender.isOpが真だった場合追加する要素
      */
