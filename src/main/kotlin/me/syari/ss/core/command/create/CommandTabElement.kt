@@ -2,7 +2,7 @@ package me.syari.ss.core.command.create
 
 import org.bukkit.command.CommandSender
 
-class CommandTabElement(list: Collection<String>) : Collection<String> {
+class CommandTabElement internal constructor(list: Iterable<String>) : Collection<String> {
     var element = list.toSet()
         private set
 
@@ -13,7 +13,7 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * 要素を追加します
      * @param element 追加する要素
      */
-    fun join(element: Collection<String>): CommandTabElement {
+    fun join(element: Iterable<String>): CommandTabElement {
         this.element = this.element.union(element)
         return this
     }
@@ -31,7 +31,7 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * @param condition 条件
      * @param element 条件に一致した場合追加する要素
      */
-    fun joinIf(condition: Boolean, element: Collection<String>): CommandTabElement {
+    fun joinIf(condition: Boolean, element: Iterable<String>): CommandTabElement {
         return if (condition) join(element) else this
     }
 
@@ -49,7 +49,7 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * @param sender CommandSender
      * @param element sender.isOpが真だった場合追加する要素
      */
-    fun joinIfOp(sender: CommandSender, element: Collection<String>): CommandTabElement {
+    fun joinIfOp(sender: CommandSender, element: Iterable<String>): CommandTabElement {
         return joinIf(sender.isOp, element)
     }
 
@@ -66,7 +66,7 @@ class CommandTabElement(list: Collection<String>) : Collection<String> {
      * @param sender CommandSender
      * @param element sender.isOpが偽だった場合追加する要素
      */
-    fun joinIfNotOp(sender: CommandSender, element: Collection<String>): CommandTabElement {
+    fun joinIfNotOp(sender: CommandSender, element: Iterable<String>): CommandTabElement {
         return joinIf(!sender.isOp, element)
     }
 
