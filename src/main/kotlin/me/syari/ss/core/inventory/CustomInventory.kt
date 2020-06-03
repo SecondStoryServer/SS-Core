@@ -3,6 +3,7 @@ package me.syari.ss.core.inventory
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.inventory.CreateInventory.menuPlayer
 import me.syari.ss.core.item.CustomItemStack
+import me.syari.ss.core.player.UUIDPlayer
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -14,8 +15,9 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-class CustomInventory(val inventory: Inventory, private val id: List<String>) {
+class CustomInventory(val inventory: Inventory, id: List<String>) {
     private val events = mutableMapOf<Pair<Int, ClickType?>, () -> Unit>()
+    internal val id = id.joinToString("-").toColor
 
     /**
      * クリックイベントキャンセル
@@ -263,7 +265,8 @@ class CustomInventory(val inventory: Inventory, private val id: List<String>) {
      */
     fun open(player: Player): CustomInventory {
         player.openInventory(inventory)
-        player.menuPlayer = InventoryPlayerData(id.joinToString("-").toColor, cancel, onEvent, onClick, onClose, events)
+        val uuidPlayer = UUIDPlayer(player)
+        uuidPlayer.menuPlayer = InventoryPlayerData(id, cancel, onEvent, onClick, onClose, events)
         return this
     }
 }

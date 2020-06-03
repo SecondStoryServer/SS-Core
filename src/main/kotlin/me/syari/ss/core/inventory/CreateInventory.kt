@@ -4,8 +4,6 @@ import me.syari.ss.core.Main.Companion.corePlugin
 import me.syari.ss.core.auto.Event
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.inventory.CreateInventory.runWithId
-import me.syari.ss.core.inventory.event.CustomInventoryOpenEvent
-import me.syari.ss.core.inventory.event.NaturalInventoryOpenEvent
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.scheduler.CustomScheduler.runLater
 import org.bukkit.Bukkit.createInventory
@@ -13,37 +11,31 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.bukkit.event.inventory.*
+import org.bukkit.event.inventory.ClickType
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 
 object CreateInventory : Event {
     @EventHandler
-    fun onInventoryOpen(e: InventoryOpenEvent) {
-        val player = e.player as Player
-        val inventory = e.inventory
-        if (player.menuPlayer != null) {
-            CustomInventoryOpenEvent(player, inventory)
-        } else {
-            NaturalInventoryOpenEvent(player, inventory)
-        }.callEvent()
-    }
-
-    @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
         val player = e.whoClicked as Player
-        val playerData = player.menuPlayer ?: return
-        if (playerData.cancel) {
-            e.isCancelled = true
-        }
-        if (e.inventory == e.clickedInventory) {
-            playerData.runEvent(e.slot, e.click)
-        }
-        playerData.onClick(e)
-        if (e.click == ClickType.MIDDLE && player.isOp) {
-            val item = e.currentItem
-            if (item != null) {
+        val uuidPlayer = UUIDPlayer(player)
+        uuidPlayer.menuPlayer?.run {
+            if (cancel) {
                 e.isCancelled = true
-                player.inventory.addItem(item.asQuantity(64))
+            }
+            if (e.inventory == e.clickedInventory) {
+                runEvent(e.slot, e.click)
+            }
+            onClick(e)
+            if (e.click == ClickType.MIDDLE && player.isOp) {
+                val item = e.currentItem
+                if (item != null) {
+                    e.isCancelled = true
+                    player.inventory.addItem(item.asQuantity(64))
+                }
             }
         }
     }
@@ -51,11 +43,13 @@ object CreateInventory : Event {
     @EventHandler
     fun onInventoryClose(e: InventoryCloseEvent) {
         val player = e.player as Player
-        val playerData = player.menuPlayer ?: return
-        playerData.onClose(e)
-        player.menuPlayer = null
-        runLater(corePlugin, 5) {
-            player.updateInventory()
+        val uuidPlayer = UUIDPlayer(player)
+        uuidPlayer.menuPlayer?.run {
+            onClose(e)
+            uuidPlayer.menuPlayer = null
+            runLater(corePlugin, 5) {
+                player.updateInventory()
+            }
         }
     }
 
@@ -115,10 +109,10 @@ object CreateInventory : Event {
     /**
      * インベントリのプレイヤーデータ
      */
-    var OfflinePlayer.menuPlayer
-        get() = menuPlayers[UUIDPlayer(this)]
+    internal var UUIDPlayer.menuPlayer
+        get() = menuPlayers[this]
         set(value) {
-            val uuidPlayer = UUIDPlayer(this)
+            val uuidPlayer = this
             if (value != null) {
                 menuPlayers[uuidPlayer] = value
             } else {
@@ -127,14 +121,65 @@ object CreateInventory : Event {
         }
 
     /**
+     * プレイヤーが [id] から始まるインベントリを開いているかどうかを取得します
+     * @param player プレイヤー
+     * @param id インベントリのID
+     */
+    fun isOpenInventory(player: OfflinePlayer, vararg id: String): Boolean {
+        return UUIDPlayer(player).menuPlayer?.isOpenInventory(id) ?: false
+    }
+
+    /**
+     * プレイヤーが [id] から始まるインベントリを開いているかどうかを取得します
+     * @param uuidPlayer プレイヤー
+     * @param id インベントリのID
+     */
+    fun isOpenInventory(uuidPlayer: UUIDPlayer, vararg id: String): Boolean {
+        return uuidPlayer.menuPlayer?.isOpenInventory(id) ?: false
+    }
+
+    /**
+     * プレイヤーが指定のインベントリを開いているかどうかを取得します
+     * @param player プレイヤー
+     * @param inventory インベントリ
+     */
+    fun isOpenInventory(player: OfflinePlayer, inventory: CustomInventory): Boolean {
+        return isOpenInventory(player, inventory.id)
+    }
+
+    /**
+     * プレイヤーが指定のインベントリを開いているかどうかを取得します
+     * @param uuidPlayer プレイヤー
+     * @param inventory インベントリ
+     */
+    fun isOpenInventory(uuidPlayer: UUIDPlayer, inventory: CustomInventory): Boolean {
+        return isOpenInventory(uuidPlayer, inventory.id)
+    }
+
+    /**
+     * プレイヤーがインベントリを開いているかどうかを取得します
+     * @param player プレイヤー
+     */
+    fun isOpenInventory(player: OfflinePlayer): Boolean {
+        return isOpenInventory(UUIDPlayer(player))
+    }
+
+    /**
+     * プレイヤーがインベントリを開いているかどうかを取得します
+     * @param uuidPlayer プレイヤー
+     */
+    fun isOpenInventory(uuidPlayer: UUIDPlayer): Boolean {
+        return uuidPlayer.menuPlayer != null
+    }
+
+    /**
      * [id] から始まる インベントリID を持つプレイヤーに処理を行います
      * @param id インベントリのID
      * @param run プレイヤーに対して実行する処理
      */
     fun runWithId(vararg id: String, run: (Player) -> Unit) {
-        val joinedId = id.joinToString("-").toColor
         menuPlayers.forEach { (uuidPlayer, playerData) ->
-            if (playerData.id.startsWith(joinedId)) {
+            if (playerData.isOpenInventory(id)) {
                 val player = uuidPlayer.player ?: return@forEach
                 run.invoke(player)
             }

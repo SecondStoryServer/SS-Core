@@ -1,11 +1,12 @@
 package me.syari.ss.core.inventory
 
+import me.syari.ss.core.code.StringEditor.toColor
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryEvent
 
-data class InventoryPlayerData(
+internal data class InventoryPlayerData(
     val id: String,
     val cancel: Boolean,
     private val onEvent: ((InventoryEvent) -> Unit)?,
@@ -35,5 +36,13 @@ data class InventoryPlayerData(
             get(index to click)?.invoke()
             get(index to null)?.invoke()
         }
+    }
+
+    /**
+     * [id] から始まるインベントリを開いているかどうかを取得します
+     */
+    fun isOpenInventory(id: Array<out String>): Boolean {
+        val joinedId = id.joinToString("-").toColor
+        return this.id.startsWith(joinedId)
     }
 }
