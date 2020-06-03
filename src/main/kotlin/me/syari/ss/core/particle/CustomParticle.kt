@@ -31,6 +31,16 @@ sealed class CustomParticle(
      * パーティクルを生成します
      * @param location 場所
      */
+    fun spawn(location: Iterable<Location>) {
+        location.forEach {
+            spawn(it)
+        }
+    }
+
+    /**
+     * パーティクルを生成します
+     * @param location 場所
+     */
     fun spawn(location: Location) {
         builder.location(location).spawn()
     }
