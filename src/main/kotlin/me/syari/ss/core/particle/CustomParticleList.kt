@@ -40,6 +40,16 @@ class CustomParticleList {
      * パーティクルを生成します
      * @param location 場所
      */
+    fun spawn(location: Iterable<Location>) {
+        location.forEach {
+            spawn(it)
+        }
+    }
+
+    /**
+     * パーティクルを生成します
+     * @param location 場所
+     */
     fun spawn(location: Location): Set<CustomTask> {
         return run { it.spawn(location) }
     }
