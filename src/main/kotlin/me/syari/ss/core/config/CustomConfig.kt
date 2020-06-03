@@ -16,7 +16,7 @@ import java.io.IOException
  * @param directory ファイルの親フォルダ
  * @param deleteIfEmpty 中身が存在しなければ消去する
  */
-class CustomConfig(
+class CustomConfig internal constructor(
     val plugin: JavaPlugin,
     private val output: CommandSender,
     val fileName: String,

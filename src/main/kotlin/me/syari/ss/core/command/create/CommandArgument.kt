@@ -5,7 +5,7 @@ import org.bukkit.Bukkit.getPlayer
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 
-class CommandArgument(private val array: Array<out String>, private val message: CommandMessage) {
+class CommandArgument internal constructor(private val array: Array<out String>, private val message: CommandMessage) {
     /**
      * 指定した要素を取得します
      * @param index 取得する位置

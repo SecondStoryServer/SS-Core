@@ -15,7 +15,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-class CustomInventory(val inventory: Inventory, id: List<String>) {
+class CustomInventory internal constructor(val inventory: Inventory, id: List<String>) {
     private val events = mutableMapOf<Pair<Int, ClickType?>, () -> Unit>()
     internal val id = id.joinToString("-").toColor
 

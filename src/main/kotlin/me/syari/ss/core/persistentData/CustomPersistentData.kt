@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 /**
  * [PersistentDataContainer] 拡張クラス
  */
-class CustomPersistentData(
+class CustomPersistentData internal constructor(
     private val plugin: JavaPlugin,
     private val persistentDataContainer: PersistentDataContainer
 ) {

@@ -9,7 +9,7 @@ import org.bukkit.scoreboard.DisplaySlot
 /**
  * @see CreateScoreBoard.createScoreBoard
  */
-data class CustomScoreBoard(
+data class CustomScoreBoard internal constructor(
     private val plugin: JavaPlugin,
     private val title: String,
     val priority: ScoreBoardPriority

@@ -8,7 +8,7 @@ import org.bukkit.entity.Entity
 /**
  * サウンドデータ
  */
-class CustomSound(
+class CustomSound internal constructor(
     private val type: Sound,
     private val volume: Float,
     private val pitch: Float,

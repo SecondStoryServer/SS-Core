@@ -65,7 +65,7 @@ class JsonBuilder {
     /**
      * メッセージ
      */
-    sealed class JsonMessage {
+    internal sealed class JsonMessage {
         class Text(val text: String, val hover: String?, val click: Click?) : JsonMessage()
         object NewLine : JsonMessage()
     }

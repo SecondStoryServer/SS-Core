@@ -3,7 +3,7 @@ package me.syari.ss.core.command.create
 import me.syari.ss.core.message.Message.send
 import org.bukkit.command.CommandSender
 
-class CommandMessage(private val prefix: String, private val sender: CommandSender) {
+class CommandMessage internal constructor(private val prefix: String, private val sender: CommandSender) {
     /**
      * ```
      * sendWithPrefix("&c$message")

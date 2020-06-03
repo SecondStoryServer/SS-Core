@@ -20,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin
 /**
  * [ItemStack] の拡張クラス
  */
-class CustomItemStack constructor(private val item: ItemStack, amount: Int) : CustomPersistentDataContainer,
+class CustomItemStack internal constructor(private val item: ItemStack, amount: Int) : CustomPersistentDataContainer,
     ConfigurationSerializable {
 
     /**

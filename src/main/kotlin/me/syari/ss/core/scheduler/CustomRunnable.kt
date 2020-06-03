@@ -4,7 +4,8 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 
-class CustomRunnable(private val plugin: JavaPlugin, private val run: CustomTask.() -> Unit) : CustomTask {
+class CustomRunnable internal constructor(private val plugin: JavaPlugin, private val run: CustomTask.() -> Unit) :
+    CustomTask {
     private val isRunning
         get() = alreadyInit && !task.isCancelled
 
