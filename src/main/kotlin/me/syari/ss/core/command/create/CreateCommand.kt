@@ -32,7 +32,7 @@ object CreateCommand {
      * @param element 要素
      * @return [CommandTabElement]
      */
-    fun element(element: Collection<String>?): CommandTabElement {
+    fun element(element: Iterable<String>?): CommandTabElement {
         return CommandTabElement(element ?: listOf())
     }
 
@@ -54,8 +54,8 @@ object CreateCommand {
      */
     fun elementIf(
         condition: Boolean,
-        element: Collection<String>?,
-        unlessElement: Collection<String>? = listOf()
+        element: Iterable<String>?,
+        unlessElement: Iterable<String>? = listOf()
     ): CommandTabElement {
         return element(if (condition) element else unlessElement)
     }
@@ -70,7 +70,7 @@ object CreateCommand {
     fun elementIf(
         condition: Boolean,
         vararg element: String,
-        unlessElement: Collection<String>? = listOf()
+        unlessElement: Iterable<String>? = listOf()
     ): CommandTabElement {
         return elementIf(condition, element.toList(), unlessElement)
     }
@@ -84,8 +84,8 @@ object CreateCommand {
      */
     fun elementIfOp(
         sender: CommandSender,
-        element: Collection<String>?,
-        unlessElement: Collection<String>? = listOf()
+        element: Iterable<String>?,
+        unlessElement: Iterable<String>? = listOf()
     ): CommandTabElement {
         return elementIf(sender.isOp, element, unlessElement)
     }
@@ -100,7 +100,7 @@ object CreateCommand {
     fun elementIfOp(
         sender: CommandSender,
         vararg element: String,
-        unlessElement: Collection<String>? = listOf()
+        unlessElement: Iterable<String>? = listOf()
     ): CommandTabElement {
         return elementIfOp(sender, element.toList(), unlessElement)
     }
@@ -121,7 +121,7 @@ object CreateCommand {
         label: String,
         messagePrefix: String,
         vararg tab: CommandTab,
-        alias: Collection<String> = listOf(),
+        alias: Iterable<String> = listOf(),
         execute: CommandMessage.(CommandSender, CommandArgument) -> Unit
     ) {
         registerCommand(

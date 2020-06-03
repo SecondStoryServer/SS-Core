@@ -74,7 +74,7 @@ class CommandMessage(private val prefix: String, private val sender: CommandSend
      * @param title リストのタイトル
      * @param element リストの要素
      */
-    fun sendList(title: String = "", element: Collection<String>) {
+    fun sendList(title: String = "", element: Iterable<String>) {
         if (title.isNotEmpty()) sendWithPrefix("&f$title")
         sender.send(
             StringBuilder().apply {
