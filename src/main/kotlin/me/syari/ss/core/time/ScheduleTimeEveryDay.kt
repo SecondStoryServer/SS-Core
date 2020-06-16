@@ -9,7 +9,10 @@ data class ScheduleTimeEveryDay(
     val everyHour by lazy { ScheduleTimeEveryHour(minute) }
 
     companion object {
-        fun create(hour: Int, minute: Int): ScheduleTimeEveryDay {
+        fun create(
+            hour: Int,
+            minute: Int
+        ): ScheduleTimeEveryDay {
             return ScheduleTimeEveryWeek.create(DayOfWeek.MONDAY, hour, minute).everyDay
         }
     }

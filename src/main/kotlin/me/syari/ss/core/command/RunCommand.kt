@@ -10,7 +10,10 @@ object RunCommand {
      * @param sender 実行元
      * @param command 実行するコマンド
      */
-    fun runCommand(sender: CommandSender, command: String) {
+    fun runCommand(
+        sender: CommandSender,
+        command: String
+    ) {
         corePlugin.server.dispatchCommand(sender, command)
     }
 

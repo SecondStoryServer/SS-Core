@@ -4,8 +4,11 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 
-class CustomRunnable internal constructor(private val plugin: JavaPlugin, private val run: CustomTask.() -> Unit) :
-    CustomTask {
+class CustomRunnable internal constructor(
+    private val plugin: JavaPlugin,
+    private val run: CustomTask.() -> Unit
+):
+        CustomTask {
     private val isRunning
         get() = alreadyInit && !task.isCancelled
 
@@ -49,7 +52,10 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
      * @see CreateScheduler.runLater
      * @return [CustomTask]?
      */
-    fun runLater(delay: Long, async: Boolean = false): CustomTask? {
+    fun runLater(
+        delay: Long,
+        async: Boolean = false
+    ): CustomTask? {
         return runTimer(-1, delay, async)
     }
 
@@ -57,7 +63,11 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
      * @see CreateScheduler.runTimer
      * @return [CustomTask]?
      */
-    fun runTimer(period: Long, delay: Long = 0, async: Boolean = false): CustomTask? {
+    fun runTimer(
+        period: Long,
+        delay: Long = 0,
+        async: Boolean = false
+    ): CustomTask? {
         return runRepeatTimes(period, -1, delay, async)
     }
 
@@ -65,13 +75,18 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
      * @see CreateScheduler.runRepeatTimes
      * @return [CustomTask]?
      */
-    fun runRepeatTimes(period: Long, times: Int, delay: Long = 0, async: Boolean = false): CustomTask? {
+    fun runRepeatTimes(
+        period: Long,
+        times: Int,
+        delay: Long = 0,
+        async: Boolean = false
+    ): CustomTask? {
         return if (isRunning) {
             null
         } else {
             if (0 < times) {
                 repeatRemain = times
-                runnable = object : BukkitRunnable() {
+                runnable = object: BukkitRunnable() {
                     override fun run() {
                         run.invoke(this@CustomRunnable)
                         if (repeatRemain == 0) {
@@ -84,7 +99,7 @@ class CustomRunnable internal constructor(private val plugin: JavaPlugin, privat
                 }
             } else {
                 repeatRemain = -1
-                runnable = object : BukkitRunnable() {
+                runnable = object: BukkitRunnable() {
                     override fun run() {
                         run.invoke(this@CustomRunnable)
                     }

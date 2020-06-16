@@ -13,7 +13,7 @@ data class CustomScoreBoard internal constructor(
     private val plugin: JavaPlugin,
     private val title: String,
     val priority: ScoreBoardPriority
-) : CustomScoreBoardEdit {
+): CustomScoreBoardEdit {
     private val lineList = mutableMapOf<Int, ScoreBoardLine>()
 
     private var lineIndex = 0

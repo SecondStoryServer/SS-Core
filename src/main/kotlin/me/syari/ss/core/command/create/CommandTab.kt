@@ -9,10 +9,13 @@ sealed class CommandTab {
     class Base internal constructor(
         val arg: List<String>,
         val tab: (CommandSender, CommandArgument) -> CommandTabElement?
-    ) : CommandTab()
+    ): CommandTab()
 
     /**
      * @see CreateCommand.flag
      */
-    class Flag internal constructor(val arg: String, val flag: Map<String, CommandTabElement>) : CommandTab()
+    class Flag internal constructor(
+        val arg: String,
+        val flag: Map<String, CommandTabElement>
+    ): CommandTab()
 }

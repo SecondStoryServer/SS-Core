@@ -17,7 +17,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 
-object CreateInventory : Event {
+object CreateInventory: Event {
     @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
         val player = e.whoClicked as Player
@@ -58,7 +58,10 @@ object CreateInventory : Event {
      * @param id インベントリのID
      * @return [CustomInventory]
      */
-    fun inventory(inventory: Inventory, vararg id: String): CustomInventory {
+    fun inventory(
+        inventory: Inventory,
+        vararg id: String
+    ): CustomInventory {
         return CustomInventory(inventory, id.toList())
     }
 
@@ -68,7 +71,11 @@ object CreateInventory : Event {
      * @param id インベントリのID
      * @return [CustomInventory]
      */
-    fun inventory(display: String, type: InventoryType, vararg id: String): CustomInventory {
+    fun inventory(
+        display: String,
+        type: InventoryType,
+        vararg id: String
+    ): CustomInventory {
         return inventory(createInventory(null, type, display.toColor), *id)
     }
 
@@ -125,7 +132,10 @@ object CreateInventory : Event {
      * @param player プレイヤー
      * @param id インベントリのID
      */
-    fun isOpenInventory(player: OfflinePlayer, vararg id: String): Boolean {
+    fun isOpenInventory(
+        player: OfflinePlayer,
+        vararg id: String
+    ): Boolean {
         return UUIDPlayer(player).menuPlayer?.isOpenInventory(id) ?: false
     }
 
@@ -134,7 +144,10 @@ object CreateInventory : Event {
      * @param uuidPlayer プレイヤー
      * @param id インベントリのID
      */
-    fun isOpenInventory(uuidPlayer: UUIDPlayer, vararg id: String): Boolean {
+    fun isOpenInventory(
+        uuidPlayer: UUIDPlayer,
+        vararg id: String
+    ): Boolean {
         return uuidPlayer.menuPlayer?.isOpenInventory(id) ?: false
     }
 
@@ -143,7 +156,10 @@ object CreateInventory : Event {
      * @param player プレイヤー
      * @param inventory インベントリ
      */
-    fun isOpenInventory(player: OfflinePlayer, inventory: CustomInventory): Boolean {
+    fun isOpenInventory(
+        player: OfflinePlayer,
+        inventory: CustomInventory
+    ): Boolean {
         return isOpenInventory(player, inventory.id)
     }
 
@@ -152,7 +168,10 @@ object CreateInventory : Event {
      * @param uuidPlayer プレイヤー
      * @param inventory インベントリ
      */
-    fun isOpenInventory(uuidPlayer: UUIDPlayer, inventory: CustomInventory): Boolean {
+    fun isOpenInventory(
+        uuidPlayer: UUIDPlayer,
+        inventory: CustomInventory
+    ): Boolean {
         return isOpenInventory(uuidPlayer, inventory.id)
     }
 
@@ -177,7 +196,10 @@ object CreateInventory : Event {
      * @param id インベントリのID
      * @param run プレイヤーに対して実行する処理
      */
-    fun runWithId(vararg id: String, run: (Player) -> Unit) {
+    fun runWithId(
+        vararg id: String,
+        run: (Player) -> Unit
+    ) {
         menuPlayers.forEach { (uuidPlayer, playerData) ->
             if (playerData.isOpenInventory(id)) {
                 val player = uuidPlayer.player ?: return@forEach
@@ -192,7 +214,10 @@ object CreateInventory : Event {
      * @param id インベントリのID
      * @param inventory プレイヤーに開かせるインベントリ
      */
-    fun reopen(vararg id: String, inventory: CustomInventory) {
+    fun reopen(
+        vararg id: String,
+        inventory: CustomInventory
+    ) {
         runWithId(*id) {
             inventory.open(it)
         }
@@ -204,7 +229,10 @@ object CreateInventory : Event {
      * @param id インベントリのID
      * @param run プレイヤーに対して実行する処理
      */
-    fun reopen(vararg id: String, run: (Player) -> CustomInventory) {
+    fun reopen(
+        vararg id: String,
+        run: (Player) -> CustomInventory
+    ) {
         runWithId(*id) {
             run.invoke(it).open(it)
         }

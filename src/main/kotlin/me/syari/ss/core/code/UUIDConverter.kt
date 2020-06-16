@@ -1,6 +1,6 @@
 package me.syari.ss.core.code
 
-import java.util.*
+import java.util.UUID
 
 object UUIDConverter {
     fun String.toUUID() = UUID.fromString(this)

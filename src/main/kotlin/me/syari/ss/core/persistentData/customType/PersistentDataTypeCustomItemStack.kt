@@ -4,7 +4,7 @@ import me.syari.ss.core.item.CustomItemStack
 import org.bukkit.persistence.PersistentDataAdapterContext
 import org.bukkit.persistence.PersistentDataType
 
-object PersistentDataTypeCustomItemStack : PersistentDataType<String, CustomItemStack> {
+object PersistentDataTypeCustomItemStack: PersistentDataType<String, CustomItemStack> {
     override fun getPrimitiveType(): Class<String> {
         return String::class.java
     }
@@ -13,11 +13,17 @@ object PersistentDataTypeCustomItemStack : PersistentDataType<String, CustomItem
         return CustomItemStack::class.java
     }
 
-    override fun toPrimitive(complex: CustomItemStack, context: PersistentDataAdapterContext): String {
+    override fun toPrimitive(
+        complex: CustomItemStack,
+        context: PersistentDataAdapterContext
+    ): String {
         return complex.toJson()
     }
 
-    override fun fromPrimitive(primitive: String, context: PersistentDataAdapterContext): CustomItemStack {
+    override fun fromPrimitive(
+        primitive: String,
+        context: PersistentDataAdapterContext
+    ): CustomItemStack {
         return CustomItemStack.fromJson(primitive)
     }
 }

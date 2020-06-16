@@ -20,7 +20,10 @@ object Message {
      * @param message 本文
      * @param to 送信先
      */
-    fun send(message: String, vararg to: CommandSender) {
+    fun send(
+        message: String,
+        vararg to: CommandSender
+    ) {
         val colored = message.toColor
         to.forEach {
             it.sendMessage(colored)
@@ -51,7 +54,13 @@ object Message {
      * @param stay 表示時間
      * @param fadeOut フェードアウト時間
      */
-    fun Player.title(main: String, sub: String, fadeIn: Int, stay: Int, fadeOut: Int) {
+    fun Player.title(
+        main: String,
+        sub: String,
+        fadeIn: Int,
+        stay: Int,
+        fadeOut: Int
+    ) {
         sendTitle(main.toColor, sub.toColor, fadeIn, stay, fadeOut)
     }
 

@@ -9,7 +9,10 @@ object CreateScheduler {
      * @param run 実行する処理
      * @return [CustomRunnable]
      */
-    fun schedule(plugin: JavaPlugin, run: CustomTask.() -> Unit): CustomRunnable {
+    fun schedule(
+        plugin: JavaPlugin,
+        run: CustomTask.() -> Unit
+    ): CustomRunnable {
         return CustomRunnable(plugin, run)
     }
 
@@ -19,7 +22,11 @@ object CreateScheduler {
      * @param run 実行する処理
      * @return [CustomTask]?
      */
-    fun run(plugin: JavaPlugin, async: Boolean = false, run: CustomTask.() -> Unit): CustomTask? {
+    fun run(
+        plugin: JavaPlugin,
+        async: Boolean = false,
+        run: CustomTask.() -> Unit
+    ): CustomTask? {
         return schedule(plugin, run).run(async)
     }
 
@@ -30,7 +37,12 @@ object CreateScheduler {
      * @param run 遅らせて実行する処理
      * @return [CustomTask]?
      */
-    fun runLater(plugin: JavaPlugin, delay: Long, async: Boolean = false, run: CustomTask.() -> Unit): CustomTask? {
+    fun runLater(
+        plugin: JavaPlugin,
+        delay: Long,
+        async: Boolean = false,
+        run: CustomTask.() -> Unit
+    ): CustomTask? {
         return schedule(plugin, run).runLater(delay, async)
     }
 

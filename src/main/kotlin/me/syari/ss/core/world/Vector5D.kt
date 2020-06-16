@@ -3,7 +3,13 @@ package me.syari.ss.core.world
 import org.bukkit.Location
 import org.bukkit.World
 
-data class Vector5D(val x: Double, val y: Double, val z: Double, val yaw: Float = 0F, val pitch: Float = 0F) {
+data class Vector5D(
+    val x: Double,
+    val y: Double,
+    val z: Double,
+    val yaw: Float = 0F,
+    val pitch: Float = 0F
+) {
     /**
      * Location に変換します
      * @param world ワールド
@@ -26,7 +32,7 @@ data class Vector5D(val x: Double, val y: Double, val z: Double, val yaw: Float 
          * @return [Vector5D]
          */
         fun fromLocation(location: Location) =
-            Vector5D(location.x, location.y, location.z, location.yaw, location.pitch)
+                Vector5D(location.x, location.y, location.z, location.yaw, location.pitch)
 
         /**
          * String から Vector5D に変換します

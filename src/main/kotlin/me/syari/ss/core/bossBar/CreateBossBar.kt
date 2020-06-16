@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
-object CreateBossBar : Event, OnDisable {
+object CreateBossBar: Event, OnDisable {
     internal val barList = mutableListOf<CustomBossBar>()
 
     /**
@@ -20,7 +20,6 @@ object CreateBossBar : Event, OnDisable {
         val player = e.player
         barList.forEach { it.onLogin(player) }
     }
-
 
     @EventHandler
     fun onQuit(e: PlayerQuitEvent) {
@@ -43,6 +42,11 @@ object CreateBossBar : Event, OnDisable {
      * @param public 全てのプレイヤーに表示するか default: false
      * @return [CustomBossBar]
      */
-    fun createBossBar(title: String, color: BarColor, style: BarStyle, public: Boolean = false) =
-        CustomBossBar(title, color, style, public)
+    fun createBossBar(
+        title: String,
+        color: BarColor,
+        style: BarStyle,
+        public: Boolean = false
+    ) =
+            CustomBossBar(title, color, style, public)
 }

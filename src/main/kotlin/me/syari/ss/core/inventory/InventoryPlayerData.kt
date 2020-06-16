@@ -31,7 +31,10 @@ internal data class InventoryPlayerData(
     /**
      * アイテム単位のクリックイベント
      */
-    fun runEvent(index: Int, click: ClickType) {
+    fun runEvent(
+        index: Int,
+        click: ClickType
+    ) {
         clickEvent?.run {
             get(index to click)?.invoke()
             get(index to null)?.invoke()

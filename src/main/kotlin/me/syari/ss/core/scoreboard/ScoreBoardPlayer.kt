@@ -12,7 +12,10 @@ data class ScoreBoardPlayer(val uuidPlayer: UUIDPlayer) {
          * @param uuidPlayer 対象プレイヤー
          * @param board スコアボード
          */
-        fun addBoard(uuidPlayer: UUIDPlayer, board: CustomScoreBoard) {
+        fun addBoard(
+            uuidPlayer: UUIDPlayer,
+            board: CustomScoreBoard
+        ) {
             playerList.getOrPut(uuidPlayer) { ScoreBoardPlayer(uuidPlayer) }.addBoard(board)
         }
 
@@ -21,7 +24,10 @@ data class ScoreBoardPlayer(val uuidPlayer: UUIDPlayer) {
          * @param uuidPlayer 対象プレイヤー
          * @param board スコアボード
          */
-        fun removeBoard(uuidPlayer: UUIDPlayer, board: CustomScoreBoard) {
+        fun removeBoard(
+            uuidPlayer: UUIDPlayer,
+            board: CustomScoreBoard
+        ) {
             playerList[uuidPlayer]?.removeBoard(board)
         }
 

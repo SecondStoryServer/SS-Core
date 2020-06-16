@@ -35,7 +35,10 @@ class CustomSound internal constructor(
      * @param location 場所
      * @param number 繰り返し回数
      */
-    fun repeat(location: Location, number: Int) {
+    fun repeat(
+        location: Location,
+        number: Int
+    ) {
         for (i in 0 until number) {
             play(location)
         }

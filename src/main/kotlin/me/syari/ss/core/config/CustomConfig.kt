@@ -62,7 +62,11 @@ class CustomConfig internal constructor(
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
      * @return [T]?
      */
-    inline fun <reified T> getUnsafe(path: String, typeName: String, notFoundError: Boolean = true): T? {
+    inline fun <reified T> getUnsafe(
+        path: String,
+        typeName: String,
+        notFoundError: Boolean = true
+    ): T? {
         if (config.contains(path)) {
             val getValue = config.get(path)
             if (getValue is T) {
@@ -76,14 +80,17 @@ class CustomConfig internal constructor(
         return null
     }
 
-
     /**
      * @param path コンフィグパス
      * @param typeName データ型の名前
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
      * @return [List]<[T]>?
      */
-    inline fun <reified T> getListUnsafe(path: String, typeName: String, notFoundError: Boolean = true): List<T>? {
+    inline fun <reified T> getListUnsafe(
+        path: String,
+        typeName: String,
+        notFoundError: Boolean = true
+    ): List<T>? {
         return mutableListOf<T>().apply {
             if (config.isList(path)) {
                 getUnsafe<List<*>>(path, "List<$typeName>", notFoundError)?.forEachIndexed { index, each ->
@@ -106,7 +113,11 @@ class CustomConfig internal constructor(
      * @param type データタイプ
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
      */
-    fun <T> get(path: String, type: ConfigDataType<T>, notFoundError: Boolean = true): T? {
+    fun <T> get(
+        path: String,
+        type: ConfigDataType<T>,
+        notFoundError: Boolean = true
+    ): T? {
         return type.get(this, path, notFoundError)
     }
 
@@ -116,7 +127,12 @@ class CustomConfig internal constructor(
      * @param default デフォルト値
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
      */
-    fun <T> get(path: String, type: ConfigDataType<T>, default: T, notFoundError: Boolean = true): T {
+    fun <T> get(
+        path: String,
+        type: ConfigDataType<T>,
+        default: T,
+        notFoundError: Boolean = true
+    ): T {
         return get(path, type, notFoundError) ?: default
     }
 
@@ -125,7 +141,11 @@ class CustomConfig internal constructor(
      * @param value 上書きする値
      * @param save 上書き後に保存する default: false
      */
-    fun set(path: String, value: Any?, save: Boolean = false) {
+    fun set(
+        path: String,
+        value: Any?,
+        save: Boolean = false
+    ) {
         config.set(path, value)
         if (save) save()
     }
@@ -141,7 +161,10 @@ class CustomConfig internal constructor(
      * @param path コンフィグパス
      * @param notFoundError 存在しないデータの場合にエラーを出す default: true
      */
-    fun section(path: String, notFoundError: Boolean = true): Set<String>? {
+    fun section(
+        path: String,
+        notFoundError: Boolean = true
+    ): Set<String>? {
         val section = config.getConfigurationSection(path)?.getKeys(false)
         return if (section != null) {
             section
@@ -193,7 +216,10 @@ class CustomConfig internal constructor(
      * @param path コンフィグパス
      * @param message 本文
      */
-    fun sendError(path: String, message: String) {
+    fun sendError(
+        path: String,
+        message: String
+    ) {
         output.send("&6[$filePath|$path] &c$message")
     }
 
@@ -204,7 +230,10 @@ class CustomConfig internal constructor(
      * @param path コンフィグパス
      * @param thing データ名
      */
-    fun nullError(path: String, thing: String) {
+    fun nullError(
+        path: String,
+        thing: String
+    ) {
         sendError(path, "$thing が null です")
     }
 
@@ -225,7 +254,10 @@ class CustomConfig internal constructor(
      * @param path コンフィグパス
      * @param typeName データタイプ
      */
-    fun typeMismatchError(path: String, typeName: String) {
+    fun typeMismatchError(
+        path: String,
+        typeName: String
+    ) {
         sendError(path, "データタイプが $typeName ではありませんでした")
     }
 

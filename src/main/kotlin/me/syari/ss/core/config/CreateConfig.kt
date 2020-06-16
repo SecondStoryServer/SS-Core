@@ -113,7 +113,10 @@ object CreateConfig {
      * @param fileName 対象のファイル名 最後は必ず.yml
      * @return [Boolean]
      */
-    fun contains(plugin: JavaPlugin, fileName: String): Boolean {
+    fun contains(
+        plugin: JavaPlugin,
+        fileName: String
+    ): Boolean {
         var directory = plugin.dataFolder
         if (!directory.exists()) return false
         fileName.split("/".toRegex()).forEach { file ->

@@ -6,10 +6,14 @@ import me.syari.ss.core.sound.CustomSoundList
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 
-object ConfigSoundDataType : ConfigDataType<CustomSoundList> {
+object ConfigSoundDataType: ConfigDataType<CustomSoundList> {
     override val typeName = "CustomSoundList"
 
-    override fun get(config: CustomConfig, path: String, notFoundError: Boolean): CustomSoundList? {
+    override fun get(
+        config: CustomConfig,
+        path: String,
+        notFoundError: Boolean
+    ): CustomSoundList? {
         val getList = config.get(path, ConfigDataType.STRINGLIST, notFoundError) ?: return null
         return CustomSoundList().apply {
             getList.forEachIndexed { index, line ->

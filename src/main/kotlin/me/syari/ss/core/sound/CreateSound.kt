@@ -14,7 +14,12 @@ object CreateSound {
      * @param category サウンドカテゴリー default: MASTER
      * @return [CustomSound]
      */
-    fun sound(type: Sound, volume: Float, pitch: Float, category: SoundCategory = SoundCategory.MASTER): CustomSound {
+    fun sound(
+        type: Sound,
+        volume: Float,
+        pitch: Float,
+        category: SoundCategory = SoundCategory.MASTER
+    ): CustomSound {
         return CustomSound(type, volume, pitch, category)
     }
 

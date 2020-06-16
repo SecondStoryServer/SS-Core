@@ -3,7 +3,7 @@ package me.syari.ss.core.persistentData.customType
 import org.bukkit.persistence.PersistentDataAdapterContext
 import org.bukkit.persistence.PersistentDataType
 
-object PersistentDataTypeBoolean : PersistentDataType<Byte, Boolean> {
+object PersistentDataTypeBoolean: PersistentDataType<Byte, Boolean> {
     override fun getPrimitiveType(): Class<Byte> {
         return Byte::class.java
     }
@@ -12,11 +12,17 @@ object PersistentDataTypeBoolean : PersistentDataType<Byte, Boolean> {
         return Boolean::class.java
     }
 
-    override fun toPrimitive(complex: Boolean, context: PersistentDataAdapterContext): Byte {
+    override fun toPrimitive(
+        complex: Boolean,
+        context: PersistentDataAdapterContext
+    ): Byte {
         return if (complex) 1 else 0
     }
 
-    override fun fromPrimitive(primitive: Byte, context: PersistentDataAdapterContext): Boolean {
+    override fun fromPrimitive(
+        primitive: Byte,
+        context: PersistentDataAdapterContext
+    ): Boolean {
         return primitive == 1.toByte()
     }
 }

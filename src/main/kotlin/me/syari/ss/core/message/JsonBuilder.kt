@@ -15,7 +15,11 @@ class JsonBuilder {
      * @param click クリックイベント default: null
      * @return [JsonBuilder]
      */
-    fun append(text: String, hover: String? = null, click: Click? = null): JsonBuilder {
+    fun append(
+        text: String,
+        hover: String? = null,
+        click: Click? = null
+    ): JsonBuilder {
         message.add(JsonMessage.Text(text, hover, click))
         return this
     }
@@ -36,7 +40,11 @@ class JsonBuilder {
      * @param click クリックイベント default: null
      * @return [JsonBuilder]
      */
-    fun appendln(text: String, hover: String? = null, click: Click? = null): JsonBuilder {
+    fun appendln(
+        text: String,
+        hover: String? = null,
+        click: Click? = null
+    ): JsonBuilder {
         return append(text, hover, click).appendln()
     }
 
@@ -66,36 +74,44 @@ class JsonBuilder {
      * メッセージ
      */
     internal sealed class JsonMessage {
-        class Text(val text: String, val hover: String?, val click: Click?) : JsonMessage()
-        object NewLine : JsonMessage()
+        class Text(
+            val text: String,
+            val hover: String?,
+            val click: Click?
+        ): JsonMessage()
+
+        object NewLine: JsonMessage()
     }
 
     /**
      * クリックイベント
      */
-    sealed class Click(val event: ClickEvent.Action, val content: String) {
+    sealed class Click(
+        val event: ClickEvent.Action,
+        val content: String
+    ) {
         /**
          * コマンドを実行します
          * @param command 実行するコマンド
          */
-        class RunCommand(command: String) : Click(ClickEvent.Action.RUN_COMMAND, command)
+        class RunCommand(command: String): Click(ClickEvent.Action.RUN_COMMAND, command)
 
         /**
          * チャット入力欄を変更します
          * @param text 変更する文字
          */
-        class TypeText(text: String) : Click(ClickEvent.Action.SUGGEST_COMMAND, text)
+        class TypeText(text: String): Click(ClickEvent.Action.SUGGEST_COMMAND, text)
 
         /**
          * URLを開きます
          * @param url URL
          */
-        class OpenURL(url: String) : Click(ClickEvent.Action.OPEN_URL, url)
+        class OpenURL(url: String): Click(ClickEvent.Action.OPEN_URL, url)
 
         /**
          * クリップボードにコピーします
          * @param text コピーする文字
          */
-        class Clipboard(text: String) : Click(ClickEvent.Action.COPY_TO_CLIPBOARD, text)
+        class Clipboard(text: String): Click(ClickEvent.Action.COPY_TO_CLIPBOARD, text)
     }
 }

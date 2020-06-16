@@ -23,9 +23,9 @@ sealed class CustomParticle(
      * @see ParticleBuilder
      */
     val builder = ParticleBuilder(type)
-        .count(count)
-        .offset(offsetX, offsetY, offsetZ)
-        .extra(speed)
+            .count(count)
+            .offset(offsetX, offsetY, offsetZ)
+            .extra(speed)
 
     /**
      * パーティクルを生成します
@@ -69,7 +69,7 @@ sealed class CustomParticle(
         offsetX: Double = 0.0,
         offsetY: Double = 0.0,
         offsetZ: Double = 0.0
-    ) : CustomParticle(type, count, speed, offsetX, offsetY, offsetZ)
+    ): CustomParticle(type, count, speed, offsetX, offsetY, offsetZ)
 
     /**
      * アイテムクラック
@@ -87,7 +87,7 @@ sealed class CustomParticle(
         offsetX: Double = 0.0,
         offsetY: Double = 0.0,
         offsetZ: Double = 0.0
-    ) : CustomParticle(Particle.ITEM_CRACK, count, speed, offsetX, offsetY, offsetZ) {
+    ): CustomParticle(Particle.ITEM_CRACK, count, speed, offsetX, offsetY, offsetZ) {
         init {
             builder.data(ItemStack(material))
         }
@@ -109,7 +109,7 @@ sealed class CustomParticle(
         offsetX: Double = 0.0,
         offsetY: Double = 0.0,
         offsetZ: Double = 0.0
-    ) : CustomParticle(Particle.BLOCK_CRACK, count, speed, offsetX, offsetY, offsetZ) {
+    ): CustomParticle(Particle.BLOCK_CRACK, count, speed, offsetX, offsetY, offsetZ) {
         init {
             builder.data(material.createBlockData())
         }
@@ -131,7 +131,7 @@ sealed class CustomParticle(
         offsetX: Double = 0.0,
         offsetY: Double = 0.0,
         offsetZ: Double = 0.0
-    ) : CustomParticle(Particle.BLOCK_DUST, count, speed, offsetX, offsetY, offsetZ) {
+    ): CustomParticle(Particle.BLOCK_DUST, count, speed, offsetX, offsetY, offsetZ) {
         init {
             builder.data(material.createBlockData())
         }
@@ -153,7 +153,7 @@ sealed class CustomParticle(
         offsetX: Double = 0.0,
         offsetY: Double = 0.0,
         offsetZ: Double = 0.0
-    ) : CustomParticle(Particle.FALLING_DUST, count, speed, offsetX, offsetY, offsetZ) {
+    ): CustomParticle(Particle.FALLING_DUST, count, speed, offsetX, offsetY, offsetZ) {
         init {
             builder.data(material.createBlockData())
         }
@@ -175,7 +175,7 @@ sealed class CustomParticle(
         offsetX: Double = 0.0,
         offsetY: Double = 0.0,
         offsetZ: Double = 0.0
-    ) : CustomParticle(Particle.REDSTONE, count, speed, offsetX, offsetY, offsetZ) {
+    ): CustomParticle(Particle.REDSTONE, count, speed, offsetX, offsetY, offsetZ) {
         init {
             builder.color(color)
         }
@@ -200,7 +200,7 @@ sealed class CustomParticle(
             offsetX: Double = 0.0,
             offsetY: Double = 0.0,
             offsetZ: Double = 0.0
-        ) : this(
+        ): this(
             Color.fromRGB(convertColor(red), convertColor(green), convertColor(blue)),
             count,
             speed,

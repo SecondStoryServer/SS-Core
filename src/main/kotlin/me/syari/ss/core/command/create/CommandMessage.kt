@@ -3,7 +3,10 @@ package me.syari.ss.core.command.create
 import me.syari.ss.core.message.Message.send
 import org.bukkit.command.CommandSender
 
-class CommandMessage internal constructor(private val prefix: String, private val sender: CommandSender) {
+class CommandMessage internal constructor(
+    private val prefix: String,
+    private val sender: CommandSender
+) {
     /**
      * ```
      * sendWithPrefix("&c$message")
@@ -66,7 +69,10 @@ class CommandMessage internal constructor(private val prefix: String, private va
      * @param title リストのタイトル
      * @param element リストの要素
      */
-    fun sendList(title: String, vararg element: String) {
+    fun sendList(
+        title: String,
+        vararg element: String
+    ) {
         sendList(title, element.toList())
     }
 
@@ -74,7 +80,10 @@ class CommandMessage internal constructor(private val prefix: String, private va
      * @param title リストのタイトル
      * @param element リストの要素
      */
-    fun sendList(title: String = "", element: Iterable<String>) {
+    fun sendList(
+        title: String = "",
+        element: Iterable<String>
+    ) {
         if (title.isNotEmpty()) sendWithPrefix("&f$title")
         sender.send(
             StringBuilder().apply {

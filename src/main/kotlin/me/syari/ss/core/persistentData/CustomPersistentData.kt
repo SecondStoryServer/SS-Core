@@ -20,7 +20,10 @@ class CustomPersistentData internal constructor(
      * @param type データタイプ
      * @return [Boolean]
      */
-    fun <T, Z> has(key: String, type: PersistentDataType<T, Z>): Boolean {
+    fun <T, Z> has(
+        key: String,
+        type: PersistentDataType<T, Z>
+    ): Boolean {
         return persistentDataContainer.has(key.asNamespacedKey, type)
     }
 
@@ -30,7 +33,10 @@ class CustomPersistentData internal constructor(
      * @param type データタイプ
      * @return [Z]?
      */
-    fun <T, Z> get(key: String, type: PersistentDataType<T, Z>): Z? {
+    fun <T, Z> get(
+        key: String,
+        type: PersistentDataType<T, Z>
+    ): Z? {
         return if (has(key, type)) {
             persistentDataContainer.get(key.asNamespacedKey, type)
         } else {
@@ -45,7 +51,11 @@ class CustomPersistentData internal constructor(
      * @param default デフォルト値
      * @return [Z]
      */
-    fun <T, Z> get(key: String, type: PersistentDataType<T, Z>, default: Z): Z {
+    fun <T, Z> get(
+        key: String,
+        type: PersistentDataType<T, Z>,
+        default: Z
+    ): Z {
         return get(key, type) ?: default
     }
 
@@ -55,7 +65,11 @@ class CustomPersistentData internal constructor(
      * @param type データタイプ
      * @param value 値
      */
-    fun <T, Z> set(key: String, type: PersistentDataType<T, Z>, value: Z?) {
+    fun <T, Z> set(
+        key: String,
+        type: PersistentDataType<T, Z>,
+        value: Z?
+    ) {
         if (value != null) {
             persistentDataContainer.set(key.asNamespacedKey, type, value)
         } else {

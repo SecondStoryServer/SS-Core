@@ -10,7 +10,7 @@ import me.syari.ss.core.time.TimeScheduler
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.plugin.java.JavaPlugin
 
-class Main : JavaPlugin() {
+class Main: JavaPlugin() {
     companion object {
         /**
          * コアプラグインのインスタンス

@@ -13,7 +13,10 @@ object CreateCommand {
      * @param tab タブ補完の内容
      * @return [CommandTab.Base]
      */
-    fun tab(vararg arg: String, tab: (CommandSender, CommandArgument) -> CommandTabElement?): CommandTab.Base {
+    fun tab(
+        vararg arg: String,
+        tab: (CommandSender, CommandArgument) -> CommandTabElement?
+    ): CommandTab.Base {
         return CommandTab.Base(arg.toList(), tab)
     }
 
@@ -23,7 +26,10 @@ object CreateCommand {
      * @param flag 設定に対応するタブ補完の内容
      * @return [CommandTab.Flag]
      */
-    fun flag(arg: String, vararg flag: Pair<String, CommandTabElement>): CommandTab.Flag {
+    fun flag(
+        arg: String,
+        vararg flag: Pair<String, CommandTabElement>
+    ): CommandTab.Flag {
         return CommandTab.Flag(arg, flag.toMap())
     }
 
@@ -126,8 +132,12 @@ object CreateCommand {
     ) {
         registerCommand(
             plugin,
-            object : Command(label, "", "/", alias.toList()) {
-                override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
+            object: Command(label, "", "/", alias.toList()) {
+                override fun execute(
+                    sender: CommandSender,
+                    commandLabel: String,
+                    args: Array<out String>
+                ): Boolean {
                     val message = CommandMessage(messagePrefix, sender)
                     execute.invoke(
                         message, sender,
@@ -136,7 +146,11 @@ object CreateCommand {
                     return true
                 }
 
-                override fun tabComplete(sender: CommandSender, alias: String, args: Array<out String>): List<String> {
+                override fun tabComplete(
+                    sender: CommandSender,
+                    alias: String,
+                    args: Array<out String>
+                ): List<String> {
                     val message = CommandMessage(messagePrefix, sender)
                     val tabList = mutableListOf<String>()
                     val joinArg = args.joinToString(separator = " ").toLowerCase()
@@ -205,7 +219,10 @@ object CreateCommand {
         )
     }
 
-    private fun registerCommand(plugin: JavaPlugin, command: Command) {
+    private fun registerCommand(
+        plugin: JavaPlugin,
+        command: Command
+    ) {
         try {
             val commandMapField = plugin.server.javaClass.getDeclaredField("commandMap")
             commandMapField.isAccessible = true

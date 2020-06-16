@@ -15,7 +15,10 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-class CustomInventory internal constructor(val inventory: Inventory, id: List<String>) {
+class CustomInventory internal constructor(
+    val inventory: Inventory,
+    id: List<String>
+) {
     private val events = mutableMapOf<Pair<Int, ClickType?>, () -> Unit>()
     internal val id = id.joinToString("-").toColor
 
@@ -61,7 +64,11 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
      * @param material アイテムタイプ
      * @param customModelData カスタムモデルデータ
      */
-    fun item(index: Iterable<Int>, material: Material, customModelData: Int? = null) {
+    fun item(
+        index: Iterable<Int>,
+        material: Material,
+        customModelData: Int? = null
+    ) {
         val item = CustomItemStack.create(material, "").apply {
             this.customModelData = customModelData
         }.toOneItemStack
@@ -76,7 +83,11 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
      * @param material アイテムタイプ
      * @param customModelData カスタムモデルデータ
      */
-    fun item(vararg index: Int, material: Material, customModelData: Int? = null) {
+    fun item(
+        vararg index: Int,
+        material: Material,
+        customModelData: Int? = null
+    ) {
         item(index.toList(), material, customModelData)
     }
 
@@ -86,7 +97,11 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
      * @param material アイテムタイプ
      * @param customModelData カスタムモデルデータ
      */
-    fun item(index: IntRange, material: Material, customModelData: Int? = null) {
+    fun item(
+        index: IntRange,
+        material: Material,
+        customModelData: Int? = null
+    ) {
         item(index.toList(), material, customModelData)
     }
 
@@ -95,7 +110,10 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
      * @param item アイテム
      * @return [ClickEvent]
      */
-    fun item(index: Int, item: ItemStack): ClickEvent {
+    fun item(
+        index: Int,
+        item: ItemStack
+    ): ClickEvent {
         return if (index in 0 until inventory.size) {
             inventory.setItem(index, item)
             ClickEvent(this, listOf(index))
@@ -109,7 +127,10 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
      * @param item アイテム
      * @return [ClickEvent]
      */
-    fun item(index: Int, item: CustomItemStack): ClickEvent {
+    fun item(
+        index: Int,
+        item: CustomItemStack
+    ): ClickEvent {
         return item(index, item.toOneItemStack)
     }
 
@@ -230,13 +251,19 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
     /**
      * アイテム単位でクリックイベントを設定します
      */
-    data class ClickEvent(val inventory: CustomInventory, val slot: List<Int>) {
+    data class ClickEvent(
+        val inventory: CustomInventory,
+        val slot: List<Int>
+    ) {
         /**
          * @param clickType クリックタイプ
          * @param run クリックタイプが一致した時に実行する処理
          * @return [ClickEvent]
          */
-        fun event(vararg clickType: ClickType, run: () -> Unit): ClickEvent {
+        fun event(
+            vararg clickType: ClickType,
+            run: () -> Unit
+        ): ClickEvent {
             clickType.forEach { type ->
                 addEvent(type, run)
             }
@@ -252,7 +279,10 @@ class CustomInventory internal constructor(val inventory: Inventory, id: List<St
             return this
         }
 
-        private fun addEvent(clickType: ClickType?, run: () -> Unit) {
+        private fun addEvent(
+            clickType: ClickType?,
+            run: () -> Unit
+        ) {
             slot.forEach {
                 inventory.events[it to clickType] = run
             }

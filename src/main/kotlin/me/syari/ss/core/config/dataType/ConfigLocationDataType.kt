@@ -4,10 +4,14 @@ import me.syari.ss.core.config.CustomConfig
 import org.bukkit.Bukkit
 import org.bukkit.Location
 
-object ConfigLocationDataType : ConfigDataType<Location> {
+object ConfigLocationDataType: ConfigDataType<Location> {
     override val typeName = "Location"
 
-    override fun get(config: CustomConfig, path: String, notFoundError: Boolean): Location? {
+    override fun get(
+        config: CustomConfig,
+        path: String,
+        notFoundError: Boolean
+    ): Location? {
         val line = config.get(path, ConfigDataType.STRING, notFoundError) ?: return null
         val split = line.split(",\\s*".toRegex())
         when (val size = split.size) {

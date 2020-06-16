@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 
-object TimeScheduler : OnEnable, Event {
+object TimeScheduler: OnEnable, Event {
     private val everyWeekScheduler = mutableMapOf<ScheduleTimeEveryWeek, MutableSet<() -> Unit>>()
     private val everyDayScheduler = mutableMapOf<ScheduleTimeEveryDay, MutableSet<() -> Unit>>()
     private val everyHourScheduler = mutableMapOf<ScheduleTimeEveryHour, MutableSet<() -> Unit>>()
@@ -23,7 +23,12 @@ object TimeScheduler : OnEnable, Event {
      * @param minute 分
      * @param run その時間に実行する処理
      */
-    fun scheduleEveryWeekAt(dayOfWeek: DayOfWeek, hour: Int, minute: Int, run: () -> Unit) {
+    fun scheduleEveryWeekAt(
+        dayOfWeek: DayOfWeek,
+        hour: Int,
+        minute: Int,
+        run: () -> Unit
+    ) {
         everyWeekScheduler.getOrPut(ScheduleTimeEveryWeek.create(dayOfWeek, hour, minute)) { mutableSetOf() }.add(run)
     }
 
@@ -33,7 +38,11 @@ object TimeScheduler : OnEnable, Event {
      * @param minute 分
      * @param run その時間に実行する処理
      */
-    fun scheduleEveryDayAt(hour: Int, minute: Int, run: () -> Unit) {
+    fun scheduleEveryDayAt(
+        hour: Int,
+        minute: Int,
+        run: () -> Unit
+    ) {
         everyDayScheduler.getOrPut(ScheduleTimeEveryDay.create(hour, minute)) { mutableSetOf() }.add(run)
     }
 
@@ -42,7 +51,10 @@ object TimeScheduler : OnEnable, Event {
      * @param minute 分
      * @param run その時間に実行する処理
      */
-    fun scheduleEveryHourAt(minute: Int, run: () -> Unit) {
+    fun scheduleEveryHourAt(
+        minute: Int,
+        run: () -> Unit
+    ) {
         everyHourScheduler.getOrPut(ScheduleTimeEveryHour.create(minute)) { mutableSetOf() }.add(run)
     }
 
@@ -52,7 +64,10 @@ object TimeScheduler : OnEnable, Event {
      * @param minute 分
      * @return [String]
      */
-    fun getFormatTime(hour: Int, minute: Int): String {
+    fun getFormatTime(
+        hour: Int,
+        minute: Int
+    ): String {
         return "${String.format("%2d", hour)}:${String.format("%2d", minute)}"
     }
 

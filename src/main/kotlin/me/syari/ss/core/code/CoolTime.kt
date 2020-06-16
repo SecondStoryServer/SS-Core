@@ -34,7 +34,10 @@ class CoolTime<T>(private val plugin: JavaPlugin) {
      * @param value データ
      * @param coolTime 削除されるまでの時間 Tick
      */
-    fun add(value: T, coolTime: Long) {
+    fun add(
+        value: T,
+        coolTime: Long
+    ) {
         val success = coolTimeList.add(value)
         if (!success) return
         runLater(plugin, coolTime) {

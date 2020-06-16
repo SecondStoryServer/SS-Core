@@ -14,7 +14,11 @@ data class ScheduleTimeEveryWeek(
     val everyDay by lazy { ScheduleTimeEveryDay(hour, minute) }
 
     companion object {
-        fun create(dayOfWeek: DayOfWeek, hour: Int, minute: Int): ScheduleTimeEveryWeek {
+        fun create(
+            dayOfWeek: DayOfWeek,
+            hour: Int,
+            minute: Int
+        ): ScheduleTimeEveryWeek {
             var nextHour = hour
             val nextMinute = if (60 <= minute) {
                 nextHour += (minute / 60)

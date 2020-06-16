@@ -5,7 +5,10 @@ import org.bukkit.Bukkit.getPlayer
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 
-class CommandArgument internal constructor(private val array: Array<out String>, private val message: CommandMessage) {
+class CommandArgument internal constructor(
+    private val array: Array<out String>,
+    private val message: CommandMessage
+) {
     /**
      * 指定した要素を取得します
      * @param index 取得する位置
@@ -93,7 +96,10 @@ class CommandArgument internal constructor(private val array: Array<out String>,
      * @param equalName 名前が完全一致した場合のみ取得する
      * @return [OfflinePlayer]?
      */
-    fun getOfflinePlayer(index: Int, equalName: Boolean): OfflinePlayer? {
+    fun getOfflinePlayer(
+        index: Int,
+        equalName: Boolean
+    ): OfflinePlayer? {
         val rawPlayer = getOrNull(index)
         if (rawPlayer == null) {
             message.sendError(ErrorMessage.NotEnterPlayer)
@@ -115,7 +121,10 @@ class CommandArgument internal constructor(private val array: Array<out String>,
      * @param equalName 名前が完全一致した場合のみ取得する
      * @return [Player]?
      */
-    fun getPlayer(index: Int, equalName: Boolean): Player? {
+    fun getPlayer(
+        index: Int,
+        equalName: Boolean
+    ): Player? {
         val rawPlayer = getOrNull(index)
         if (rawPlayer == null) {
             message.sendError(ErrorMessage.NotEnterPlayer)
