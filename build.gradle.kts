@@ -29,7 +29,7 @@ bukkit {
     main = "$group.Main"
     author = "sya_ri"
     depend = listOf("SS-Kotlin")
-    apiVersion = "1.15"
+    apiVersion = "1.16"
 }
 
 tasks {
