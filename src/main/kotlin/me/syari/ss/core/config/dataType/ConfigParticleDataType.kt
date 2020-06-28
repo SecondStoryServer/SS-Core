@@ -32,29 +32,23 @@ object ConfigParticleDataType: ConfigDataType<CustomParticleList> {
                     3, 4, 6 -> {
                         val rawType = split[0].toUpperCase()
                         val type = Particle.values().firstOrNull { rawType == it.name }
-                        if (type == null) {
-                            config.nullError("$path:$index", "Particle($rawType)")
-                            return@forEachIndexed
-                        }
+                                ?: return@forEachIndexed config.nullError("$path:$index", "Particle($rawType)")
                         val lastIndex = split.lastIndex
                         val speed = split[lastIndex - 1].toDoubleOrNull()
-                        if (speed == null) {
-                            config.nullError("$path:$index", "Double(${split[lastIndex - 1]})")
-                            return@forEachIndexed
-                        }
+                                ?: return@forEachIndexed config.nullError(
+                                    "$path:$index",
+                                    "Double(${split[lastIndex - 1]})"
+                                )
                         val count = split[lastIndex].toIntOrNull()
-                        if (count == null) {
-                            config.nullError("$path:$index", "Int(${split[lastIndex]})")
-                            return@forEachIndexed
-                        }
+                                ?: return@forEachIndexed config.nullError("$path:$index", "Int(${split[lastIndex]})")
                         addParticle(
                             when (type) {
                                 Particle.ITEM_CRACK, Particle.BLOCK_CRACK, Particle.BLOCK_DUST, Particle.FALLING_DUST -> {
                                     val material = Material.getMaterial(split[2])
-                                    if (material == null) {
-                                        config.nullError("$path:$index", "Material(${split[2]})")
-                                        return@forEachIndexed
-                                    }
+                                            ?: return@forEachIndexed config.nullError(
+                                                "$path:$index",
+                                                "Material(${split[2]})"
+                                            )
                                     when (type) {
                                         Particle.ITEM_CRACK -> CustomParticle.ItemCrack(material, count, speed)
                                         Particle.BLOCK_CRACK -> CustomParticle.BlockCrack(material, count, speed)
@@ -70,8 +64,10 @@ object ConfigParticleDataType: ConfigDataType<CustomParticleList> {
                                         val blue = split[4].toInt()
                                         CustomParticle.RedStone(red, blue, green, count, speed)
                                     } catch (ex: NumberFormatException) {
-                                        config.nullError("$path:$index", "Int(${split[2]}, ${split[3]}, ${split[4]})")
-                                        return@forEachIndexed
+                                        return@forEachIndexed config.nullError(
+                                            "$path:$index",
+                                            "Int(${split[2]}, ${split[3]}, ${split[4]})"
+                                        )
                                     }
                                 }
                                 else -> CustomParticle.Normal(type, count, speed)

@@ -17,29 +17,15 @@ object ConfigPotionDataType: ConfigDataType<List<PotionEffect>> {
             getList.forEachIndexed { index, line ->
                 val split = line.split("-")
                 if (split.size < 3) {
-                    config.formatMismatchError("$path:$index")
-                    return@forEachIndexed
+                    return@forEachIndexed config.formatMismatchError("$path:$index")
                 }
                 val type = PotionEffectType.getByName(split[0])
-                if (type == null) {
-                    config.nullError("$path:$index", "Potion(${split[0]})")
-                    return@forEachIndexed
-                }
+                        ?: return@forEachIndexed config.nullError("$path:$index", "Potion(${split[0]})")
                 val duration = split[1].toIntOrNull()
-                if (duration == null) {
-                    config.typeMismatchError("$path:$index", "Int(${split[1]})")
-                    return@forEachIndexed
-                }
+                        ?: return@forEachIndexed config.typeMismatchError("$path:$index", "Int(${split[1]})")
                 val level = split[2].toIntOrNull()
-                if (level == null) {
-                    config.typeMismatchError("$path:$index", "Int(${split[2]})")
-                    return@forEachIndexed
-                }
-                val particle = if (split.size < 4) {
-                    split[3].toBoolean()
-                } else {
-                    true
-                }
+                        ?: return@forEachIndexed config.typeMismatchError("$path:$index", "Int(${split[2]})")
+                val particle = split.getOrNull(3)?.toBoolean() ?: true
                 PotionEffect(type, duration, level, true, particle)
             }
         }
