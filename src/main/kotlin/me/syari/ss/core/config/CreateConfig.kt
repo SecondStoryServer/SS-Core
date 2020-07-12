@@ -3,6 +3,7 @@ package me.syari.ss.core.config
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
+import java.io.Reader
 
 object CreateConfig {
     /**
@@ -53,6 +54,42 @@ object CreateConfig {
         run: CustomFileConfig.() -> Unit
     ): CustomFileConfig {
         return config(plugin, output, fileName, deleteIfEmpty, default).apply(run)
+    }
+
+    /**
+     * コンフィグをロードします
+     * @param plugin ロードするプラグイン
+     * @param output メッセージの出力先
+     * @param uniqueName 識別名
+     * @param reader コンフィグの内容
+     * @return [CustomFileConfig]
+     */
+    fun config(
+        plugin: JavaPlugin,
+        output: CommandSender,
+        uniqueName: String,
+        reader: Reader
+    ): CustomReaderConfig {
+        return CustomReaderConfig(plugin, output, uniqueName, reader)
+    }
+
+    /**
+     * コンフィグをロードします
+     * @param plugin ロードするプラグイン
+     * @param output メッセージの出力先
+     * @param uniqueName 識別名
+     * @param reader コンフィグの内容
+     * @param run コンフィグに対して実行する処理
+     * @return [CustomFileConfig]
+     */
+    fun config(
+        plugin: JavaPlugin,
+        output: CommandSender,
+        uniqueName: String,
+        reader: Reader,
+        run: CustomReaderConfig.() -> Unit
+    ): CustomReaderConfig {
+        return config(plugin, output, uniqueName, reader).apply(run)
     }
 
     /**
