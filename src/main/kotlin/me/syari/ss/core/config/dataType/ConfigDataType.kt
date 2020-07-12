@@ -1,6 +1,7 @@
 package me.syari.ss.core.config.dataType
 
 import me.syari.ss.core.config.CustomConfig
+import me.syari.ss.core.config.CustomFileConfig
 
 /**
  * コンフィグデータタイプ
@@ -13,7 +14,7 @@ interface ConfigDataType<T> {
     val typeName: String
 
     /**
-     * @param config [CustomConfig]
+     * @param config [CustomFileConfig]
      * @param path コンフィグパス
      * @param notFoundError 存在しないデータの場合にエラーを出す
      */
@@ -24,7 +25,7 @@ interface ConfigDataType<T> {
     ): T?
 
     /**
-     * @param config [CustomConfig]
+     * @param config [CustomFileConfig]
      * @param path コンフィグパス
      * @param notFoundError 存在しないデータの場合にエラーを出す
      * @param default デフォルト値
