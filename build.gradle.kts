@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.syari.ss.core"
-version = "3.1-pre"
+version = "3.1"
 
 val ssMavenRepoUploadURL: String by extra
 val ssMavenRepoUploadUser: String by extra

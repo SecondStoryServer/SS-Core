@@ -4,6 +4,7 @@ import me.syari.ss.core.code.StringEditor.toColor
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
+import net.md_5.bungee.api.chat.hover.content.Text
 
 class JsonBuilder {
     private val message = mutableListOf<JsonMessage>()
@@ -58,7 +59,7 @@ class JsonBuilder {
                     is JsonMessage.Text -> addExtra(
                         TextComponent(eachMessage.text.toColor).apply {
                             eachMessage.hover?.let {
-                                hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, arrayOf(TextComponent(it.toColor)))
+                                hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(it.toColor))
                             }
                             eachMessage.click?.let {
                                 clickEvent = ClickEvent(it.event, it.content.toColor)
