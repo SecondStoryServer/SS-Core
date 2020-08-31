@@ -17,16 +17,11 @@ interface Database {
 
     /**
      * 接続テストを行います
+     * @param run データベースに対して実行する処理
      * @return [Boolean]
      */
-    fun canConnect(): Boolean {
-        return try {
-            getConnection().use { }
-            true
-        } catch (ex: SQLException) {
-            ex.printStackTrace()
-            false
-        }
+    fun canConnect(run: Statement.() -> Unit = {}): Boolean {
+        return use(run) != null
     }
 
     /**

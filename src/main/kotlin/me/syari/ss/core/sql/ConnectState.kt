@@ -1,5 +1,7 @@
 package me.syari.ss.core.sql
 
+import java.sql.Statement
+
 /**
  * データベース接続結果
  * @param message 日本語メッセージ
@@ -38,10 +40,11 @@ enum class ConnectState(val message: String) {
 
         /**
          * データベースに接続できるか確認します
+         * @param run データベースに対して実行する処理
          * @return [ConnectState]
          */
-        fun Database?.checkConnect(): ConnectState {
-            return ConnectState.get(this?.canConnect())
+        fun Database?.checkConnect(run: Statement.() -> Unit = {}): ConnectState {
+            return ConnectState.get(this?.canConnect(run))
         }
     }
 }
