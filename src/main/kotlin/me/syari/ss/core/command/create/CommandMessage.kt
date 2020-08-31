@@ -88,7 +88,7 @@ class CommandMessage internal constructor(
         sender.send(
             StringBuilder().apply {
                 element.forEach {
-                    appendln("&7- &a$it")
+                    appendLine("&7- &a$it")
                 }
             }
         )

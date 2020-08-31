@@ -56,7 +56,7 @@ data class ScoreBoardPlayer(val uuidPlayer: UUIDPlayer) {
 
     private fun updateBoard() {
         val lastBoard = board
-        val board = boardList.maxBy { it.priority.level }
+        val board = boardList.maxByOrNull { it.priority.level }
         if (lastBoard != board) {
             setBoard(board)
         }
