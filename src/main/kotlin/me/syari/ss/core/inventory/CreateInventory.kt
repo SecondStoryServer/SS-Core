@@ -1,7 +1,7 @@
 package me.syari.ss.core.inventory
 
 import me.syari.ss.core.Main.Companion.corePlugin
-import me.syari.ss.core.auto.Event
+import me.syari.ss.core.auto.EventHandlers
 import me.syari.ss.core.code.StringEditor.toColor
 import me.syari.ss.core.inventory.CreateInventory.runWithId
 import me.syari.ss.core.player.UUIDPlayer
@@ -17,7 +17,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 
-object CreateInventory: Event {
+object CreateInventory: EventHandlers {
     @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
         val player = e.whoClicked as Player

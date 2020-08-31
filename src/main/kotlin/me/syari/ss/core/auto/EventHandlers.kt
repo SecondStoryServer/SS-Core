@@ -6,12 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin
 /**
  * イベント登録
  */
-interface Event: Listener {
+interface EventHandlers: Listener {
     companion object {
         /**
          * ```
          * override fun onEnable(){
-         *      Event.register(this, ...)
+         *      EventHandlers.register(this, ...)
          * }
          * ```
          *
@@ -21,7 +21,7 @@ interface Event: Listener {
          */
         fun register(
             plugin: JavaPlugin,
-            vararg event: Event
+            vararg event: EventHandlers
         ) {
             event.forEach {
                 plugin.server.pluginManager.registerEvents(it, plugin)

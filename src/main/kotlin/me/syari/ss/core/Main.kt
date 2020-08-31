@@ -1,6 +1,6 @@
 package me.syari.ss.core
 
-import me.syari.ss.core.auto.Event
+import me.syari.ss.core.auto.EventHandlers
 import me.syari.ss.core.auto.OnDisable
 import me.syari.ss.core.auto.OnEnable
 import me.syari.ss.core.bossBar.CreateBossBar
@@ -33,7 +33,7 @@ class Main: JavaPlugin() {
         coreLogger = ConsoleLogger(this)
         console = server.consoleSender
         OnEnable.register(TimeScheduler)
-        Event.register(this, CreateBossBar, CreateInventory, TimeScheduler)
+        EventHandlers.register(this, CreateBossBar, CreateInventory, TimeScheduler)
     }
 
     override fun onDisable() {
