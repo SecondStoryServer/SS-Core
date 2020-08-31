@@ -1,6 +1,6 @@
 package me.syari.ss.core.bossBar
 
-import me.syari.ss.core.auto.OnDisable
+import me.syari.ss.core.code.OnDisable
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.event.EventHandler

@@ -1,4 +1,4 @@
-package me.syari.ss.core.auto
+package me.syari.ss.core.code
 
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin

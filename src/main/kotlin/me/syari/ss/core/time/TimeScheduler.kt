@@ -1,7 +1,7 @@
 package me.syari.ss.core.time
 
 import me.syari.ss.core.Main.Companion.corePlugin
-import me.syari.ss.core.auto.OnEnable
+import me.syari.ss.core.code.OnEnable
 import me.syari.ss.core.scheduler.CreateScheduler.runLater
 import me.syari.ss.core.time.event.NextDayEvent
 import me.syari.ss.core.time.event.NextHourEvent

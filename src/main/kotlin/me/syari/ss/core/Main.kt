@@ -1,7 +1,7 @@
 package me.syari.ss.core
 
-import me.syari.ss.core.auto.SSPlugin
 import me.syari.ss.core.bossBar.CreateBossBar
+import me.syari.ss.core.code.SSPlugin
 import me.syari.ss.core.inventory.CreateInventory
 import me.syari.ss.core.message.ConsoleLogger
 import me.syari.ss.core.time.TimeScheduler

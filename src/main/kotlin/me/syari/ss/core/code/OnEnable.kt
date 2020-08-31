@@ -1,4 +1,4 @@
-package me.syari.ss.core.auto
+package me.syari.ss.core.code
 
 /**
  * プラグインが有効になった時に処理を行う
