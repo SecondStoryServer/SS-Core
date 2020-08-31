@@ -1,14 +1,14 @@
 package me.syari.ss.core.bossBar
 
-import me.syari.ss.core.auto.EventHandlers
 import me.syari.ss.core.auto.OnDisable
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
-object CreateBossBar: EventHandlers, OnDisable {
+object CreateBossBar: Listener, OnDisable {
     internal val barList = mutableListOf<CustomBossBar>()
 
     /**

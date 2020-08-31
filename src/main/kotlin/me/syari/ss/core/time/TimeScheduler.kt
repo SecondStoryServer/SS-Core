@@ -1,17 +1,17 @@
 package me.syari.ss.core.time
 
 import me.syari.ss.core.Main.Companion.corePlugin
-import me.syari.ss.core.auto.EventHandlers
 import me.syari.ss.core.auto.OnEnable
 import me.syari.ss.core.scheduler.CreateScheduler.runLater
 import me.syari.ss.core.time.event.NextDayEvent
 import me.syari.ss.core.time.event.NextHourEvent
 import me.syari.ss.core.time.event.NextMinuteEvent
 import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 
-object TimeScheduler: OnEnable, EventHandlers {
+object TimeScheduler: OnEnable, Listener {
     private val everyWeekScheduler = mutableMapOf<ScheduleTimeEveryWeek, MutableSet<() -> Unit>>()
     private val everyDayScheduler = mutableMapOf<ScheduleTimeEveryDay, MutableSet<() -> Unit>>()
     private val everyHourScheduler = mutableMapOf<ScheduleTimeEveryHour, MutableSet<() -> Unit>>()
